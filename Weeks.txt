@@ -1,0 +1,18 @@
+Week 0 (Winter Vacations) :
+
+Literature Survey - find what different commercial and open source platforms use to provide application level sandboxing
+
+https://medium.com/@zackbloom/isolates-are-the-future-of-cloud-computing-cf7ab91c6142 = blog on isolates
+https://www.cloudflare.com/products/cloudflare-workers/ = provides serverless computing architecture without using vm or containers. cloudflare workers support js only. 194 data centres. We are trying to develop something that is language agnostic.
+
+Read the above blog on isolates.
+
+Week 1 :
+
+COMSNETS 2020 : Bishakh sir and Abhijit sir unavailable.
+Reading Paper SAND. Read till page 6.
+Created the literature survey table on notebook, everything present in Sand.
+
+Week 2 :
+
+Checking out the repo https://github.com/hobochild/sandy used to place custom blocks on read calls. Try to block read calls in a similar way.
