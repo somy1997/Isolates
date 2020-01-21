@@ -1,0 +1,68 @@
+make -C /lib/modules/4.15.0-45-generic/build M=/home/nbs/Desktop/intercept_open modules
+make[1]: Entering directory '/usr/src/linux-headers-4.15.0-45-generic'
+  CC [M]  /home/nbs/Desktop/intercept_open/intercept_open.o
+/home/nbs/Desktop/intercept_open/intercept_open.c: In function ‘our_fake_open_function’:
+/home/nbs/Desktop/intercept_open/intercept_open.c:25:26: error: storage size of ‘nd’ isn’t known
+         struct nameidata nd,nd_t;
+                          ^
+/home/nbs/Desktop/intercept_open/intercept_open.c:25:29: error: storage size of ‘nd_t’ isn’t known
+         struct nameidata nd,nd_t;
+                             ^
+/home/nbs/Desktop/intercept_open/intercept_open.c:29:15: error: implicit declaration of function ‘user_path_walk’ [-Werror=implicit-function-declaration]
+         error=user_path_walk(filename,&nd);
+               ^
+/home/nbs/Desktop/intercept_open/intercept_open.c:25:29: warning: unused variable ‘nd_t’ [-Wunused-variable]
+         struct nameidata nd,nd_t;
+                             ^
+/home/nbs/Desktop/intercept_open/intercept_open.c:25:26: warning: unused variable ‘nd’ [-Wunused-variable]
+         struct nameidata nd,nd_t;
+                          ^
+/home/nbs/Desktop/intercept_open/intercept_open.c: In function ‘my_init’:
+/home/nbs/Desktop/intercept_open/intercept_open.c:62:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+         unsigned long *sys_table;
+         ^
+/home/nbs/Desktop/intercept_open/intercept_open.c:63:39: error: ‘system_utsname’ undeclared (first use in this function)
+         sys_table = (unsigned long *)&system_utsname;
+                                       ^
+/home/nbs/Desktop/intercept_open/intercept_open.c:63:39: note: each undeclared identifier is reported only once for each function it appears in
+In file included from ./arch/x86/include/asm/atomic.h:8:0,
+                 from ./arch/x86/include/asm/msr.h:67,
+                 from ./arch/x86/include/asm/processor.h:21,
+                 from ./arch/x86/include/asm/cpufeature.h:5,
+                 from ./arch/x86/include/asm/thread_info.h:53,
+                 from ./include/linux/thread_info.h:38,
+                 from ./arch/x86/include/asm/preempt.h:7,
+                 from ./include/linux/preempt.h:81,
+                 from ./include/linux/spinlock.h:51,
+                 from ./include/linux/seqlock.h:36,
+                 from ./include/linux/time.h:6,
+                 from ./include/linux/stat.h:19,
+                 from ./include/linux/module.h:10,
+                 from /home/nbs/Desktop/intercept_open/intercept_open.c:1:
+./arch/x86/include/asm/cmpxchg.h:44:38: warning: initialization makes integer from pointer without a cast [-Wint-conversion]
+          __typeof__ (*(ptr)) __ret = (arg);   \
+                                      ^
+./arch/x86/include/asm/cmpxchg.h:78:22: note: in expansion of macro ‘__xchg_op’
+ #define xchg(ptr, v) __xchg_op((ptr), (v), xchg, "")
+                      ^
+/home/nbs/Desktop/intercept_open/intercept_open.c:80:41: note: in expansion of macro ‘xchg’
+             original_sys_open =(void * )xchg(&sys_call_table[__NR_open],
+                                         ^
+/home/nbs/Desktop/intercept_open/intercept_open.c: In function ‘my_exit’:
+./arch/x86/include/asm/cmpxchg.h:44:38: warning: initialization makes integer from pointer without a cast [-Wint-conversion]
+          __typeof__ (*(ptr)) __ret = (arg);   \
+                                      ^
+./arch/x86/include/asm/cmpxchg.h:78:22: note: in expansion of macro ‘__xchg_op’
+ #define xchg(ptr, v) __xchg_op((ptr), (v), xchg, "")
+                      ^
+/home/nbs/Desktop/intercept_open/intercept_open.c:90:9: note: in expansion of macro ‘xchg’
+         xchg(&sys_call_table[__NR_open], original_sys_open);
+         ^
+cc1: some warnings being treated as errors
+scripts/Makefile.build:339: recipe for target '/home/nbs/Desktop/intercept_open/intercept_open.o' failed
+make[2]: *** [/home/nbs/Desktop/intercept_open/intercept_open.o] Error 1
+Makefile:1551: recipe for target '_module_/home/nbs/Desktop/intercept_open' failed
+make[1]: *** [_module_/home/nbs/Desktop/intercept_open] Error 2
+make[1]: Leaving directory '/usr/src/linux-headers-4.15.0-45-generic'
+Makefile:4: recipe for target 'all' failed
+make: *** [all] Error 2

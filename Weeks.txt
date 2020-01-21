@@ -15,4 +15,16 @@ Created the literature survey table on notebook, everything present in Sand.
 
 Week 2 :
 
-Checking out the repo https://github.com/hobochild/sandy used to place custom blocks on read calls. Try to block read calls in a similar way.
+// Study the repo https://github.com/hobochild/sandy used to place custom blocks on read calls. Try to block read calls in a similar way. Understand how they are doing.
+Completed reading the paper SAND. SAND mentions in chapter 9 at the end of using LWC (light weight contexts).
+See if the methods mentioned in http://books.gigatux.nl/mirror/networksecuritytools/0596007949/networkst-CHP-7-SECT-2.html works? Some nuances :
+1. The website asks to look at /usr/include/bits/syscall.h but it is actually present at several locations like :
+    /usr/include/x86_64-linux-gnu/asm/vsyscall.h
+    /usr/include/x86_64-linux-gnu/sys/syscall.h
+    /usr/include/x86_64-linux-gnu/bits/syscall.h
+    /usr/include/syscall.h
+2. For intercept_open method, had to change the Makefile to the one in Abhijit sir's tutorial on LKM. Didn't work anyways. Showed a lot of errors. Tried with both /usr/src/linux-headers-'uname -r' and /lib/modules/'uname -r'
+3. For intercept_unlink method, had to use 'sudo grep sys_call_table /boot/System.map-4.15.0-45-generic' which resulted in
+    ffffffff81e001e0 R sys_call_table
+    ffffffff81e015a0 R ia32_sys_call_table
+After correcting some syntax errors the module was create with some warnings but while inserting it was not returning.
