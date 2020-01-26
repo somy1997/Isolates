@@ -1,6 +1,6 @@
 # Isolates
 
-All the work is manually being logged in Isolates /Weeks.txt
+All the work is manually being logged in Isolates/Weeks.txt
 
 ## Intercepting System Calls using LKM
 
