@@ -27,4 +27,12 @@ See if the methods mentioned in http://books.gigatux.nl/mirror/networksecurityto
 3. For intercept_unlink method, had to use 'sudo grep sys_call_table /boot/System.map-4.15.0-45-generic' which resulted in
     ffffffff81e001e0 R sys_call_table
     ffffffff81e015a0 R ia32_sys_call_table
-After correcting some syntax errors the module was create with some warnings but while inserting it was not returning.
+After correcting some syntax errors the module was create with some warnings but while inserting it was not returning. Also, it was displaying the message 'Killed', may be because it wasn't allowed.
+
+Week 3 : 
+
+Completed watching Jerome's DockerCon video explaing cgroups, ... : https://youtu.be/sK5i-N34im8
+Reattempting LKM tutorial
+Testing method to work around 'Killed' message, following : https://stackoverflow.com/questions/59812156/how-can-i-override-a-system-call-table-entry-with-my-own-function 
+Install vim and cscope : sudo apt-get update && sudo apt-get install vim cscope. Refer http://cscope.sourceforge.net/large_projects.html
+The stackoverflow method checks out.
