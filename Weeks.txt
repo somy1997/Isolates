@@ -36,3 +36,11 @@ Reattempting LKM tutorial
 Testing method to work around 'Killed' message, following : https://stackoverflow.com/questions/59812156/how-can-i-override-a-system-call-table-entry-with-my-own-function 
 Install vim and cscope : sudo apt-get update && sudo apt-get install vim cscope. Refer http://cscope.sourceforge.net/large_projects.html
 The stackoverflow method checks out.
+Observation : On grep, the strace method shows only a few system calls but the dmesg command shows a lot of open calls probably because the dmesg command is showing all the open calls including those called by other processes in the system.
+
+Week 4 :
+
+Out of station from Jan 28 to Feb 5
+
+Week 5 :
+
