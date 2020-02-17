@@ -44,3 +44,17 @@ Out of station from Jan 28 to Feb 5
 
 Week 5 :
 
+Refer https://stackoverflow.com/questions/26451729/how-to-get-process-id-name-and-status-using-module . It has mentions of good references for newbies in kernel programming.
+asmlinkage = Refer https://stackoverflow.com/questions/10459688/what-is-the-asmlinkage-modifier-meant-for , https://www.quora.com/Linux-Kernel/Linux-Kernel-What-does-asmlinkage-mean-in-the-definition-of-system-calls#
+Process ID, name = https://stackoverflow.com/questions/26451729/how-to-get-process-id-name-and-status-using-module
+User ID = https://stackoverflow.com/questions/14097389/how-to-get-userid-when-writing-linux-kernel-module
+current in kernel = https://stackoverflow.com/questions/12434651/what-is-the-current-in-linux-kernel-source?noredirect=1&lq=1
+obj-m = https://stackoverflow.com/questions/57839941/what-is-the-meaning-of-obj-m-in-linux-device-driver-makefile
+make variables = https://ftp.gnu.org/old-gnu/Manuals/make-3.79.1/html_chapter/make_6.html
+
+Used the stackoverflow method to log the calls made to open system call by defining the custom open function.
+Printing the process name, process ID and user ID for each call.
+Next plan to do the same thing with close, read, write syscalls as well using the same LKM.
+Created a generic Makefile to take care of creating and deleting the module and insmodding and rmmodding the module. Created it with an assumption that we'll be creating separate LKMs for each syscall. So, the makefile works such as for example, if open syscall then the folder name should be open and the code should be written in a file inside the same folder named intercept_open.c .
+Logs stored in format : 'ISOLATES:<syscall intercepted>,<process name>,<process id>,<user id>c
+Logs stored in System Call Logging/dmesglogs.txt
