@@ -28,6 +28,6 @@ Logging calls made to open system call in linux kernel using LKM by creating cus
 
 Commit URL : https://github.com/somy1997/Isolates/tree/b699d702659335e1326287281ea0c010364555a5
 
-Source Files                    : Isolates/System Call Logging
-Custom Open Function LKM Source : Isolates/System Call Logging/open/intercept_open.c
-Kernel logs                     : Isolates/System Call Logging/dmesglogs.txt
+Source Files                    : Isolates/System Call Logging\
+Custom Open Function LKM Source : Isolates/System Call Logging/open/intercept_open.c\
+Kernel logs                     : Isolates/System Call Logging/dmesglogs.txt\
