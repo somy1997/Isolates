@@ -30,4 +30,4 @@ Commit URL : https://github.com/somy1997/Isolates/tree/b699d702659335e1326287281
 
 Source Files                    : Isolates/System Call Logging\
 Custom Open Function LKM Source : Isolates/System Call Logging/open/intercept_open.c\
-Kernel logs                     : Isolates/System Call Logging/dmesglogs.txt\
+Kernel logs                     : Isolates/System Call Logging/dmesglogs.txt
