@@ -58,3 +58,36 @@ Next plan to do the same thing with close, read, write syscalls as well using th
 Created a generic Makefile to take care of creating and deleting the module and insmodding and rmmodding the module. Created it with an assumption that we'll be creating separate LKMs for each syscall. So, the makefile works such as for example, if open syscall then the folder name should be open and the code should be written in a file inside the same folder named intercept_open.c .
 Logs stored in format : 'ISOLATES:<syscall intercepted>,<process name>,<process id>,<user id>c
 Logs stored in System Call Logging/dmesglogs.txt
+Observation : In original logs logs, saw some user ids other than root(0), nbs(1000) which had id : 104
+> getent passwd "104" -- syslog:x:104:108::/home/syslog:/bin/false
+Probably for kernel logs
+
+Week 6 :
+
+Isolation
+
+Week 7 :
+
+MidSems
+
+Logged file operations system calls like open, close, read, write.
+
+Created new user : name : isol, pass : 1
+Refer https://www.digitalocean.com/community/tutorials/how-to-add-and-delete-users-on-ubuntu-16-04 for adduser command.
+Couldn't use this as it doesn't have permissions to create files in Desktop of user nbs
+Working with user nbs for now.
+Refer https://askubuntu.com/questions/468236/how-can-i-find-my-user-id-uid-from-terminal to find user id.
+
+Trying to print file accessed by simple http server written in go (language chosen because it gives statically compiled binary with everything included in the binary itself).
+Printing specific logs based on $UID = 1000.
+While trying to print filename passed to open function, the system hangs because of __user macro in the parameter declaration which means that the parameter is in user space.
+Refer https://stackoverflow.com/questions/45405442/what-is-the-meaning-of-argument-type-const-char-user-const-user-argv
+Refer https://stackoverflow.com/questions/4521551/what-are-the-implications-of-the-linux-user-macro
+Using copy_from_user function to copy from user space to kernel space. It worked.
+Refer https://www.fsl.cs.sunysb.edu/kernel-api/re257.html
+cscope -Rd to start cscope without updating the database.
+Modes definition found by searching O_RDONLY using cscope. Definitions of all modes given in fcntl.h. Those accessible in kernel mentioned in linux-4.19.102/include/linux/fcntl.h
+Currently watching only O_RDONLY | O_WRONLY | O_RDWR | O_CREAT | O_TRUNC | O_APPEND, NDELAY and NONBLOCK has same value as defined in fcntl.h (cscope).
+Ran go executable, observed that it accessed files from /lib/...
+Then statically compiled and again ran the executable, this time didn't see any mention of the server process in dmesg. May be because it is using execve, to directly execute some other process.
+Digression : after compiling used strip command on the binary simplestHTTPServer to remove the symbols and reduce the file size from 5.6 MB to 5.2 MB.
