@@ -60,7 +60,9 @@ Logs stored in format : 'ISOLATES:<syscall intercepted>,<process name>,<process 
 Logs stored in System Call Logging/dmesglogs.txt
 Observation : In original logs logs, saw some user ids other than root(0), nbs(1000) which had id : 104
 > getent passwd "104" -- syslog:x:104:108::/home/syslog:/bin/false
-Probably for kernel logs
+Probably for writing kernel logs
+I think that's why the logs were filling so fast because the act of writing to logs was also getting captured in the logs.
+After selectively logging the system calls, the logs were of decent size.
 
 Week 6 :
 
@@ -91,3 +93,122 @@ Currently watching only O_RDONLY | O_WRONLY | O_RDWR | O_CREAT | O_TRUNC | O_APP
 Ran go executable, observed that it accessed files from /lib/...
 Then statically compiled and again ran the executable, this time didn't see any mention of the server process in dmesg. May be because it is using execve, to directly execute some other process.
 Digression : after compiling used strip command on the binary simplestHTTPServer to remove the symbols and reduce the file size from 5.6 MB to 5.2 MB.
+Digression : Command 'sudo lsof | grep simple' used to see open files.
+
+Next, we try to selectively block the syscalls of a process with a particular parent pid by hardcoding this pid.
+The definition of task_struct can be found in /usr/src/linux-headers-4.15.0-45/include/linux/sched.h
+In the definition, this was mentioned :
+/*
+         * Pointers to the (original) parent process, youngest child, younger sibling,
+         * older sibling, respectively.  (p->father can be replaced with
+         * p->real_parent->pid)
+         */
+
+        /* Real parent process: */
+        struct task_struct __rcu        *real_parent;
+
+        /* Recipient of SIGCHLD, wait4() reports: */
+        struct task_struct __rcu        *parent;
+
+Refer https://medium.com/hungys-blog/linux-kernel-process-99629d91423c , it says
+Real parent vs. parent
+The field parent in task_struct usually matches the process descriptor pointed by real_parent.
+real_parent: Points to the process descriptor of the process that created P or to the descriptor of process 1 (init) if the parent process no longer exists.
+parent: Points to the current parent of P (this is the process that must be signaled when the child process terminates, i.e. SIGCHLD). It may occasionally differ from real_parent in some cases, such as when another process issues a ptrace() system call requesting that it be allowed to monitor P.
+
+Tested by blocking open system for all processes that are children of bash by checking parent's (real_parent) pid.
+Commands like ls, dmesg were not running. The go server when built directly was not running and we saw that it was opening some library files .so outside its own folder. But, the go server (simplestHTTPServer) was running when built statically probably because it's not opening anything, just uses execve call.
+
+Week 8 :
+
+Next, we want to selectively log following network calls made by the static go server and python server when build from source at a location.
+read, write, socket, signal, accept, connect, exit, fork, bind, : socketcall and list : http://man7.org/linux/man-pages/man2/socketcall.2.html
+build python from source and in that location run : ./python -m http.server
+The parameters for some of the calls weren't available in syscalls.h so had to look it up, found the declarations in socket.h file, can be searched using __sys_socket, found in linux-4.19.102/include/linux/socket.h
+Digression : on cscoping __sys_accept4, found its definition in linux-.../net/socket.c and found that __sys_accept actually makes a call to __sys_accept4 itself by putting parameter for flags as 0.
+Digression : Note that declaration of __sys_sendmsg, __sys_sendmmsg and __sys_recvmsg in linux-.../include/linux/socket.h was different from sys_sendmsg, sys_sendmmsg and sys_recvmsg in /usr/src/linux-headers-4.15.0-45/include/linux/syscalls.h where all syscalls are given, they had an extra bool parameter and following comment :
+
+/* The __sys_...msg variants allow MSG_CMSG_COMPAT iff
+ * forbid_cmsg_compat==false
+ */
+extern long __sys_sendmsg(int fd, struct user_msghdr __user *msg, unsigned int flags, bool forbid_cmsg_compat);
+asmlinkage long sys_sendmsg(int fd, struct user_msghdr __user *msg, unsigned flags);
+
+While writing the custom calls I have followed the signatures of the ones mentioned in /usr/src/.../syscalls.h
+All the custom calls are defined in the order given in the list.
+Do the #ifdef check when doing for every system call
+Syscalls list for x86 is given here : http://asm.sourceforge.net/syscall.html
+
+Week 9 :
+
+Blocking all system calls available in file /usr/src/linux-headers-4.15.0-45/include/linux/syscalls.h
+
+Observation :
+There are a few syscalls based on the number of bits in the system. 
+There are many syscalls whose availability depends on if certain constants are defined which i think is for backward compatibility. 
+Many of the commands that we use have direct syscalls associated with them like rename, stat, etc.
+Don't know the use of sysquota32ctl, couldn't find it anywhere else using cscope.
+Max 6 params are allowed as visible from the #define MAP6 in the beginning of syscalls file.
+
+Template :
+
+asmlinkage long sys_close(unsigned int fd);
+
+#ifdef __NR_close
+static asmlinkage long custom_close(unsigned int fd)
+{
+    asmlinkage long (*org_close)(unsigned int fd);
+    if(current->real_parent->pid == 12970)
+    {
+    	printk(KERN_WARNING "ISOLATES:close,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
+    }
+    org_close = (asmlinkage long (*)(unsigned int fd)) org_sys_table[__NR_close];
+    return org_close(fd);
+}
+#endif
+
+Regex used in gedit :
+
+Matching syscalls : ^asmlinkage long sys_(\w+)\((.*)\);$
+Replacement       : #ifdef __NR_\1\nstatic asmlinkage long custom_\1(\2)\n{\n    asmlinkage long (*org_\1)(\2);\n    if(current->real_parent->pid == 12970)\n    {\n    	printk(KERN_WARNING "ISOLATES:\1,%s,%d,%d\\\\n", current->comm, current->pid, current->cred->uid.val);\n    }\n    org_\1 = (asmlinkage long (*)(\2)) org_sys_table[__NR_\1];\n}\n#endif\n
+Matching the entire line for replication and repetition : (org_\w+ = .*)
+Matching 0 param  : ^\s+org_(\w+) = \(asmlinkage long \(\*\)\(void\).*;$
+Replacement       : \0\n    return org_\1();
+Matching 1 param  : ^\s+org_(\w+) = \(asmlinkage long \(\*\)\([^,\n]* \*?(\w+)\).*;$
+Replacement       : \0\n    return org_\1(\2);
+The above trick might fail for next replacements when the parameter was already a single fd. Hence, for 2 params the following trick. Solved by removing return line altogether.
+Matching 2 params : ^\s+org_(\w+) = \(asmlinkage long \(\*\)\([^,\n]* \*?(\w+),[^,\n]* \*?(\w+)\).*;$
+Replacement       : \0\n    return org_\1(\2, \3);
+Matching 3 params : ^\s+org_(\w+) = \(asmlinkage long \(\*\)\([^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+)\).*;$
+Replacement       : \0\n    return org_\1(\2, \3, \4);
+Matching 4 params : ^\s+org_(\w+) = \(asmlinkage long \(\*\)\([^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+)\).*;$
+Replacement       : \0\n    return org_\1(\2, \3, \4, \5);
+Matching 5 params : ^\s+org_(\w+) = \(asmlinkage long \(\*\)\([^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+)\).*;$
+Replacement       : \0\n    return org_\1(\2, \3, \4, \5, \6);
+Matching 6 params : ^\s+org_(\w+) = \(asmlinkage long \(\*\)\([^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+)\).*;$
+Replacement       : \0\n    return org_\1(\2, \3, \4, \5, \6, \7);
+Just for checking, we will try with 7 parameters
+Matching 7 params : ^\s+org_(\w+) = \(asmlinkage long \(\*\)\([^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+),[^,\n]* \*?(\w+)\).*;$
+
+Added following to Makefile to remove unused functions warnings :
+EXTRA_CFLAGS := -Wno-unused-function
+For some functions couldn't find it in kernel code : got sigaction and rt_sigaction from https://linux.die.net/man/2/rt_sigaction, got uname from http://man7.org/linux/man-pages/man2/uname.2.html.
+Many such syscalls appearing in error were also present in file linux-.../include/linux/compat.h with prefix compat_, found using text string search like pselect6
+Functions like custom_sigaction, custom_send didn't show up in the errors even though the function wasn't written correctly still I wrote them correctly. Still many functions were left like custom_org_readdir. To not confuse org_old, need to change our prefix org_ to org_
+Found sys_clone in linux-.../arch/openrisc/include/asm/syscalls.h
+
+Regex used in gedit for init and exit modules:
+
+Matching syscalls : ^asmlinkage long sys_(\w+)\((.*)\);$
+Storing original  : #ifdef __NR_\1\n    org_sys_table[__NR_\1] = sys_call_table[__NR_\1];\n#endif
+Assigning custom  : #ifdef __NR_\1\n    sys_call_table[__NR_\1] = (sys_call_ptr_t)custom_\1;\n#endif
+Assigning org     : #ifdef __NR_\1\n    sys_call_table[__NR_\1] = org_sys_table[__NR_\1];\n#endif
+
+I was thinking that since we already had all the system calls available in linux/syscalls.h, why not directly call it but then we are not sure if they are the ones actually pointed in the system call table but with our method, we are guaranteed.
+
+Its not working : starts behaving mysteriously and hangs if doing something on terminal, and closes abruptly on rmmodding instantly
+
+Binary searching to find the errant syscalls :
+Commenting printk first to check if it works
+Matching  : printk.*
+Replacing : //\0\n\t\t;
