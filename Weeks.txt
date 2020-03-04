@@ -213,10 +213,12 @@ Commenting printk first to check if it works
 Matching  : printk.*
 Replacing : //\0\n\t\t;
 
-Rewriting the code by removing the predefined ifdefs from syscalls.h in reallops and using binary search to determine which syscalls are creating the problems.
+Rewriting the code by removing the predefined ifdefs from syscalls.h and using macros in reallops and using binary search to determine which syscalls are creating the problems.
 Macros : argument x :
 #x results in "x", stringifies x
 ##x results in x , means the argument supplied to x, helps in reading (x = open) _##x as _open instead of _x as _x
+Multiple words separated by space can be given as arguments example : #define a(x) x - 5 : a(5 + 5) resolves to 5 + 5 - 5
+Variable arguments can be given to macros, refer https://www.geeksforgeeks.org/variable-length-arguments-for-macros/
 gcc -E shows the expanded macros, remove the include files to avoid fatal error when library not found
 Regex for using macros :
 #define STOREORIG(x) old_sys_table[__NR_##x] = sys_call_table[__NR_##x];
@@ -230,3 +232,5 @@ Match   : sys_call_table\[__NR_(\w+)\] = old_sys_table.*;
 Replace : APPLYORIG(\1);
 
 Observation : The processes created inside a bash have UID of the parent process.
+
+Create an excel sheet syscalltoflag.csv with all the syscalls signatures and the conditions on the flags.
