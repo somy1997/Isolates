@@ -1,85 +1,85 @@
 Syscall,Flags
-asmlinkage long sys_time(time_t __user *tloc);,None
-asmlinkage long sys_stime(time_t __user *tptr);,None
+"asmlinkage long sys_time(time_t __user *tloc);",None
+"asmlinkage long sys_stime(time_t __user *tptr);",None
 "asmlinkage long sys_gettimeofday(struct timeval __user *tv, struct timezone __user *tz);",None
 "asmlinkage long sys_settimeofday(struct timeval __user *tv, struct timezone __user *tz);",None
-asmlinkage long sys_adjtimex(struct timex __user *txc_p);,None
-asmlinkage long sys_times(struct tms __user *tbuf);,None
-asmlinkage long sys_gettid(void);,None
+"asmlinkage long sys_adjtimex(struct timex __user *txc_p);",None
+"asmlinkage long sys_times(struct tms __user *tbuf);",None
+"asmlinkage long sys_gettid(void);",None
 "asmlinkage long sys_nanosleep(struct timespec __user *rqtp, struct timespec __user *rmtp);",None
-asmlinkage long sys_alarm(unsigned int seconds);,None
-asmlinkage long sys_getpid(void);,None
-asmlinkage long sys_getppid(void);,None
-asmlinkage long sys_getuid(void);,None
-asmlinkage long sys_geteuid(void);,None
-asmlinkage long sys_getgid(void);,None
-asmlinkage long sys_getegid(void);,None
+"asmlinkage long sys_alarm(unsigned int seconds);",None
+"asmlinkage long sys_getpid(void);",None
+"asmlinkage long sys_getppid(void);",None
+"asmlinkage long sys_getuid(void);",None
+"asmlinkage long sys_geteuid(void);",None
+"asmlinkage long sys_getgid(void);",None
+"asmlinkage long sys_getegid(void);",None
 "asmlinkage long sys_getresuid(uid_t __user *ruid, uid_t __user *euid, uid_t __user *suid);",None
 "asmlinkage long sys_getresgid(gid_t __user *rgid, gid_t __user *egid, gid_t __user *sgid);",None
-asmlinkage long sys_getpgid(pid_t pid);,None
-asmlinkage long sys_getpgrp(void);,None
-asmlinkage long sys_getsid(pid_t pid);,None
+"asmlinkage long sys_getpgid(pid_t pid);",None
+"asmlinkage long sys_getpgrp(void);",None
+"asmlinkage long sys_getsid(pid_t pid);",None
 "asmlinkage long sys_getgroups(int gidsetsize, gid_t __user *grouplist);",None
 "asmlinkage long sys_setregid(gid_t rgid, gid_t egid);",None
-asmlinkage long sys_setgid(gid_t gid);,None
+"asmlinkage long sys_setgid(gid_t gid);",None
 "asmlinkage long sys_setreuid(uid_t ruid, uid_t euid);",None
-asmlinkage long sys_setuid(uid_t uid);,None
+"asmlinkage long sys_setuid(uid_t uid);",None
 "asmlinkage long sys_setresuid(uid_t ruid, uid_t euid, uid_t suid);",None
 "asmlinkage long sys_setresgid(gid_t rgid, gid_t egid, gid_t sgid);",None
-asmlinkage long sys_setfsuid(uid_t uid);,None
-asmlinkage long sys_setfsgid(gid_t gid);,None
+"asmlinkage long sys_setfsuid(uid_t uid);",None
+"asmlinkage long sys_setfsgid(gid_t gid);",None
 "asmlinkage long sys_setpgid(pid_t pid, pid_t pgid);",None
-asmlinkage long sys_setsid(void);,None
+"asmlinkage long sys_setsid(void);",None
 "asmlinkage long sys_setgroups(int gidsetsize, gid_t __user *grouplist);",None
-asmlinkage long sys_acct(const char __user *name);,None
+"asmlinkage long sys_acct(const char __user *name);",None
 "asmlinkage long sys_capget(cap_user_header_t header, cap_user_data_t dataptr);",None
 "asmlinkage long sys_capset(cap_user_header_t header, const cap_user_data_t data);",None
-asmlinkage long sys_personality(unsigned int personality);,None
-asmlinkage long sys_sigpending(old_sigset_t __user *set);,None
+"asmlinkage long sys_personality(unsigned int personality);",None
+"asmlinkage long sys_sigpending(old_sigset_t __user *set);",None
 "asmlinkage long sys_sigprocmask(int how, old_sigset_t __user *set, old_sigset_t __user *oset);",None
 "asmlinkage long sys_sigaltstack(const struct sigaltstack __user *uss, struct sigaltstack __user *uoss);",None
 "asmlinkage long sys_getitimer(int which, struct itimerval __user *value);",None
 "asmlinkage long sys_setitimer(int which, struct itimerval __user *value, struct itimerval __user *ovalue);",None
 "asmlinkage long sys_timer_create(clockid_t which_clock, struct sigevent __user *timer_event_spec, timer_t __user * created_timer_id);",None
 "asmlinkage long sys_timer_gettime(timer_t timer_id, struct itimerspec __user *setting);",None
-asmlinkage long sys_timer_getoverrun(timer_t timer_id);,None
+"asmlinkage long sys_timer_getoverrun(timer_t timer_id);",None
 "asmlinkage long sys_timer_settime(timer_t timer_id, int flags, const struct itimerspec __user *new_setting, struct itimerspec __user *old_setting);",None
-asmlinkage long sys_timer_delete(timer_t timer_id);,None
+"asmlinkage long sys_timer_delete(timer_t timer_id);",None
 "asmlinkage long sys_clock_settime(clockid_t which_clock, const struct timespec __user *tp);",None
 "asmlinkage long sys_clock_gettime(clockid_t which_clock, struct timespec __user *tp);",None
 "asmlinkage long sys_clock_adjtime(clockid_t which_clock, struct timex __user *tx);",None
 "asmlinkage long sys_clock_getres(clockid_t which_clock, struct timespec __user *tp);",None
 "asmlinkage long sys_clock_nanosleep(clockid_t which_clock, int flags, const struct timespec __user *rqtp, struct timespec __user *rmtp);",None
-asmlinkage long sys_nice(int increment);,None
+"asmlinkage long sys_nice(int increment);",None
 "asmlinkage long sys_sched_setscheduler(pid_t pid, int policy, struct sched_param __user *param);",None
 "asmlinkage long sys_sched_setparam(pid_t pid, struct sched_param __user *param);",None
 "asmlinkage long sys_sched_setattr(pid_t pid, struct sched_attr __user *attr, unsigned int flags);",None
-asmlinkage long sys_sched_getscheduler(pid_t pid);,None
+"asmlinkage long sys_sched_getscheduler(pid_t pid);",None
 "asmlinkage long sys_sched_getparam(pid_t pid, struct sched_param __user *param);",None
 "asmlinkage long sys_sched_getattr(pid_t pid, struct sched_attr __user *attr, unsigned int size, unsigned int flags);",None
 "asmlinkage long sys_sched_setaffinity(pid_t pid, unsigned int len, unsigned long __user *user_mask_ptr);",None
 "asmlinkage long sys_sched_getaffinity(pid_t pid, unsigned int len, unsigned long __user *user_mask_ptr);",None
-asmlinkage long sys_sched_yield(void);,None
-asmlinkage long sys_sched_get_priority_max(int policy);,None
-asmlinkage long sys_sched_get_priority_min(int policy);,None
+"asmlinkage long sys_sched_yield(void);",None
+"asmlinkage long sys_sched_get_priority_max(int policy);",None
+"asmlinkage long sys_sched_get_priority_min(int policy);",None
 "asmlinkage long sys_sched_rr_get_interval(pid_t pid, struct timespec __user *interval);",None
 "asmlinkage long sys_setpriority(int which, int who, int niceval);",None
 "asmlinkage long sys_getpriority(int which, int who);",None
 "asmlinkage long sys_shutdown(int fd, int how);",None
 "asmlinkage long sys_reboot(int magic1, int magic2, unsigned int cmd, void __user *arg);",None
-asmlinkage long sys_restart_syscall(void);,None
+"asmlinkage long sys_restart_syscall(void);",None
 "asmlinkage long sys_kexec_load(unsigned long entry, unsigned long nr_segments, struct kexec_segment __user *segments, unsigned long flags);",None
 "asmlinkage long sys_kexec_file_load(int kernel_fd, int initrd_fd, unsigned long cmdline_len, const char __user *cmdline_ptr, unsigned long flags);",None
-asmlinkage long sys_exit(int error_code);,None
-asmlinkage long sys_exit_group(int error_code);,None
+"asmlinkage long sys_exit(int error_code);",None
+"asmlinkage long sys_exit_group(int error_code);",None
 "asmlinkage long sys_wait4(pid_t pid, int __user *stat_addr, int options, struct rusage __user *ru);",None
 "asmlinkage long sys_waitid(int which, pid_t pid, struct siginfo __user *infop, int options, struct rusage __user *ru);",None
 "asmlinkage long sys_waitpid(pid_t pid, int __user *stat_addr, int options);",None
-asmlinkage long sys_set_tid_address(int __user *tidptr);,None
+"asmlinkage long sys_set_tid_address(int __user *tidptr);",None
 "asmlinkage long sys_futex(u32 __user *uaddr, int op, u32 val, struct timespec __user *utime, u32 __user *uaddr2, u32 val3);",None
 "asmlinkage long sys_init_module(void __user *umod, unsigned long len, const char __user *uargs);",None
 "asmlinkage long sys_delete_module(const char __user *name_user, unsigned int flags);",None
-asmlinkage long sys_sigsuspend(old_sigset_t mask);,CONFIG_OLD_SIGSUSPEND
+"asmlinkage long sys_sigsuspend(old_sigset_t mask);",CONFIG_OLD_SIGSUSPEND
 "asmlinkage long sys_sigsuspend(int unused1, int unused2, old_sigset_t mask);",CONFIG_OLD_SIGSUSPEND3
 "asmlinkage long sys_rt_sigsuspend(sigset_t __user *unewset, size_t sigsetsize);",None
 "asmlinkage long sys_sigaction(int, const struct old_sigaction __user *, struct old_sigaction __user *);",CONFIG_OLD_SIGACTION
@@ -92,17 +92,17 @@ asmlinkage long sys_sigsuspend(old_sigset_t mask);,CONFIG_OLD_SIGSUSPEND
 "asmlinkage long sys_tgkill(pid_t tgid, pid_t pid, int sig);",None
 "asmlinkage long sys_tkill(pid_t pid, int sig);",None
 "asmlinkage long sys_rt_sigqueueinfo(pid_t pid, int sig, siginfo_t __user *uinfo);",None
-asmlinkage long sys_sgetmask(void);,None
-asmlinkage long sys_ssetmask(int newmask);,None
+"asmlinkage long sys_sgetmask(void);",None
+"asmlinkage long sys_ssetmask(int newmask);",None
 "asmlinkage long sys_signal(int sig, __sighandler_t handler);",None
-asmlinkage long sys_pause(void);,None
-asmlinkage long sys_sync(void);,None
-asmlinkage long sys_fsync(unsigned int fd);,None
-asmlinkage long sys_fdatasync(unsigned int fd);,None
+"asmlinkage long sys_pause(void);",None
+"asmlinkage long sys_sync(void);",None
+"asmlinkage long sys_fsync(unsigned int fd);",None
+"asmlinkage long sys_fdatasync(unsigned int fd);",None
 "asmlinkage long sys_bdflush(int func, long data);",None
 "asmlinkage long sys_mount(char __user *dev_name, char __user *dir_name, char __user *type, unsigned long flags, void __user *data);",None
 "asmlinkage long sys_umount(char __user *name, int flags);",None
-asmlinkage long sys_oldumount(char __user *name);,None
+"asmlinkage long sys_oldumount(char __user *name);",None
 "asmlinkage long sys_truncate(const char __user *path, long length);",None
 "asmlinkage long sys_ftruncate(unsigned int fd, unsigned long length);",None
 "asmlinkage long sys_stat(const char __user *filename, struct __old_kernel_stat __user *statbuf);",None
@@ -134,7 +134,7 @@ asmlinkage long sys_oldumount(char __user *name);,None
 "asmlinkage long sys_removexattr(const char __user *path, const char __user *name);",None
 "asmlinkage long sys_lremovexattr(const char __user *path, const char __user *name);",None
 "asmlinkage long sys_fremovexattr(int fd, const char __user *name);",None
-asmlinkage long sys_brk(unsigned long brk);,None
+"asmlinkage long sys_brk(unsigned long brk);",None
 "asmlinkage long sys_mprotect(unsigned long start, size_t len, unsigned long prot);",None
 "asmlinkage long sys_mremap(unsigned long addr, unsigned long old_len, unsigned long new_len, unsigned long flags, unsigned long new_addr);",None
 "asmlinkage long sys_remap_file_pages(unsigned long start, unsigned long size, unsigned long prot, unsigned long pgoff, unsigned long flags);",None
@@ -144,31 +144,31 @@ asmlinkage long sys_brk(unsigned long brk);,None
 "asmlinkage long sys_munmap(unsigned long addr, size_t len);",None
 "asmlinkage long sys_mlock(unsigned long start, size_t len);",None
 "asmlinkage long sys_munlock(unsigned long start, size_t len);",None
-asmlinkage long sys_mlockall(int flags);,None
-asmlinkage long sys_munlockall(void);,None
+"asmlinkage long sys_mlockall(int flags);",None
+"asmlinkage long sys_munlockall(void);",None
 "asmlinkage long sys_madvise(unsigned long start, size_t len, int behavior);",None
 "asmlinkage long sys_mincore(unsigned long start, size_t len, unsigned char __user * vec);",None
 "asmlinkage long sys_pivot_root(const char __user *new_root, const char __user *put_old);",None
-asmlinkage long sys_chroot(const char __user *filename);,None
+"asmlinkage long sys_chroot(const char __user *filename);",None
 "asmlinkage long sys_mknod(const char __user *filename, umode_t mode, unsigned dev);",None
 "asmlinkage long sys_link(const char __user *oldname, const char __user *newname);",None
 "asmlinkage long sys_symlink(const char __user *old, const char __user *new);",None
-asmlinkage long sys_unlink(const char __user *pathname);,None
+"asmlinkage long sys_unlink(const char __user *pathname);",None
 "asmlinkage long sys_rename(const char __user *oldname, const char __user *newname);",None
 "asmlinkage long sys_chmod(const char __user *filename, umode_t mode);",None
 "asmlinkage long sys_fchmod(unsigned int fd, umode_t mode);",None
 "asmlinkage long sys_fcntl(unsigned int fd, unsigned int cmd, unsigned long arg);",None
 "asmlinkage long sys_fcntl64(unsigned int fd, unsigned int cmd, unsigned long arg);",BITS_PER_LONG == 32
-asmlinkage long sys_pipe(int __user *fildes);,None
+"asmlinkage long sys_pipe(int __user *fildes);",None
 "asmlinkage long sys_pipe2(int __user *fildes, int flags);",None
-asmlinkage long sys_dup(unsigned int fildes);,None
+"asmlinkage long sys_dup(unsigned int fildes);",None
 "asmlinkage long sys_dup2(unsigned int oldfd, unsigned int newfd);",None
 "asmlinkage long sys_dup3(unsigned int oldfd, unsigned int newfd, int flags);",None
 "asmlinkage long sys_ioperm(unsigned long from, unsigned long num, int on);",None
 "asmlinkage long sys_ioctl(unsigned int fd, unsigned int cmd, unsigned long arg);",None
 "asmlinkage long sys_flock(unsigned int fd, unsigned int cmd);",None
 "asmlinkage long sys_io_setup(unsigned nr_reqs, aio_context_t __user *ctx);",None
-asmlinkage long sys_io_destroy(aio_context_t ctx);,None
+"asmlinkage long sys_io_destroy(aio_context_t ctx);",None
 "asmlinkage long sys_io_getevents(aio_context_t ctx_id, long min_nr, long nr, struct io_event __user *events, struct timespec __user *timeout);",None
 "asmlinkage long sys_io_submit(aio_context_t ctx_id, long nr, struct iocb __user * __user *uiocbpp);",None
 "asmlinkage long sys_io_cancel(aio_context_t ctx_id, struct iocb __user *iocb, struct io_event __user *result);",None
@@ -177,9 +177,9 @@ asmlinkage long sys_io_destroy(aio_context_t ctx);,None
 "asmlinkage long sys_readlink(const char __user *path, char __user *buf, int bufsiz);",None
 "asmlinkage long sys_creat(const char __user *pathname, umode_t mode);",None
 "asmlinkage long sys_open(const char __user *filename, int flags, umode_t mode);",None
-asmlinkage long sys_close(unsigned int fd);,None
+"asmlinkage long sys_close(unsigned int fd);",None
 "asmlinkage long sys_access(const char __user *filename, int mode);",None
-asmlinkage long sys_vhangup(void);,None
+"asmlinkage long sys_vhangup(void);",None
 "asmlinkage long sys_chown(const char __user *filename, uid_t user, gid_t group);",None
 "asmlinkage long sys_lchown(const char __user *filename, uid_t user, gid_t group);",None
 "asmlinkage long sys_fchown(unsigned int fd, uid_t user, gid_t group);",None
@@ -187,21 +187,21 @@ asmlinkage long sys_vhangup(void);,None
 "asmlinkage long sys_lchown16(const char __user *filename, old_uid_t user, old_gid_t group);",CONFIG_HAVE_UID16
 "asmlinkage long sys_fchown16(unsigned int fd, old_uid_t user, old_gid_t group);",CONFIG_HAVE_UID16
 "asmlinkage long sys_setregid16(old_gid_t rgid, old_gid_t egid);",CONFIG_HAVE_UID16
-asmlinkage long sys_setgid16(old_gid_t gid);,CONFIG_HAVE_UID16
+"asmlinkage long sys_setgid16(old_gid_t gid);",CONFIG_HAVE_UID16
 "asmlinkage long sys_setreuid16(old_uid_t ruid, old_uid_t euid);",CONFIG_HAVE_UID16
-asmlinkage long sys_setuid16(old_uid_t uid);,CONFIG_HAVE_UID16
+"asmlinkage long sys_setuid16(old_uid_t uid);",CONFIG_HAVE_UID16
 "asmlinkage long sys_setresuid16(old_uid_t ruid, old_uid_t euid, old_uid_t suid);",CONFIG_HAVE_UID16
 "asmlinkage long sys_getresuid16(old_uid_t __user *ruid, old_uid_t __user *euid, old_uid_t __user *suid);",CONFIG_HAVE_UID16
 "asmlinkage long sys_setresgid16(old_gid_t rgid, old_gid_t egid, old_gid_t sgid);",CONFIG_HAVE_UID16
 "asmlinkage long sys_getresgid16(old_gid_t __user *rgid, old_gid_t __user *egid, old_gid_t __user *sgid);",CONFIG_HAVE_UID16
-asmlinkage long sys_setfsuid16(old_uid_t uid);,CONFIG_HAVE_UID16
-asmlinkage long sys_setfsgid16(old_gid_t gid);,CONFIG_HAVE_UID16
+"asmlinkage long sys_setfsuid16(old_uid_t uid);",CONFIG_HAVE_UID16
+"asmlinkage long sys_setfsgid16(old_gid_t gid);",CONFIG_HAVE_UID16
 "asmlinkage long sys_getgroups16(int gidsetsize, old_gid_t __user *grouplist);",CONFIG_HAVE_UID16
 "asmlinkage long sys_setgroups16(int gidsetsize, old_gid_t __user *grouplist);",CONFIG_HAVE_UID16
-asmlinkage long sys_getuid16(void);,CONFIG_HAVE_UID16
-asmlinkage long sys_geteuid16(void);,CONFIG_HAVE_UID16
-asmlinkage long sys_getgid16(void);,CONFIG_HAVE_UID16
-asmlinkage long sys_getegid16(void);,CONFIG_HAVE_UID16
+"asmlinkage long sys_getuid16(void);",CONFIG_HAVE_UID16
+"asmlinkage long sys_geteuid16(void);",CONFIG_HAVE_UID16
+"asmlinkage long sys_getgid16(void);",CONFIG_HAVE_UID16
+"asmlinkage long sys_getegid16(void);",CONFIG_HAVE_UID16
 "asmlinkage long sys_utime(char __user *filename, struct utimbuf __user *times);",None
 "asmlinkage long sys_utimes(char __user *filename, struct timeval __user *utimes);",None
 "asmlinkage long sys_lseek(unsigned int fd, off_t offset, unsigned int whence);",None
@@ -219,9 +219,9 @@ asmlinkage long sys_getegid16(void);,CONFIG_HAVE_UID16
 "asmlinkage long sys_pwritev2(unsigned long fd, const struct iovec __user *vec, unsigned long vlen, unsigned long pos_l, unsigned long pos_h, rwf_t flags);",None
 "asmlinkage long sys_getcwd(char __user *buf, unsigned long size);",None
 "asmlinkage long sys_mkdir(const char __user *pathname, umode_t mode);",None
-asmlinkage long sys_chdir(const char __user *filename);,None
-asmlinkage long sys_fchdir(unsigned int fd);,None
-asmlinkage long sys_rmdir(const char __user *pathname);,None
+"asmlinkage long sys_chdir(const char __user *filename);",None
+"asmlinkage long sys_fchdir(unsigned int fd);",None
+"asmlinkage long sys_rmdir(const char __user *pathname);",None
 "asmlinkage long sys_lookup_dcookie(u64 cookie64, char __user *buf, size_t len);",None
 "asmlinkage long sys_quotactl(unsigned int cmd, const char __user *special, qid_t id, void __user *addr);",None
 "asmlinkage long sys_getdents(unsigned int fd, struct linux_dirent __user *dirent, unsigned int count);",None
@@ -248,24 +248,24 @@ asmlinkage long sys_rmdir(const char __user *pathname);,None
 "asmlinkage long sys_listen(int fd, int backlog);",None
 "asmlinkage long sys_poll(struct pollfd __user *ufds, unsigned int nfds, int timeout);",None
 "asmlinkage long sys_select(int n, fd_set __user *inp, fd_set __user *outp, fd_set __user *exp, struct timeval __user *tvp);",None
-asmlinkage long sys_old_select(struct sel_arg_struct __user *arg);,None
-asmlinkage long sys_epoll_create(int size);,None
-asmlinkage long sys_epoll_create1(int flags);,None
+"asmlinkage long sys_old_select(struct sel_arg_struct __user *arg);",None
+"asmlinkage long sys_epoll_create(int size);",None
+"asmlinkage long sys_epoll_create1(int flags);",None
 "asmlinkage long sys_epoll_ctl(int epfd, int op, int fd, struct epoll_event __user *event);",None
 "asmlinkage long sys_epoll_wait(int epfd, struct epoll_event __user *events, int maxevents, int timeout);",None
 "asmlinkage long sys_epoll_pwait(int epfd, struct epoll_event __user *events, int maxevents, int timeout, const sigset_t __user *sigmask, size_t sigsetsize);",None
 "asmlinkage long sys_gethostname(char __user *name, int len);",None
 "asmlinkage long sys_sethostname(char __user *name, int len);",None
 "asmlinkage long sys_setdomainname(char __user *name, int len);",None
-asmlinkage long sys_newuname(struct new_utsname __user *name);,None
-asmlinkage long sys_uname(struct old_utsname __user *ubuf);,None
-asmlinkage long sys_olduname(struct oldold_utsname __user *);,None
+"asmlinkage long sys_newuname(struct new_utsname __user *name);",None
+"asmlinkage long sys_uname(struct old_utsname __user *ubuf);",None
+"asmlinkage long sys_olduname(struct oldold_utsname __user *);",None
 "asmlinkage long sys_getrlimit(unsigned int resource, struct rlimit __user *rlim);",None
 "asmlinkage long sys_old_getrlimit(unsigned int resource, struct rlimit __user *rlim);",__ARCH_WANT_SYS_OLD_GETRLIMIT
 "asmlinkage long sys_setrlimit(unsigned int resource, struct rlimit __user *rlim);",None
 "asmlinkage long sys_prlimit64(pid_t pid, unsigned int resource, const struct rlimit64 __user *new_rlim, struct rlimit64 __user *old_rlim);",None
 "asmlinkage long sys_getrusage(int who, struct rusage __user *ru);",None
-asmlinkage long sys_umask(int mask);,None
+"asmlinkage long sys_umask(int mask);",None
 "asmlinkage long sys_msgget(key_t key, int msgflg);",None
 "asmlinkage long sys_msgsnd(int msqid, struct msgbuf __user *msgp, size_t msgsz, int msgflg);",None
 "asmlinkage long sys_msgrcv(int msqid, struct msgbuf __user *msgp, size_t msgsz, long msgtyp, int msgflg);",None
@@ -276,11 +276,11 @@ asmlinkage long sys_umask(int mask);,None
 "asmlinkage long sys_semtimedop(int semid, struct sembuf __user *sops, unsigned nsops, const struct timespec __user *timeout);",None
 "asmlinkage long sys_shmat(int shmid, char __user *shmaddr, int shmflg);",None
 "asmlinkage long sys_shmget(key_t key, size_t size, int flag);",None
-asmlinkage long sys_shmdt(char __user *shmaddr);,None
+"asmlinkage long sys_shmdt(char __user *shmaddr);",None
 "asmlinkage long sys_shmctl(int shmid, int cmd, struct shmid_ds __user *buf);",None
 "asmlinkage long sys_ipc(unsigned int call, int first, unsigned long second, unsigned long third, void __user *ptr, long fifth);",None
 "asmlinkage long sys_mq_open(const char __user *name, int oflag, umode_t mode, struct mq_attr __user *attr);",None
-asmlinkage long sys_mq_unlink(const char __user *name);,None
+"asmlinkage long sys_mq_unlink(const char __user *name);",None
 "asmlinkage long sys_mq_timedsend(mqd_t mqdes, const char __user *msg_ptr, size_t msg_len, unsigned int msg_prio, const struct timespec __user *abs_timeout);",None
 "asmlinkage long sys_mq_timedreceive(mqd_t mqdes, char __user *msg_ptr, size_t msg_len, unsigned int __user *msg_prio, const struct timespec __user *abs_timeout);",None
 "asmlinkage long sys_mq_notify(mqd_t mqdes, const struct sigevent __user *notification);",None
@@ -290,13 +290,13 @@ asmlinkage long sys_mq_unlink(const char __user *name);,None
 "asmlinkage long sys_pciconfig_write(unsigned long bus, unsigned long dfn, unsigned long off, unsigned long len, void __user *buf);",None
 "asmlinkage long sys_prctl(int option, unsigned long arg2, unsigned long arg3, unsigned long arg4, unsigned long arg5);",None
 "asmlinkage long sys_swapon(const char __user *specialfile, int swap_flags);",None
-asmlinkage long sys_swapoff(const char __user *specialfile);,None
-asmlinkage long sys_sysctl(struct __sysctl_args __user *args);,None
-asmlinkage long sys_sysinfo(struct sysinfo __user *info);,None
+"asmlinkage long sys_swapoff(const char __user *specialfile);",None
+"asmlinkage long sys_sysctl(struct __sysctl_args __user *args);",None
+"asmlinkage long sys_sysinfo(struct sysinfo __user *info);",None
 "asmlinkage long sys_sysfs(int option, unsigned long arg1, unsigned long arg2);",None
 "asmlinkage long sys_syslog(int type, char __user *buf, int len);",None
-asmlinkage long sys_uselib(const char __user *library);,None
-asmlinkage long sys_ni_syscall(void);,None
+"asmlinkage long sys_uselib(const char __user *library);",None
+"asmlinkage long sys_ni_syscall(void);",None
 "asmlinkage long sys_ptrace(long request, long pid, unsigned long addr, unsigned long data);",None
 "asmlinkage long sys_add_key(const char __user *_type, const char __user *_description, const void __user *_payload, size_t plen, key_serial_t destringid);",None
 "asmlinkage long sys_request_key(const char __user *_type, const char __user *_description, const char __user *_callout_info, key_serial_t destringid);",None
@@ -308,8 +308,8 @@ asmlinkage long sys_ni_syscall(void);,None
 "asmlinkage long sys_move_pages(pid_t pid, unsigned long nr_pages, const void __user * __user *pages, const int __user *nodes, int __user *status, int flags);",None
 "asmlinkage long sys_mbind(unsigned long start, unsigned long len, unsigned long mode, const unsigned long __user *nmask, unsigned long maxnode, unsigned flags);",None
 "asmlinkage long sys_get_mempolicy(int __user *policy, unsigned long __user *nmask, unsigned long maxnode, unsigned long addr, unsigned long flags);",None
-asmlinkage long sys_inotify_init(void);,None
-asmlinkage long sys_inotify_init1(int flags);,None
+"asmlinkage long sys_inotify_init(void);",None
+"asmlinkage long sys_inotify_init1(int flags);",None
 "asmlinkage long sys_inotify_add_watch(int fd, const char __user *path, u32 mask);",None
 "asmlinkage long sys_inotify_rm_watch(int fd, __s32 wd);",None
 "asmlinkage long sys_spu_run(int fd, __u32 __user *unpc, __u32 __user *ustatus);",None
@@ -329,7 +329,7 @@ asmlinkage long sys_inotify_init1(int flags);,None
 "asmlinkage long sys_newfstatat(int dfd, const char __user *filename, struct stat __user *statbuf, int flag);",None
 "asmlinkage long sys_readlinkat(int dfd, const char __user *path, char __user *buf, int bufsiz);",None
 "asmlinkage long sys_utimensat(int dfd, const char __user *filename, struct timespec __user *utimes, int flags);",None
-asmlinkage long sys_unshare(unsigned long unshare_flags);,None
+"asmlinkage long sys_unshare(unsigned long unshare_flags);",None
 "asmlinkage long sys_splice(int fd_in, loff_t __user *off_in, int fd_out, loff_t __user *off_out, size_t len, unsigned int flags);",None
 "asmlinkage long sys_vmsplice(int fd, const struct iovec __user *iov, unsigned long nr_segs, unsigned int flags);",None
 "asmlinkage long sys_tee(int fdin, int fdout, size_t len, unsigned int flags);",None
@@ -343,26 +343,26 @@ asmlinkage long sys_unshare(unsigned long unshare_flags);,None
 "asmlinkage long sys_timerfd_create(int clockid, int flags);",None
 "asmlinkage long sys_timerfd_settime(int ufd, int flags, const struct itimerspec __user *utmr, struct itimerspec __user *otmr);",None
 "asmlinkage long sys_timerfd_gettime(int ufd, struct itimerspec __user *otmr);",None
-asmlinkage long sys_eventfd(unsigned int count);,None
+"asmlinkage long sys_eventfd(unsigned int count);",None
 "asmlinkage long sys_eventfd2(unsigned int count, int flags);",None
 "asmlinkage long sys_memfd_create(const char __user *uname_ptr, unsigned int flags);",None
-asmlinkage long sys_userfaultfd(int flags);,None
+"asmlinkage long sys_userfaultfd(int flags);",None
 "asmlinkage long sys_fallocate(int fd, int mode, loff_t offset, loff_t len);",None
 "asmlinkage long sys_old_readdir(unsigned int, struct old_linux_dirent __user *, unsigned int);",None
 "asmlinkage long sys_pselect6(int n, fd_set __user *inp, fd_set __user *outp, fd_set __user *exp, struct timespec __user *tsp, void __user *sig);",None
 "asmlinkage long sys_ppoll(struct pollfd __user *ufds, unsigned int nfds, struct timespec __user *tsp, const sigset_t __user *sigmask, size_t sigsetsize);",None
 "asmlinkage long sys_fanotify_init(unsigned int flags, unsigned int event_f_flags);",None
 "asmlinkage long sys_fanotify_mark(int fanotify_fd, unsigned int flags, u64 mask, int fd, const char  __user *pathname);",None
-asmlinkage long sys_syncfs(int fd);,None
-asmlinkage long sys_fork(void);,None
-asmlinkage long sys_vfork(void);,None
+"asmlinkage long sys_syncfs(int fd);",None
+"asmlinkage long sys_fork(void);",None
+"asmlinkage long sys_vfork(void);",None
 "asmlinkage long sys_clone(unsigned long, unsigned long, int __user *, unsigned long, int __user *);",CONFIG_CLONE_BACKWARDS
-"asmlinkage long sys_clone(unsigned long, unsigned long, int, int __user *, int __user *, unsigned long);",CONFIG_CLONE_BACKWARDS3 && ~CONFIG_CLONE_BACKWARDS
-"asmlinkage long sys_clone(unsigned long clone_flags, unsigned long newsp, int __user *parent_tid, int __user *child_tid, unsigned long tls);",None
+"asmlinkage long sys_clone(unsigned long, unsigned long, int, int __user *, int __user *, unsigned long);",~CONFIG_CLONE_BACKWARDS && CONFIG_CLONE_BACKWARDS3
+"asmlinkage long sys_clone(unsigned long clone_flags, unsigned long newsp, int __user *parent_tid, int __user *child_tid, unsigned long tls);",~CONFIG_CLONE_BACKWARDS && ~CONFIG_CLONE_BACKWARDS3
 "asmlinkage long sys_execve(const char __user *filename, const char __user *const __user *argv, const char __user *const __user *envp);",None
 "asmlinkage long sys_perf_event_open(struct perf_event_attr __user *attr_uptr, pid_t pid, int cpu, int group_fd, unsigned long flags);",None
 "asmlinkage long sys_mmap_pgoff(unsigned long addr, unsigned long len, unsigned long prot, unsigned long flags, unsigned long fd, unsigned long pgoff);",None
-asmlinkage long sys_old_mmap(struct mmap_arg_struct __user *arg);,None
+"asmlinkage long sys_old_mmap(struct mmap_arg_struct __user *arg);",None
 "asmlinkage long sys_name_to_handle_at(int dfd, const char __user *name, struct file_handle __user *handle, int __user *mnt_id, int flag);",None
 "asmlinkage long sys_open_by_handle_at(int mountdirfd, struct file_handle __user *handle, int flags);",None
 "asmlinkage long sys_setns(int fd, int nstype);",None
@@ -379,5 +379,5 @@ asmlinkage long sys_old_mmap(struct mmap_arg_struct __user *arg);,None
 "asmlinkage long sys_mlock2(unsigned long start, size_t len, int flags);",None
 "asmlinkage long sys_pkey_mprotect(unsigned long start, size_t len, unsigned long prot, int pkey);",None
 "asmlinkage long sys_pkey_alloc(unsigned long flags, unsigned long init_val);",None
-asmlinkage long sys_pkey_free(int pkey);,None
+"asmlinkage long sys_pkey_free(int pkey);",None
 "asmlinkage long sys_statx(int dfd, const char __user *path, unsigned flags, unsigned mask, struct statx __user *buffer);",None
