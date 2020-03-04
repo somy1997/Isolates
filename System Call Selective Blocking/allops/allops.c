@@ -25,6 +25,8 @@
 #include <trace/syscall.h>
 */
 
+#define PARENTID 19284
+
 MODULE_LICENSE("GPL");
 
 char *sym_name = "sys_call_table";
@@ -37,7 +39,7 @@ static sys_call_ptr_t org_sys_table[2048];
 static asmlinkage long custom_time(time_t __user *tloc)
 {
     asmlinkage long (*org_time)(time_t __user *tloc);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:time,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -50,7 +52,7 @@ static asmlinkage long custom_time(time_t __user *tloc)
 static asmlinkage long custom_stime(time_t __user *tptr)
 {
     asmlinkage long (*org_stime)(time_t __user *tptr);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:stime,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -63,7 +65,7 @@ static asmlinkage long custom_stime(time_t __user *tptr)
 static asmlinkage long custom_gettimeofday(struct timeval __user *tv, struct timezone __user *tz)
 {
     asmlinkage long (*org_gettimeofday)(struct timeval __user *tv, struct timezone __user *tz);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:gettimeofday,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -76,7 +78,7 @@ static asmlinkage long custom_gettimeofday(struct timeval __user *tv, struct tim
 static asmlinkage long custom_settimeofday(struct timeval __user *tv, struct timezone __user *tz)
 {
     asmlinkage long (*org_settimeofday)(struct timeval __user *tv, struct timezone __user *tz);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:settimeofday,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -89,7 +91,7 @@ static asmlinkage long custom_settimeofday(struct timeval __user *tv, struct tim
 static asmlinkage long custom_adjtimex(struct timex __user *txc_p)
 {
     asmlinkage long (*org_adjtimex)(struct timex __user *txc_p);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:adjtimex,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -103,7 +105,7 @@ static asmlinkage long custom_adjtimex(struct timex __user *txc_p)
 static asmlinkage long custom_times(struct tms __user *tbuf)
 {
     asmlinkage long (*org_times)(struct tms __user *tbuf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:times,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -117,7 +119,7 @@ static asmlinkage long custom_times(struct tms __user *tbuf)
 static asmlinkage long custom_gettid(void)
 {
     asmlinkage long (*org_gettid)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:gettid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -130,7 +132,7 @@ static asmlinkage long custom_gettid(void)
 static asmlinkage long custom_nanosleep(struct timespec __user *rqtp, struct timespec __user *rmtp)
 {
     asmlinkage long (*org_nanosleep)(struct timespec __user *rqtp, struct timespec __user *rmtp);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:nanosleep,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -143,7 +145,7 @@ static asmlinkage long custom_nanosleep(struct timespec __user *rqtp, struct tim
 static asmlinkage long custom_alarm(unsigned int seconds)
 {
     asmlinkage long (*org_alarm)(unsigned int seconds);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:alarm,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -156,7 +158,7 @@ static asmlinkage long custom_alarm(unsigned int seconds)
 static asmlinkage long custom_getpid(void)
 {
     asmlinkage long (*org_getpid)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getpid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -169,7 +171,7 @@ static asmlinkage long custom_getpid(void)
 static asmlinkage long custom_getppid(void)
 {
     asmlinkage long (*org_getppid)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getppid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -182,7 +184,7 @@ static asmlinkage long custom_getppid(void)
 static asmlinkage long custom_getuid(void)
 {
     asmlinkage long (*org_getuid)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getuid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -195,7 +197,7 @@ static asmlinkage long custom_getuid(void)
 static asmlinkage long custom_geteuid(void)
 {
     asmlinkage long (*org_geteuid)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:geteuid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -208,7 +210,7 @@ static asmlinkage long custom_geteuid(void)
 static asmlinkage long custom_getgid(void)
 {
     asmlinkage long (*org_getgid)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getgid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -221,7 +223,7 @@ static asmlinkage long custom_getgid(void)
 static asmlinkage long custom_getegid(void)
 {
     asmlinkage long (*org_getegid)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getegid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -234,7 +236,7 @@ static asmlinkage long custom_getegid(void)
 static asmlinkage long custom_getresuid(uid_t __user *ruid, uid_t __user *euid, uid_t __user *suid)
 {
     asmlinkage long (*org_getresuid)(uid_t __user *ruid, uid_t __user *euid, uid_t __user *suid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getresuid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -247,7 +249,7 @@ static asmlinkage long custom_getresuid(uid_t __user *ruid, uid_t __user *euid, 
 static asmlinkage long custom_getresgid(gid_t __user *rgid, gid_t __user *egid, gid_t __user *sgid)
 {
     asmlinkage long (*org_getresgid)(gid_t __user *rgid, gid_t __user *egid, gid_t __user *sgid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getresgid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -260,7 +262,7 @@ static asmlinkage long custom_getresgid(gid_t __user *rgid, gid_t __user *egid, 
 static asmlinkage long custom_getpgid(pid_t pid)
 {
     asmlinkage long (*org_getpgid)(pid_t pid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getpgid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -273,7 +275,7 @@ static asmlinkage long custom_getpgid(pid_t pid)
 static asmlinkage long custom_getpgrp(void)
 {
     asmlinkage long (*org_getpgrp)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getpgrp,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -286,7 +288,7 @@ static asmlinkage long custom_getpgrp(void)
 static asmlinkage long custom_getsid(pid_t pid)
 {
     asmlinkage long (*org_getsid)(pid_t pid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getsid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -299,7 +301,7 @@ static asmlinkage long custom_getsid(pid_t pid)
 static asmlinkage long custom_getgroups(int gidsetsize, gid_t __user *grouplist)
 {
     asmlinkage long (*org_getgroups)(int gidsetsize, gid_t __user *grouplist);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getgroups,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -313,7 +315,7 @@ static asmlinkage long custom_getgroups(int gidsetsize, gid_t __user *grouplist)
 static asmlinkage long custom_setregid(gid_t rgid, gid_t egid)
 {
     asmlinkage long (*org_setregid)(gid_t rgid, gid_t egid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setregid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -326,7 +328,7 @@ static asmlinkage long custom_setregid(gid_t rgid, gid_t egid)
 static asmlinkage long custom_setgid(gid_t gid)
 {
     asmlinkage long (*org_setgid)(gid_t gid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setgid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -339,7 +341,7 @@ static asmlinkage long custom_setgid(gid_t gid)
 static asmlinkage long custom_setreuid(uid_t ruid, uid_t euid)
 {
     asmlinkage long (*org_setreuid)(uid_t ruid, uid_t euid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setreuid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -352,7 +354,7 @@ static asmlinkage long custom_setreuid(uid_t ruid, uid_t euid)
 static asmlinkage long custom_setuid(uid_t uid)
 {
     asmlinkage long (*org_setuid)(uid_t uid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setuid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -365,7 +367,7 @@ static asmlinkage long custom_setuid(uid_t uid)
 static asmlinkage long custom_setresuid(uid_t ruid, uid_t euid, uid_t suid)
 {
     asmlinkage long (*org_setresuid)(uid_t ruid, uid_t euid, uid_t suid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setresuid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -378,7 +380,7 @@ static asmlinkage long custom_setresuid(uid_t ruid, uid_t euid, uid_t suid)
 static asmlinkage long custom_setresgid(gid_t rgid, gid_t egid, gid_t sgid)
 {
     asmlinkage long (*org_setresgid)(gid_t rgid, gid_t egid, gid_t sgid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setresgid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -391,7 +393,7 @@ static asmlinkage long custom_setresgid(gid_t rgid, gid_t egid, gid_t sgid)
 static asmlinkage long custom_setfsuid(uid_t uid)
 {
     asmlinkage long (*org_setfsuid)(uid_t uid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setfsuid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -404,7 +406,7 @@ static asmlinkage long custom_setfsuid(uid_t uid)
 static asmlinkage long custom_setfsgid(gid_t gid)
 {
     asmlinkage long (*org_setfsgid)(gid_t gid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setfsgid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -417,7 +419,7 @@ static asmlinkage long custom_setfsgid(gid_t gid)
 static asmlinkage long custom_setpgid(pid_t pid, pid_t pgid)
 {
     asmlinkage long (*org_setpgid)(pid_t pid, pid_t pgid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setpgid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -430,7 +432,7 @@ static asmlinkage long custom_setpgid(pid_t pid, pid_t pgid)
 static asmlinkage long custom_setsid(void)
 {
     asmlinkage long (*org_setsid)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setsid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -443,7 +445,7 @@ static asmlinkage long custom_setsid(void)
 static asmlinkage long custom_setgroups(int gidsetsize, gid_t __user *grouplist)
 {
     asmlinkage long (*org_setgroups)(int gidsetsize, gid_t __user *grouplist);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setgroups,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -457,7 +459,7 @@ static asmlinkage long custom_setgroups(int gidsetsize, gid_t __user *grouplist)
 static asmlinkage long custom_acct(const char __user *name)
 {
     asmlinkage long (*org_acct)(const char __user *name);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:acct,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -470,7 +472,7 @@ static asmlinkage long custom_acct(const char __user *name)
 static asmlinkage long custom_capget(cap_user_header_t header, cap_user_data_t dataptr)
 {
     asmlinkage long (*org_capget)(cap_user_header_t header, cap_user_data_t dataptr);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:capget,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -483,7 +485,7 @@ static asmlinkage long custom_capget(cap_user_header_t header, cap_user_data_t d
 static asmlinkage long custom_capset(cap_user_header_t header, const cap_user_data_t data)
 {
     asmlinkage long (*org_capset)(cap_user_header_t header, const cap_user_data_t data);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:capset,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -496,7 +498,7 @@ static asmlinkage long custom_capset(cap_user_header_t header, const cap_user_da
 static asmlinkage long custom_personality(unsigned int personality)
 {
     asmlinkage long (*org_personality)(unsigned int personality);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:personality,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -510,7 +512,7 @@ static asmlinkage long custom_personality(unsigned int personality)
 static asmlinkage long custom_sigpending(old_sigset_t __user *set)
 {
     asmlinkage long (*org_sigpending)(old_sigset_t __user *set);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sigpending,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -523,7 +525,7 @@ static asmlinkage long custom_sigpending(old_sigset_t __user *set)
 static asmlinkage long custom_sigprocmask(int how, old_sigset_t __user *set, old_sigset_t __user *oset)
 {
     asmlinkage long (*org_sigprocmask)(int how, old_sigset_t __user *set, old_sigset_t __user *oset);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sigprocmask,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -536,7 +538,7 @@ static asmlinkage long custom_sigprocmask(int how, old_sigset_t __user *set, old
 static asmlinkage long custom_sigaltstack(const struct sigaltstack __user *uss, struct sigaltstack __user *uoss)
 {
     asmlinkage long (*org_sigaltstack)(const struct sigaltstack __user *uss, struct sigaltstack __user *uoss);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sigaltstack,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -550,7 +552,7 @@ static asmlinkage long custom_sigaltstack(const struct sigaltstack __user *uss, 
 static asmlinkage long custom_getitimer(int which, struct itimerval __user *value)
 {
     asmlinkage long (*org_getitimer)(int which, struct itimerval __user *value);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getitimer,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -563,7 +565,7 @@ static asmlinkage long custom_getitimer(int which, struct itimerval __user *valu
 static asmlinkage long custom_setitimer(int which, struct itimerval __user *value, struct itimerval __user *ovalue)
 {
     asmlinkage long (*org_setitimer)(int which, struct itimerval __user *value, struct itimerval __user *ovalue);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setitimer,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -576,7 +578,7 @@ static asmlinkage long custom_setitimer(int which, struct itimerval __user *valu
 static asmlinkage long custom_timer_create(clockid_t which_clock, struct sigevent __user *timer_event_spec, timer_t __user * created_timer_id)
 {
     asmlinkage long (*org_timer_create)(clockid_t which_clock, struct sigevent __user *timer_event_spec, timer_t __user * created_timer_id);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:timer_create,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -589,7 +591,7 @@ static asmlinkage long custom_timer_create(clockid_t which_clock, struct sigeven
 static asmlinkage long custom_timer_gettime(timer_t timer_id, struct itimerspec __user *setting)
 {
     asmlinkage long (*org_timer_gettime)(timer_t timer_id, struct itimerspec __user *setting);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:timer_gettime,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -602,7 +604,7 @@ static asmlinkage long custom_timer_gettime(timer_t timer_id, struct itimerspec 
 static asmlinkage long custom_timer_getoverrun(timer_t timer_id)
 {
     asmlinkage long (*org_timer_getoverrun)(timer_t timer_id);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:timer_getoverrun,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -615,7 +617,7 @@ static asmlinkage long custom_timer_getoverrun(timer_t timer_id)
 static asmlinkage long custom_timer_settime(timer_t timer_id, int flags, const struct itimerspec __user *new_setting, struct itimerspec __user *old_setting)
 {
     asmlinkage long (*org_timer_settime)(timer_t timer_id, int flags, const struct itimerspec __user *new_setting, struct itimerspec __user *old_setting);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:timer_settime,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -628,7 +630,7 @@ static asmlinkage long custom_timer_settime(timer_t timer_id, int flags, const s
 static asmlinkage long custom_timer_delete(timer_t timer_id)
 {
     asmlinkage long (*org_timer_delete)(timer_t timer_id);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:timer_delete,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -641,7 +643,7 @@ static asmlinkage long custom_timer_delete(timer_t timer_id)
 static asmlinkage long custom_clock_settime(clockid_t which_clock, const struct timespec __user *tp)
 {
     asmlinkage long (*org_clock_settime)(clockid_t which_clock, const struct timespec __user *tp);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:clock_settime,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -654,7 +656,7 @@ static asmlinkage long custom_clock_settime(clockid_t which_clock, const struct 
 static asmlinkage long custom_clock_gettime(clockid_t which_clock, struct timespec __user *tp)
 {
     asmlinkage long (*org_clock_gettime)(clockid_t which_clock, struct timespec __user *tp);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:clock_gettime,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -667,7 +669,7 @@ static asmlinkage long custom_clock_gettime(clockid_t which_clock, struct timesp
 static asmlinkage long custom_clock_adjtime(clockid_t which_clock, struct timex __user *tx)
 {
     asmlinkage long (*org_clock_adjtime)(clockid_t which_clock, struct timex __user *tx);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:clock_adjtime,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -680,7 +682,7 @@ static asmlinkage long custom_clock_adjtime(clockid_t which_clock, struct timex 
 static asmlinkage long custom_clock_getres(clockid_t which_clock, struct timespec __user *tp)
 {
     asmlinkage long (*org_clock_getres)(clockid_t which_clock, struct timespec __user *tp);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:clock_getres,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -693,7 +695,7 @@ static asmlinkage long custom_clock_getres(clockid_t which_clock, struct timespe
 static asmlinkage long custom_clock_nanosleep(clockid_t which_clock, int flags, const struct timespec __user *rqtp, struct timespec __user *rmtp)
 {
     asmlinkage long (*org_clock_nanosleep)(clockid_t which_clock, int flags, const struct timespec __user *rqtp, struct timespec __user *rmtp);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:clock_nanosleep,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -707,7 +709,7 @@ static asmlinkage long custom_clock_nanosleep(clockid_t which_clock, int flags, 
 static asmlinkage long custom_nice(int increment)
 {
     asmlinkage long (*org_nice)(int increment);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:nice,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -720,7 +722,7 @@ static asmlinkage long custom_nice(int increment)
 static asmlinkage long custom_sched_setscheduler(pid_t pid, int policy, struct sched_param __user *param)
 {
     asmlinkage long (*org_sched_setscheduler)(pid_t pid, int policy, struct sched_param __user *param);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sched_setscheduler,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -733,7 +735,7 @@ static asmlinkage long custom_sched_setscheduler(pid_t pid, int policy, struct s
 static asmlinkage long custom_sched_setparam(pid_t pid, struct sched_param __user *param)
 {
     asmlinkage long (*org_sched_setparam)(pid_t pid, struct sched_param __user *param);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sched_setparam,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -746,7 +748,7 @@ static asmlinkage long custom_sched_setparam(pid_t pid, struct sched_param __use
 static asmlinkage long custom_sched_setattr(pid_t pid, struct sched_attr __user *attr, unsigned int flags)
 {
     asmlinkage long (*org_sched_setattr)(pid_t pid, struct sched_attr __user *attr, unsigned int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sched_setattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -759,7 +761,7 @@ static asmlinkage long custom_sched_setattr(pid_t pid, struct sched_attr __user 
 static asmlinkage long custom_sched_getscheduler(pid_t pid)
 {
     asmlinkage long (*org_sched_getscheduler)(pid_t pid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sched_getscheduler,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -772,7 +774,7 @@ static asmlinkage long custom_sched_getscheduler(pid_t pid)
 static asmlinkage long custom_sched_getparam(pid_t pid, struct sched_param __user *param)
 {
     asmlinkage long (*org_sched_getparam)(pid_t pid, struct sched_param __user *param);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sched_getparam,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -785,7 +787,7 @@ static asmlinkage long custom_sched_getparam(pid_t pid, struct sched_param __use
 static asmlinkage long custom_sched_getattr(pid_t pid, struct sched_attr __user *attr, unsigned int size, unsigned int flags)
 {
     asmlinkage long (*org_sched_getattr)(pid_t pid, struct sched_attr __user *attr, unsigned int size, unsigned int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sched_getattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -798,7 +800,7 @@ static asmlinkage long custom_sched_getattr(pid_t pid, struct sched_attr __user 
 static asmlinkage long custom_sched_setaffinity(pid_t pid, unsigned int len, unsigned long __user *user_mask_ptr)
 {
     asmlinkage long (*org_sched_setaffinity)(pid_t pid, unsigned int len, unsigned long __user *user_mask_ptr);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sched_setaffinity,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -811,7 +813,7 @@ static asmlinkage long custom_sched_setaffinity(pid_t pid, unsigned int len, uns
 static asmlinkage long custom_sched_getaffinity(pid_t pid, unsigned int len, unsigned long __user *user_mask_ptr)
 {
     asmlinkage long (*org_sched_getaffinity)(pid_t pid, unsigned int len, unsigned long __user *user_mask_ptr);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sched_getaffinity,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -824,7 +826,7 @@ static asmlinkage long custom_sched_getaffinity(pid_t pid, unsigned int len, uns
 static asmlinkage long custom_sched_yield(void)
 {
     asmlinkage long (*org_sched_yield)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sched_yield,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -837,7 +839,7 @@ static asmlinkage long custom_sched_yield(void)
 static asmlinkage long custom_sched_get_priority_max(int policy)
 {
     asmlinkage long (*org_sched_get_priority_max)(int policy);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sched_get_priority_max,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -850,7 +852,7 @@ static asmlinkage long custom_sched_get_priority_max(int policy)
 static asmlinkage long custom_sched_get_priority_min(int policy)
 {
     asmlinkage long (*org_sched_get_priority_min)(int policy);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sched_get_priority_min,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -863,7 +865,7 @@ static asmlinkage long custom_sched_get_priority_min(int policy)
 static asmlinkage long custom_sched_rr_get_interval(pid_t pid, struct timespec __user *interval)
 {
     asmlinkage long (*org_sched_rr_get_interval)(pid_t pid, struct timespec __user *interval);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sched_rr_get_interval,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -876,7 +878,7 @@ static asmlinkage long custom_sched_rr_get_interval(pid_t pid, struct timespec _
 static asmlinkage long custom_setpriority(int which, int who, int niceval)
 {
     asmlinkage long (*org_setpriority)(int which, int who, int niceval);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setpriority,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -889,7 +891,7 @@ static asmlinkage long custom_setpriority(int which, int who, int niceval)
 static asmlinkage long custom_getpriority(int which, int who)
 {
     asmlinkage long (*org_getpriority)(int which, int who);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getpriority,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -903,7 +905,7 @@ static asmlinkage long custom_getpriority(int which, int who)
 static asmlinkage long custom_shutdown(int fd, int how)
 {
     asmlinkage long (*org_shutdown)(int fd, int how);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:shutdown,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -916,7 +918,7 @@ static asmlinkage long custom_shutdown(int fd, int how)
 static asmlinkage long custom_reboot(int magic1, int magic2, unsigned int cmd, void __user *arg)
 {
     asmlinkage long (*org_reboot)(int magic1, int magic2, unsigned int cmd, void __user *arg);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:reboot,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -929,7 +931,7 @@ static asmlinkage long custom_reboot(int magic1, int magic2, unsigned int cmd, v
 static asmlinkage long custom_restart_syscall(void)
 {
     asmlinkage long (*org_restart_syscall)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:restart_syscall,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -942,7 +944,7 @@ static asmlinkage long custom_restart_syscall(void)
 static asmlinkage long custom_kexec_load(unsigned long entry, unsigned long nr_segments, struct kexec_segment __user *segments, unsigned long flags)
 {
     asmlinkage long (*org_kexec_load)(unsigned long entry, unsigned long nr_segments, struct kexec_segment __user *segments, unsigned long flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:kexec_load,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -955,7 +957,7 @@ static asmlinkage long custom_kexec_load(unsigned long entry, unsigned long nr_s
 static asmlinkage long custom_kexec_file_load(int kernel_fd, int initrd_fd, unsigned long cmdline_len, const char __user *cmdline_ptr, unsigned long flags)
 {
     asmlinkage long (*org_kexec_file_load)(int kernel_fd, int initrd_fd, unsigned long cmdline_len, const char __user *cmdline_ptr, unsigned long flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:kexec_file_load,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -969,7 +971,7 @@ static asmlinkage long custom_kexec_file_load(int kernel_fd, int initrd_fd, unsi
 static asmlinkage long custom_exit(int error_code)
 {
     asmlinkage long (*org_exit)(int error_code);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:exit,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -982,7 +984,7 @@ static asmlinkage long custom_exit(int error_code)
 static asmlinkage long custom_exit_group(int error_code)
 {
     asmlinkage long (*org_exit_group)(int error_code);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:exit_group,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -995,7 +997,7 @@ static asmlinkage long custom_exit_group(int error_code)
 static asmlinkage long custom_wait4(pid_t pid, int __user *stat_addr, int options, struct rusage __user *ru)
 {
     asmlinkage long (*org_wait4)(pid_t pid, int __user *stat_addr, int options, struct rusage __user *ru);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:wait4,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1008,7 +1010,7 @@ static asmlinkage long custom_wait4(pid_t pid, int __user *stat_addr, int option
 static asmlinkage long custom_waitid(int which, pid_t pid, struct siginfo __user *infop, int options, struct rusage __user *ru)
 {
     asmlinkage long (*org_waitid)(int which, pid_t pid, struct siginfo __user *infop, int options, struct rusage __user *ru);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:waitid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1021,7 +1023,7 @@ static asmlinkage long custom_waitid(int which, pid_t pid, struct siginfo __user
 static asmlinkage long custom_waitpid(pid_t pid, int __user *stat_addr, int options)
 {
     asmlinkage long (*org_waitpid)(pid_t pid, int __user *stat_addr, int options);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:waitpid,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1034,7 +1036,7 @@ static asmlinkage long custom_waitpid(pid_t pid, int __user *stat_addr, int opti
 static asmlinkage long custom_set_tid_address(int __user *tidptr)
 {
     asmlinkage long (*org_set_tid_address)(int __user *tidptr);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:set_tid_address,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1047,7 +1049,7 @@ static asmlinkage long custom_set_tid_address(int __user *tidptr)
 static asmlinkage long custom_futex(u32 __user *uaddr, int op, u32 val, struct timespec __user *utime, u32 __user *uaddr2, u32 val3)
 {
     asmlinkage long (*org_futex)(u32 __user *uaddr, int op, u32 val, struct timespec __user *utime, u32 __user *uaddr2, u32 val3);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:futex,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1061,7 +1063,7 @@ static asmlinkage long custom_futex(u32 __user *uaddr, int op, u32 val, struct t
 static asmlinkage long custom_init_module(void __user *umod, unsigned long len, const char __user *uargs)
 {
     asmlinkage long (*org_init_module)(void __user *umod, unsigned long len, const char __user *uargs);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:init_module,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1074,7 +1076,7 @@ static asmlinkage long custom_init_module(void __user *umod, unsigned long len, 
 static asmlinkage long custom_delete_module(const char __user *name_user, unsigned int flags)
 {
     asmlinkage long (*org_delete_module)(const char __user *name_user, unsigned int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:delete_module,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1089,7 +1091,7 @@ static asmlinkage long custom_delete_module(const char __user *name_user, unsign
 static asmlinkage long custom_sigsuspend(old_sigset_t mask)
 {
     asmlinkage long (*org_sigsuspend)(old_sigset_t mask);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sigsuspend,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1105,7 +1107,7 @@ static asmlinkage long custom_sigsuspend(old_sigset_t mask)
 static asmlinkage long custom_sigsuspend(int unused1, int unused2, old_sigset_t mask)
 {
     asmlinkage long (*org_sigsuspend)(int unused1, int unused2, old_sigset_t mask);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sigsuspend,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1120,7 +1122,7 @@ static asmlinkage long custom_sigsuspend(int unused1, int unused2, old_sigset_t 
 static asmlinkage long custom_rt_sigsuspend(sigset_t __user *unewset, size_t sigsetsize)
 {
     asmlinkage long (*org_rt_sigsuspend)(sigset_t __user *unewset, size_t sigsetsize);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:rt_sigsuspend,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1135,7 +1137,7 @@ static asmlinkage long custom_rt_sigsuspend(sigset_t __user *unewset, size_t sig
 static asmlinkage long custom_sigaction(int signum, const struct old_sigaction __user *uact, struct old_sigaction __user *uoldact)
 {
     asmlinkage long (*org_sigaction)(int signum, const struct old_sigaction __user *uact, struct old_sigaction __user *uoldact);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sigaction,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1151,7 +1153,7 @@ static asmlinkage long custom_sigaction(int signum, const struct old_sigaction _
 static asmlinkage long custom_rt_sigaction(int signum, const struct sigaction __user *uact, struct sigaction __user *uoldact, size_t sigsetsize)
 {
     asmlinkage long (*org_rt_sigaction)(int signum, const struct sigaction __user *uact, struct sigaction __user *uoldact, size_t sigsetsize);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:rt_sigaction,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1165,7 +1167,7 @@ static asmlinkage long custom_rt_sigaction(int signum, const struct sigaction __
 static asmlinkage long custom_rt_sigprocmask(int how, sigset_t __user *set, sigset_t __user *oset, size_t sigsetsize)
 {
     asmlinkage long (*org_rt_sigprocmask)(int how, sigset_t __user *set, sigset_t __user *oset, size_t sigsetsize);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:rt_sigprocmask,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1178,7 +1180,7 @@ static asmlinkage long custom_rt_sigprocmask(int how, sigset_t __user *set, sigs
 static asmlinkage long custom_rt_sigpending(sigset_t __user *set, size_t sigsetsize)
 {
     asmlinkage long (*org_rt_sigpending)(sigset_t __user *set, size_t sigsetsize);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:rt_sigpending,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1191,7 +1193,7 @@ static asmlinkage long custom_rt_sigpending(sigset_t __user *set, size_t sigsets
 static asmlinkage long custom_rt_sigtimedwait(const sigset_t __user *uthese, siginfo_t __user *uinfo, const struct timespec __user *uts, size_t sigsetsize)
 {
     asmlinkage long (*org_rt_sigtimedwait)(const sigset_t __user *uthese, siginfo_t __user *uinfo, const struct timespec __user *uts, size_t sigsetsize);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:rt_sigtimedwait,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1204,7 +1206,7 @@ static asmlinkage long custom_rt_sigtimedwait(const sigset_t __user *uthese, sig
 static asmlinkage long custom_rt_tgsigqueueinfo(pid_t tgid, pid_t  pid, int sig, siginfo_t __user *uinfo)
 {
     asmlinkage long (*org_rt_tgsigqueueinfo)(pid_t tgid, pid_t  pid, int sig, siginfo_t __user *uinfo);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:rt_tgsigqueueinfo,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1217,7 +1219,7 @@ static asmlinkage long custom_rt_tgsigqueueinfo(pid_t tgid, pid_t  pid, int sig,
 static asmlinkage long custom_kill(pid_t pid, int sig)
 {
     asmlinkage long (*org_kill)(pid_t pid, int sig);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:kill,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1230,7 +1232,7 @@ static asmlinkage long custom_kill(pid_t pid, int sig)
 static asmlinkage long custom_tgkill(pid_t tgid, pid_t pid, int sig)
 {
     asmlinkage long (*org_tgkill)(pid_t tgid, pid_t pid, int sig);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:tgkill,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1243,7 +1245,7 @@ static asmlinkage long custom_tgkill(pid_t tgid, pid_t pid, int sig)
 static asmlinkage long custom_tkill(pid_t pid, int sig)
 {
     asmlinkage long (*org_tkill)(pid_t pid, int sig);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:tkill,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1256,7 +1258,7 @@ static asmlinkage long custom_tkill(pid_t pid, int sig)
 static asmlinkage long custom_rt_sigqueueinfo(pid_t pid, int sig, siginfo_t __user *uinfo)
 {
     asmlinkage long (*org_rt_sigqueueinfo)(pid_t pid, int sig, siginfo_t __user *uinfo);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:rt_sigqueueinfo,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1269,7 +1271,7 @@ static asmlinkage long custom_rt_sigqueueinfo(pid_t pid, int sig, siginfo_t __us
 static asmlinkage long custom_sgetmask(void)
 {
     asmlinkage long (*org_sgetmask)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sgetmask,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1282,7 +1284,7 @@ static asmlinkage long custom_sgetmask(void)
 static asmlinkage long custom_ssetmask(int newmask)
 {
     asmlinkage long (*org_ssetmask)(int newmask);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:ssetmask,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1295,7 +1297,7 @@ static asmlinkage long custom_ssetmask(int newmask)
 static asmlinkage long custom_signal(int sig, __sighandler_t handler)
 {
     asmlinkage long (*org_signal)(int sig, __sighandler_t handler);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:signal,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1308,7 +1310,7 @@ static asmlinkage long custom_signal(int sig, __sighandler_t handler)
 static asmlinkage long custom_pause(void)
 {
     asmlinkage long (*org_pause)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pause,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1322,7 +1324,7 @@ static asmlinkage long custom_pause(void)
 static asmlinkage long custom_sync(void)
 {
     asmlinkage long (*org_sync)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sync,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1335,7 +1337,7 @@ static asmlinkage long custom_sync(void)
 static asmlinkage long custom_fsync(unsigned int fd)
 {
     asmlinkage long (*org_fsync)(unsigned int fd);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fsync,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1348,7 +1350,7 @@ static asmlinkage long custom_fsync(unsigned int fd)
 static asmlinkage long custom_fdatasync(unsigned int fd)
 {
     asmlinkage long (*org_fdatasync)(unsigned int fd);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fdatasync,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1361,7 +1363,7 @@ static asmlinkage long custom_fdatasync(unsigned int fd)
 static asmlinkage long custom_bdflush(int func, long data)
 {
     asmlinkage long (*org_bdflush)(int func, long data);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:bdflush,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1374,7 +1376,7 @@ static asmlinkage long custom_bdflush(int func, long data)
 static asmlinkage long custom_mount(char __user *dev_name, char __user *dir_name, char __user *type, unsigned long flags, void __user *data)
 {
     asmlinkage long (*org_mount)(char __user *dev_name, char __user *dir_name, char __user *type, unsigned long flags, void __user *data);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mount,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1387,7 +1389,7 @@ static asmlinkage long custom_mount(char __user *dev_name, char __user *dir_name
 static asmlinkage long custom_umount(char __user *name, int flags)
 {
     asmlinkage long (*org_umount)(char __user *name, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:umount,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1400,7 +1402,7 @@ static asmlinkage long custom_umount(char __user *name, int flags)
 static asmlinkage long custom_oldumount(char __user *name)
 {
     asmlinkage long (*org_oldumount)(char __user *name);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:oldumount,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1413,7 +1415,7 @@ static asmlinkage long custom_oldumount(char __user *name)
 static asmlinkage long custom_truncate(const char __user *path, long length)
 {
     asmlinkage long (*org_truncate)(const char __user *path, long length);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:truncate,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1426,7 +1428,7 @@ static asmlinkage long custom_truncate(const char __user *path, long length)
 static asmlinkage long custom_ftruncate(unsigned int fd, unsigned long length)
 {
     asmlinkage long (*org_ftruncate)(unsigned int fd, unsigned long length);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:ftruncate,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1439,7 +1441,7 @@ static asmlinkage long custom_ftruncate(unsigned int fd, unsigned long length)
 static asmlinkage long custom_stat(const char __user *filename, struct __old_kernel_stat __user *statbuf)
 {
     asmlinkage long (*org_stat)(const char __user *filename, struct __old_kernel_stat __user *statbuf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:stat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1452,7 +1454,7 @@ static asmlinkage long custom_stat(const char __user *filename, struct __old_ker
 static asmlinkage long custom_statfs(const char __user * path, struct statfs __user *buf)
 {
     asmlinkage long (*org_statfs)(const char __user * path, struct statfs __user *buf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:statfs,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1465,7 +1467,7 @@ static asmlinkage long custom_statfs(const char __user * path, struct statfs __u
 static asmlinkage long custom_statfs64(const char __user *path, size_t sz, struct statfs64 __user *buf)
 {
     asmlinkage long (*org_statfs64)(const char __user *path, size_t sz, struct statfs64 __user *buf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:statfs64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1478,7 +1480,7 @@ static asmlinkage long custom_statfs64(const char __user *path, size_t sz, struc
 static asmlinkage long custom_fstatfs(unsigned int fd, struct statfs __user *buf)
 {
     asmlinkage long (*org_fstatfs)(unsigned int fd, struct statfs __user *buf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fstatfs,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1491,7 +1493,7 @@ static asmlinkage long custom_fstatfs(unsigned int fd, struct statfs __user *buf
 static asmlinkage long custom_fstatfs64(unsigned int fd, size_t sz, struct statfs64 __user *buf)
 {
     asmlinkage long (*org_fstatfs64)(unsigned int fd, size_t sz, struct statfs64 __user *buf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fstatfs64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1504,7 +1506,7 @@ static asmlinkage long custom_fstatfs64(unsigned int fd, size_t sz, struct statf
 static asmlinkage long custom_lstat(const char __user *filename, struct __old_kernel_stat __user *statbuf)
 {
     asmlinkage long (*org_lstat)(const char __user *filename, struct __old_kernel_stat __user *statbuf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:lstat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1517,7 +1519,7 @@ static asmlinkage long custom_lstat(const char __user *filename, struct __old_ke
 static asmlinkage long custom_fstat(unsigned int fd, struct __old_kernel_stat __user *statbuf)
 {
     asmlinkage long (*org_fstat)(unsigned int fd, struct __old_kernel_stat __user *statbuf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fstat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1530,7 +1532,7 @@ static asmlinkage long custom_fstat(unsigned int fd, struct __old_kernel_stat __
 static asmlinkage long custom_newstat(const char __user *filename, struct stat __user *statbuf)
 {
     asmlinkage long (*org_newstat)(const char __user *filename, struct stat __user *statbuf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:newstat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1543,7 +1545,7 @@ static asmlinkage long custom_newstat(const char __user *filename, struct stat _
 static asmlinkage long custom_newlstat(const char __user *filename, struct stat __user *statbuf)
 {
     asmlinkage long (*org_newlstat)(const char __user *filename, struct stat __user *statbuf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:newlstat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1556,7 +1558,7 @@ static asmlinkage long custom_newlstat(const char __user *filename, struct stat 
 static asmlinkage long custom_newfstat(unsigned int fd, struct stat __user *statbuf)
 {
     asmlinkage long (*org_newfstat)(unsigned int fd, struct stat __user *statbuf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:newfstat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1569,7 +1571,7 @@ static asmlinkage long custom_newfstat(unsigned int fd, struct stat __user *stat
 static asmlinkage long custom_ustat(unsigned dev, struct ustat __user *ubuf)
 {
     asmlinkage long (*org_ustat)(unsigned dev, struct ustat __user *ubuf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:ustat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1583,7 +1585,7 @@ static asmlinkage long custom_ustat(unsigned dev, struct ustat __user *ubuf)
 static asmlinkage long custom_stat64(const char __user *filename, struct stat64 __user *statbuf)
 {
     asmlinkage long (*org_stat64)(const char __user *filename, struct stat64 __user *statbuf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:stat64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1596,7 +1598,7 @@ static asmlinkage long custom_stat64(const char __user *filename, struct stat64 
 static asmlinkage long custom_fstat64(unsigned long fd, struct stat64 __user *statbuf)
 {
     asmlinkage long (*org_fstat64)(unsigned long fd, struct stat64 __user *statbuf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fstat64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1609,7 +1611,7 @@ static asmlinkage long custom_fstat64(unsigned long fd, struct stat64 __user *st
 static asmlinkage long custom_lstat64(const char __user *filename, struct stat64 __user *statbuf)
 {
     asmlinkage long (*org_lstat64)(const char __user *filename, struct stat64 __user *statbuf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:lstat64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1622,7 +1624,7 @@ static asmlinkage long custom_lstat64(const char __user *filename, struct stat64
 static asmlinkage long custom_fstatat64(int dfd, const char __user *filename, struct stat64 __user *statbuf, int flag)
 {
     asmlinkage long (*org_fstatat64)(int dfd, const char __user *filename, struct stat64 __user *statbuf, int flag);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fstatat64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1637,7 +1639,7 @@ static asmlinkage long custom_fstatat64(int dfd, const char __user *filename, st
 static asmlinkage long custom_truncate64(const char __user *path, loff_t length)
 {
     asmlinkage long (*org_truncate64)(const char __user *path, loff_t length);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:truncate64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1650,7 +1652,7 @@ static asmlinkage long custom_truncate64(const char __user *path, loff_t length)
 static asmlinkage long custom_ftruncate64(unsigned int fd, loff_t length)
 {
     asmlinkage long (*org_ftruncate64)(unsigned int fd, loff_t length);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:ftruncate64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1665,7 +1667,7 @@ static asmlinkage long custom_ftruncate64(unsigned int fd, loff_t length)
 static asmlinkage long custom_setxattr(const char __user *path, const char __user *name, const void __user *value, size_t size, int flags)
 {
     asmlinkage long (*org_setxattr)(const char __user *path, const char __user *name, const void __user *value, size_t size, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setxattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1678,7 +1680,7 @@ static asmlinkage long custom_setxattr(const char __user *path, const char __use
 static asmlinkage long custom_lsetxattr(const char __user *path, const char __user *name, const void __user *value, size_t size, int flags)
 {
     asmlinkage long (*org_lsetxattr)(const char __user *path, const char __user *name, const void __user *value, size_t size, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:lsetxattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1691,7 +1693,7 @@ static asmlinkage long custom_lsetxattr(const char __user *path, const char __us
 static asmlinkage long custom_fsetxattr(int fd, const char __user *name, const void __user *value, size_t size, int flags)
 {
     asmlinkage long (*org_fsetxattr)(int fd, const char __user *name, const void __user *value, size_t size, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fsetxattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1704,7 +1706,7 @@ static asmlinkage long custom_fsetxattr(int fd, const char __user *name, const v
 static asmlinkage long custom_getxattr(const char __user *path, const char __user *name, void __user *value, size_t size)
 {
     asmlinkage long (*org_getxattr)(const char __user *path, const char __user *name, void __user *value, size_t size);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getxattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1717,7 +1719,7 @@ static asmlinkage long custom_getxattr(const char __user *path, const char __use
 static asmlinkage long custom_lgetxattr(const char __user *path, const char __user *name, void __user *value, size_t size)
 {
     asmlinkage long (*org_lgetxattr)(const char __user *path, const char __user *name, void __user *value, size_t size);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:lgetxattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1730,7 +1732,7 @@ static asmlinkage long custom_lgetxattr(const char __user *path, const char __us
 static asmlinkage long custom_fgetxattr(int fd, const char __user *name, void __user *value, size_t size)
 {
     asmlinkage long (*org_fgetxattr)(int fd, const char __user *name, void __user *value, size_t size);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fgetxattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1743,7 +1745,7 @@ static asmlinkage long custom_fgetxattr(int fd, const char __user *name, void __
 static asmlinkage long custom_listxattr(const char __user *path, char __user *list, size_t size)
 {
     asmlinkage long (*org_listxattr)(const char __user *path, char __user *list, size_t size);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:listxattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1756,7 +1758,7 @@ static asmlinkage long custom_listxattr(const char __user *path, char __user *li
 static asmlinkage long custom_llistxattr(const char __user *path, char __user *list, size_t size)
 {
     asmlinkage long (*org_llistxattr)(const char __user *path, char __user *list, size_t size);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:llistxattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1769,7 +1771,7 @@ static asmlinkage long custom_llistxattr(const char __user *path, char __user *l
 static asmlinkage long custom_flistxattr(int fd, char __user *list, size_t size)
 {
     asmlinkage long (*org_flistxattr)(int fd, char __user *list, size_t size);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:flistxattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1782,7 +1784,7 @@ static asmlinkage long custom_flistxattr(int fd, char __user *list, size_t size)
 static asmlinkage long custom_removexattr(const char __user *path, const char __user *name)
 {
     asmlinkage long (*org_removexattr)(const char __user *path, const char __user *name);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:removexattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1795,7 +1797,7 @@ static asmlinkage long custom_removexattr(const char __user *path, const char __
 static asmlinkage long custom_lremovexattr(const char __user *path, const char __user *name)
 {
     asmlinkage long (*org_lremovexattr)(const char __user *path, const char __user *name);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:lremovexattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1808,7 +1810,7 @@ static asmlinkage long custom_lremovexattr(const char __user *path, const char _
 static asmlinkage long custom_fremovexattr(int fd, const char __user *name)
 {
     asmlinkage long (*org_fremovexattr)(int fd, const char __user *name);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fremovexattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1822,7 +1824,7 @@ static asmlinkage long custom_fremovexattr(int fd, const char __user *name)
 static asmlinkage long custom_brk(unsigned long brk)
 {
     asmlinkage long (*org_brk)(unsigned long brk);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:brk,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1835,7 +1837,7 @@ static asmlinkage long custom_brk(unsigned long brk)
 static asmlinkage long custom_mprotect(unsigned long start, size_t len, unsigned long prot)
 {
     asmlinkage long (*org_mprotect)(unsigned long start, size_t len, unsigned long prot);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mprotect,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1848,7 +1850,7 @@ static asmlinkage long custom_mprotect(unsigned long start, size_t len, unsigned
 static asmlinkage long custom_mremap(unsigned long addr, unsigned long old_len, unsigned long new_len, unsigned long flags, unsigned long new_addr)
 {
     asmlinkage long (*org_mremap)(unsigned long addr, unsigned long old_len, unsigned long new_len, unsigned long flags, unsigned long new_addr);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mremap,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1861,7 +1863,7 @@ static asmlinkage long custom_mremap(unsigned long addr, unsigned long old_len, 
 static asmlinkage long custom_remap_file_pages(unsigned long start, unsigned long size, unsigned long prot, unsigned long pgoff, unsigned long flags)
 {
     asmlinkage long (*org_remap_file_pages)(unsigned long start, unsigned long size, unsigned long prot, unsigned long pgoff, unsigned long flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:remap_file_pages,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1874,7 +1876,7 @@ static asmlinkage long custom_remap_file_pages(unsigned long start, unsigned lon
 static asmlinkage long custom_msync(unsigned long start, size_t len, int flags)
 {
     asmlinkage long (*org_msync)(unsigned long start, size_t len, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:msync,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1887,7 +1889,7 @@ static asmlinkage long custom_msync(unsigned long start, size_t len, int flags)
 static asmlinkage long custom_fadvise64(int fd, loff_t offset, size_t len, int advice)
 {
     asmlinkage long (*org_fadvise64)(int fd, loff_t offset, size_t len, int advice);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fadvise64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1900,7 +1902,7 @@ static asmlinkage long custom_fadvise64(int fd, loff_t offset, size_t len, int a
 static asmlinkage long custom_fadvise64_64(int fd, loff_t offset, loff_t len, int advice)
 {
     asmlinkage long (*org_fadvise64_64)(int fd, loff_t offset, loff_t len, int advice);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fadvise64_64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1913,7 +1915,7 @@ static asmlinkage long custom_fadvise64_64(int fd, loff_t offset, loff_t len, in
 static asmlinkage long custom_munmap(unsigned long addr, size_t len)
 {
     asmlinkage long (*org_munmap)(unsigned long addr, size_t len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:munmap,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1926,7 +1928,7 @@ static asmlinkage long custom_munmap(unsigned long addr, size_t len)
 static asmlinkage long custom_mlock(unsigned long start, size_t len)
 {
     asmlinkage long (*org_mlock)(unsigned long start, size_t len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mlock,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1939,7 +1941,7 @@ static asmlinkage long custom_mlock(unsigned long start, size_t len)
 static asmlinkage long custom_munlock(unsigned long start, size_t len)
 {
     asmlinkage long (*org_munlock)(unsigned long start, size_t len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:munlock,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1952,7 +1954,7 @@ static asmlinkage long custom_munlock(unsigned long start, size_t len)
 static asmlinkage long custom_mlockall(int flags)
 {
     asmlinkage long (*org_mlockall)(int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mlockall,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1965,7 +1967,7 @@ static asmlinkage long custom_mlockall(int flags)
 static asmlinkage long custom_munlockall(void)
 {
     asmlinkage long (*org_munlockall)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:munlockall,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1978,7 +1980,7 @@ static asmlinkage long custom_munlockall(void)
 static asmlinkage long custom_madvise(unsigned long start, size_t len, int behavior)
 {
     asmlinkage long (*org_madvise)(unsigned long start, size_t len, int behavior);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:madvise,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -1991,7 +1993,7 @@ static asmlinkage long custom_madvise(unsigned long start, size_t len, int behav
 static asmlinkage long custom_mincore(unsigned long start, size_t len, unsigned char __user * vec)
 {
     asmlinkage long (*org_mincore)(unsigned long start, size_t len, unsigned char __user * vec);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mincore,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2005,7 +2007,7 @@ static asmlinkage long custom_mincore(unsigned long start, size_t len, unsigned 
 static asmlinkage long custom_pivot_root(const char __user *new_root, const char __user *put_old)
 {
     asmlinkage long (*org_pivot_root)(const char __user *new_root, const char __user *put_old);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pivot_root,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2018,7 +2020,7 @@ static asmlinkage long custom_pivot_root(const char __user *new_root, const char
 static asmlinkage long custom_chroot(const char __user *filename)
 {
     asmlinkage long (*org_chroot)(const char __user *filename);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:chroot,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2031,7 +2033,7 @@ static asmlinkage long custom_chroot(const char __user *filename)
 static asmlinkage long custom_mknod(const char __user *filename, umode_t mode, unsigned dev)
 {
     asmlinkage long (*org_mknod)(const char __user *filename, umode_t mode, unsigned dev);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mknod,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2044,7 +2046,7 @@ static asmlinkage long custom_mknod(const char __user *filename, umode_t mode, u
 static asmlinkage long custom_link(const char __user *oldname, const char __user *newname)
 {
     asmlinkage long (*org_link)(const char __user *oldname, const char __user *newname);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:link,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2057,7 +2059,7 @@ static asmlinkage long custom_link(const char __user *oldname, const char __user
 static asmlinkage long custom_symlink(const char __user *old, const char __user *new)
 {
     asmlinkage long (*org_symlink)(const char __user *old, const char __user *new);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:symlink,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2070,7 +2072,7 @@ static asmlinkage long custom_symlink(const char __user *old, const char __user 
 static asmlinkage long custom_unlink(const char __user *pathname)
 {
     asmlinkage long (*org_unlink)(const char __user *pathname);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:unlink,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2083,7 +2085,7 @@ static asmlinkage long custom_unlink(const char __user *pathname)
 static asmlinkage long custom_rename(const char __user *oldname, const char __user *newname)
 {
     asmlinkage long (*org_rename)(const char __user *oldname, const char __user *newname);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:rename,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2096,7 +2098,7 @@ static asmlinkage long custom_rename(const char __user *oldname, const char __us
 static asmlinkage long custom_chmod(const char __user *filename, umode_t mode)
 {
     asmlinkage long (*org_chmod)(const char __user *filename, umode_t mode);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:chmod,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2109,7 +2111,7 @@ static asmlinkage long custom_chmod(const char __user *filename, umode_t mode)
 static asmlinkage long custom_fchmod(unsigned int fd, umode_t mode)
 {
     asmlinkage long (*org_fchmod)(unsigned int fd, umode_t mode);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fchmod,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2123,7 +2125,7 @@ static asmlinkage long custom_fchmod(unsigned int fd, umode_t mode)
 static asmlinkage long custom_fcntl(unsigned int fd, unsigned int cmd, unsigned long arg)
 {
     asmlinkage long (*org_fcntl)(unsigned int fd, unsigned int cmd, unsigned long arg);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fcntl,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2137,7 +2139,7 @@ static asmlinkage long custom_fcntl(unsigned int fd, unsigned int cmd, unsigned 
 static asmlinkage long custom_fcntl64(unsigned int fd, unsigned int cmd, unsigned long arg)
 {
     asmlinkage long (*org_fcntl64)(unsigned int fd, unsigned int cmd, unsigned long arg);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fcntl64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2151,7 +2153,7 @@ static asmlinkage long custom_fcntl64(unsigned int fd, unsigned int cmd, unsigne
 static asmlinkage long custom_pipe(int __user *fildes)
 {
     asmlinkage long (*org_pipe)(int __user *fildes);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pipe,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2164,7 +2166,7 @@ static asmlinkage long custom_pipe(int __user *fildes)
 static asmlinkage long custom_pipe2(int __user *fildes, int flags)
 {
     asmlinkage long (*org_pipe2)(int __user *fildes, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pipe2,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2177,7 +2179,7 @@ static asmlinkage long custom_pipe2(int __user *fildes, int flags)
 static asmlinkage long custom_dup(unsigned int fildes)
 {
     asmlinkage long (*org_dup)(unsigned int fildes);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:dup,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2190,7 +2192,7 @@ static asmlinkage long custom_dup(unsigned int fildes)
 static asmlinkage long custom_dup2(unsigned int oldfd, unsigned int newfd)
 {
     asmlinkage long (*org_dup2)(unsigned int oldfd, unsigned int newfd);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:dup2,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2203,7 +2205,7 @@ static asmlinkage long custom_dup2(unsigned int oldfd, unsigned int newfd)
 static asmlinkage long custom_dup3(unsigned int oldfd, unsigned int newfd, int flags)
 {
     asmlinkage long (*org_dup3)(unsigned int oldfd, unsigned int newfd, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:dup3,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2216,7 +2218,7 @@ static asmlinkage long custom_dup3(unsigned int oldfd, unsigned int newfd, int f
 static asmlinkage long custom_ioperm(unsigned long from, unsigned long num, int on)
 {
     asmlinkage long (*org_ioperm)(unsigned long from, unsigned long num, int on);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:ioperm,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2229,7 +2231,7 @@ static asmlinkage long custom_ioperm(unsigned long from, unsigned long num, int 
 static asmlinkage long custom_ioctl(unsigned int fd, unsigned int cmd, unsigned long arg)
 {
     asmlinkage long (*org_ioctl)(unsigned int fd, unsigned int cmd, unsigned long arg);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:ioctl,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2242,7 +2244,7 @@ static asmlinkage long custom_ioctl(unsigned int fd, unsigned int cmd, unsigned 
 static asmlinkage long custom_flock(unsigned int fd, unsigned int cmd)
 {
     asmlinkage long (*org_flock)(unsigned int fd, unsigned int cmd);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:flock,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2255,7 +2257,7 @@ static asmlinkage long custom_flock(unsigned int fd, unsigned int cmd)
 static asmlinkage long custom_io_setup(unsigned nr_reqs, aio_context_t __user *ctx)
 {
     asmlinkage long (*org_io_setup)(unsigned nr_reqs, aio_context_t __user *ctx);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:io_setup,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2268,7 +2270,7 @@ static asmlinkage long custom_io_setup(unsigned nr_reqs, aio_context_t __user *c
 static asmlinkage long custom_io_destroy(aio_context_t ctx)
 {
     asmlinkage long (*org_io_destroy)(aio_context_t ctx);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:io_destroy,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2281,7 +2283,7 @@ static asmlinkage long custom_io_destroy(aio_context_t ctx)
 static asmlinkage long custom_io_getevents(aio_context_t ctx_id, long min_nr, long nr, struct io_event __user *events, struct timespec __user *timeout)
 {
     asmlinkage long (*org_io_getevents)(aio_context_t ctx_id, long min_nr, long nr, struct io_event __user *events, struct timespec __user *timeout);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:io_getevents,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2294,7 +2296,7 @@ static asmlinkage long custom_io_getevents(aio_context_t ctx_id, long min_nr, lo
 static asmlinkage long custom_io_submit(aio_context_t ctx_id, long nr, struct iocb __user * __user *uiocbpp)
 {
     asmlinkage long (*org_io_submit)(aio_context_t ctx_id, long nr, struct iocb __user * __user *uiocbpp);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:io_submit,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2307,7 +2309,7 @@ static asmlinkage long custom_io_submit(aio_context_t ctx_id, long nr, struct io
 static asmlinkage long custom_io_cancel(aio_context_t ctx_id, struct iocb __user *iocb, struct io_event __user *result)
 {
     asmlinkage long (*org_io_cancel)(aio_context_t ctx_id, struct iocb __user *iocb, struct io_event __user *result);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:io_cancel,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2320,7 +2322,7 @@ static asmlinkage long custom_io_cancel(aio_context_t ctx_id, struct iocb __user
 static asmlinkage long custom_sendfile(int out_fd, int in_fd, off_t __user *offset, size_t count)
 {
     asmlinkage long (*org_sendfile)(int out_fd, int in_fd, off_t __user *offset, size_t count);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sendfile,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2333,7 +2335,7 @@ static asmlinkage long custom_sendfile(int out_fd, int in_fd, off_t __user *offs
 static asmlinkage long custom_sendfile64(int out_fd, int in_fd, loff_t __user *offset, size_t count)
 {
     asmlinkage long (*org_sendfile64)(int out_fd, int in_fd, loff_t __user *offset, size_t count);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sendfile64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2346,7 +2348,7 @@ static asmlinkage long custom_sendfile64(int out_fd, int in_fd, loff_t __user *o
 static asmlinkage long custom_readlink(const char __user *path, char __user *buf, int bufsiz)
 {
     asmlinkage long (*org_readlink)(const char __user *path, char __user *buf, int bufsiz);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:readlink,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2359,7 +2361,7 @@ static asmlinkage long custom_readlink(const char __user *path, char __user *buf
 static asmlinkage long custom_creat(const char __user *pathname, umode_t mode)
 {
     asmlinkage long (*org_creat)(const char __user *pathname, umode_t mode);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:creat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2372,7 +2374,7 @@ static asmlinkage long custom_creat(const char __user *pathname, umode_t mode)
 static asmlinkage long custom_open(const char __user *filename, int flags, umode_t mode)
 {
     asmlinkage long (*org_open)(const char __user *filename, int flags, umode_t mode);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:open,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2385,7 +2387,7 @@ static asmlinkage long custom_open(const char __user *filename, int flags, umode
 static asmlinkage long custom_close(unsigned int fd)
 {
     asmlinkage long (*org_close)(unsigned int fd);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:close,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2398,7 +2400,7 @@ static asmlinkage long custom_close(unsigned int fd)
 static asmlinkage long custom_access(const char __user *filename, int mode)
 {
     asmlinkage long (*org_access)(const char __user *filename, int mode);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:access,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2411,7 +2413,7 @@ static asmlinkage long custom_access(const char __user *filename, int mode)
 static asmlinkage long custom_vhangup(void)
 {
     asmlinkage long (*org_vhangup)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:vhangup,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2424,7 +2426,7 @@ static asmlinkage long custom_vhangup(void)
 static asmlinkage long custom_chown(const char __user *filename, uid_t user, gid_t group)
 {
     asmlinkage long (*org_chown)(const char __user *filename, uid_t user, gid_t group);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:chown,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2437,7 +2439,7 @@ static asmlinkage long custom_chown(const char __user *filename, uid_t user, gid
 static asmlinkage long custom_lchown(const char __user *filename, uid_t user, gid_t group)
 {
     asmlinkage long (*org_lchown)(const char __user *filename, uid_t user, gid_t group);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:lchown,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2450,7 +2452,7 @@ static asmlinkage long custom_lchown(const char __user *filename, uid_t user, gi
 static asmlinkage long custom_fchown(unsigned int fd, uid_t user, gid_t group)
 {
     asmlinkage long (*org_fchown)(unsigned int fd, uid_t user, gid_t group);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fchown,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2464,7 +2466,7 @@ static asmlinkage long custom_fchown(unsigned int fd, uid_t user, gid_t group)
 static asmlinkage long custom_chown16(const char __user *filename, old_uid_t user, old_gid_t group)
 {
     asmlinkage long (*org_chown16)(const char __user *filename, old_uid_t user, old_gid_t group);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:chown16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2477,7 +2479,7 @@ static asmlinkage long custom_chown16(const char __user *filename, old_uid_t use
 static asmlinkage long custom_lchown16(const char __user *filename, old_uid_t user, old_gid_t group)
 {
     asmlinkage long (*org_lchown16)(const char __user *filename, old_uid_t user, old_gid_t group);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:lchown16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2490,7 +2492,7 @@ static asmlinkage long custom_lchown16(const char __user *filename, old_uid_t us
 static asmlinkage long custom_fchown16(unsigned int fd, old_uid_t user, old_gid_t group)
 {
     asmlinkage long (*org_fchown16)(unsigned int fd, old_uid_t user, old_gid_t group);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fchown16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2503,7 +2505,7 @@ static asmlinkage long custom_fchown16(unsigned int fd, old_uid_t user, old_gid_
 static asmlinkage long custom_setregid16(old_gid_t rgid, old_gid_t egid)
 {
     asmlinkage long (*org_setregid16)(old_gid_t rgid, old_gid_t egid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setregid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2516,7 +2518,7 @@ static asmlinkage long custom_setregid16(old_gid_t rgid, old_gid_t egid)
 static asmlinkage long custom_setgid16(old_gid_t gid)
 {
     asmlinkage long (*org_setgid16)(old_gid_t gid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setgid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2529,7 +2531,7 @@ static asmlinkage long custom_setgid16(old_gid_t gid)
 static asmlinkage long custom_setreuid16(old_uid_t ruid, old_uid_t euid)
 {
     asmlinkage long (*org_setreuid16)(old_uid_t ruid, old_uid_t euid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setreuid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2542,7 +2544,7 @@ static asmlinkage long custom_setreuid16(old_uid_t ruid, old_uid_t euid)
 static asmlinkage long custom_setuid16(old_uid_t uid)
 {
     asmlinkage long (*org_setuid16)(old_uid_t uid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setuid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2555,7 +2557,7 @@ static asmlinkage long custom_setuid16(old_uid_t uid)
 static asmlinkage long custom_setresuid16(old_uid_t ruid, old_uid_t euid, old_uid_t suid)
 {
     asmlinkage long (*org_setresuid16)(old_uid_t ruid, old_uid_t euid, old_uid_t suid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setresuid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2568,7 +2570,7 @@ static asmlinkage long custom_setresuid16(old_uid_t ruid, old_uid_t euid, old_ui
 static asmlinkage long custom_getresuid16(old_uid_t __user *ruid, old_uid_t __user *euid, old_uid_t __user *suid)
 {
     asmlinkage long (*org_getresuid16)(old_uid_t __user *ruid, old_uid_t __user *euid, old_uid_t __user *suid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getresuid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2581,7 +2583,7 @@ static asmlinkage long custom_getresuid16(old_uid_t __user *ruid, old_uid_t __us
 static asmlinkage long custom_setresgid16(old_gid_t rgid, old_gid_t egid, old_gid_t sgid)
 {
     asmlinkage long (*org_setresgid16)(old_gid_t rgid, old_gid_t egid, old_gid_t sgid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setresgid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2594,7 +2596,7 @@ static asmlinkage long custom_setresgid16(old_gid_t rgid, old_gid_t egid, old_gi
 static asmlinkage long custom_getresgid16(old_gid_t __user *rgid, old_gid_t __user *egid, old_gid_t __user *sgid)
 {
     asmlinkage long (*org_getresgid16)(old_gid_t __user *rgid, old_gid_t __user *egid, old_gid_t __user *sgid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getresgid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2607,7 +2609,7 @@ static asmlinkage long custom_getresgid16(old_gid_t __user *rgid, old_gid_t __us
 static asmlinkage long custom_setfsuid16(old_uid_t uid)
 {
     asmlinkage long (*org_setfsuid16)(old_uid_t uid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setfsuid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2620,7 +2622,7 @@ static asmlinkage long custom_setfsuid16(old_uid_t uid)
 static asmlinkage long custom_setfsgid16(old_gid_t gid)
 {
     asmlinkage long (*org_setfsgid16)(old_gid_t gid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setfsgid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2633,7 +2635,7 @@ static asmlinkage long custom_setfsgid16(old_gid_t gid)
 static asmlinkage long custom_getgroups16(int gidsetsize, old_gid_t __user *grouplist)
 {
     asmlinkage long (*org_getgroups16)(int gidsetsize, old_gid_t __user *grouplist);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getgroups16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2646,7 +2648,7 @@ static asmlinkage long custom_getgroups16(int gidsetsize, old_gid_t __user *grou
 static asmlinkage long custom_setgroups16(int gidsetsize, old_gid_t __user *grouplist)
 {
     asmlinkage long (*org_setgroups16)(int gidsetsize, old_gid_t __user *grouplist);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setgroups16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2659,7 +2661,7 @@ static asmlinkage long custom_setgroups16(int gidsetsize, old_gid_t __user *grou
 static asmlinkage long custom_getuid16(void)
 {
     asmlinkage long (*org_getuid16)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getuid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2672,7 +2674,7 @@ static asmlinkage long custom_getuid16(void)
 static asmlinkage long custom_geteuid16(void)
 {
     asmlinkage long (*org_geteuid16)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:geteuid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2685,7 +2687,7 @@ static asmlinkage long custom_geteuid16(void)
 static asmlinkage long custom_getgid16(void)
 {
     asmlinkage long (*org_getgid16)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getgid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2698,7 +2700,7 @@ static asmlinkage long custom_getgid16(void)
 static asmlinkage long custom_getegid16(void)
 {
     asmlinkage long (*org_getegid16)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getegid16,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2713,7 +2715,7 @@ static asmlinkage long custom_getegid16(void)
 static asmlinkage long custom_utime(char __user *filename, struct utimbuf __user *times)
 {
     asmlinkage long (*org_utime)(char __user *filename, struct utimbuf __user *times);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:utime,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2726,7 +2728,7 @@ static asmlinkage long custom_utime(char __user *filename, struct utimbuf __user
 static asmlinkage long custom_utimes(char __user *filename, struct timeval __user *utimes)
 {
     asmlinkage long (*org_utimes)(char __user *filename, struct timeval __user *utimes);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:utimes,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2739,7 +2741,7 @@ static asmlinkage long custom_utimes(char __user *filename, struct timeval __use
 static asmlinkage long custom_lseek(unsigned int fd, off_t offset, unsigned int whence)
 {
     asmlinkage long (*org_lseek)(unsigned int fd, off_t offset, unsigned int whence);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:lseek,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2752,7 +2754,7 @@ static asmlinkage long custom_lseek(unsigned int fd, off_t offset, unsigned int 
 static asmlinkage long custom_llseek(unsigned int fd, unsigned long offset_high, unsigned long offset_low, loff_t __user *result, unsigned int whence)
 {
     asmlinkage long (*org_llseek)(unsigned int fd, unsigned long offset_high, unsigned long offset_low, loff_t __user *result, unsigned int whence);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:llseek,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2765,7 +2767,7 @@ static asmlinkage long custom_llseek(unsigned int fd, unsigned long offset_high,
 static asmlinkage long custom_read(unsigned int fd, char __user *buf, size_t count)
 {
     asmlinkage long (*org_read)(unsigned int fd, char __user *buf, size_t count);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:read,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2778,7 +2780,7 @@ static asmlinkage long custom_read(unsigned int fd, char __user *buf, size_t cou
 static asmlinkage long custom_readahead(int fd, loff_t offset, size_t count)
 {
     asmlinkage long (*org_readahead)(int fd, loff_t offset, size_t count);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:readahead,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2791,7 +2793,7 @@ static asmlinkage long custom_readahead(int fd, loff_t offset, size_t count)
 static asmlinkage long custom_readv(unsigned long fd, const struct iovec __user *vec, unsigned long vlen)
 {
     asmlinkage long (*org_readv)(unsigned long fd, const struct iovec __user *vec, unsigned long vlen);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:readv,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2804,7 +2806,7 @@ static asmlinkage long custom_readv(unsigned long fd, const struct iovec __user 
 static asmlinkage long custom_write(unsigned int fd, const char __user *buf, size_t count)
 {
     asmlinkage long (*org_write)(unsigned int fd, const char __user *buf, size_t count);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:write,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2817,7 +2819,7 @@ static asmlinkage long custom_write(unsigned int fd, const char __user *buf, siz
 static asmlinkage long custom_writev(unsigned long fd, const struct iovec __user *vec, unsigned long vlen)
 {
     asmlinkage long (*org_writev)(unsigned long fd, const struct iovec __user *vec, unsigned long vlen);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:writev,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2830,7 +2832,7 @@ static asmlinkage long custom_writev(unsigned long fd, const struct iovec __user
 static asmlinkage long custom_pread64(unsigned int fd, char __user *buf, size_t count, loff_t pos)
 {
     asmlinkage long (*org_pread64)(unsigned int fd, char __user *buf, size_t count, loff_t pos);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pread64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2843,7 +2845,7 @@ static asmlinkage long custom_pread64(unsigned int fd, char __user *buf, size_t 
 static asmlinkage long custom_pwrite64(unsigned int fd, const char __user *buf, size_t count, loff_t pos)
 {
     asmlinkage long (*org_pwrite64)(unsigned int fd, const char __user *buf, size_t count, loff_t pos);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pwrite64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2856,7 +2858,7 @@ static asmlinkage long custom_pwrite64(unsigned int fd, const char __user *buf, 
 static asmlinkage long custom_preadv(unsigned long fd, const struct iovec __user *vec, unsigned long vlen, unsigned long pos_l, unsigned long pos_h)
 {
     asmlinkage long (*org_preadv)(unsigned long fd, const struct iovec __user *vec, unsigned long vlen, unsigned long pos_l, unsigned long pos_h);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:preadv,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2869,7 +2871,7 @@ static asmlinkage long custom_preadv(unsigned long fd, const struct iovec __user
 static asmlinkage long custom_preadv2(unsigned long fd, const struct iovec __user *vec, unsigned long vlen, unsigned long pos_l, unsigned long pos_h, rwf_t flags)
 {
     asmlinkage long (*org_preadv2)(unsigned long fd, const struct iovec __user *vec, unsigned long vlen, unsigned long pos_l, unsigned long pos_h, rwf_t flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:preadv2,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2882,7 +2884,7 @@ static asmlinkage long custom_preadv2(unsigned long fd, const struct iovec __use
 static asmlinkage long custom_pwritev(unsigned long fd, const struct iovec __user *vec, unsigned long vlen, unsigned long pos_l, unsigned long pos_h)
 {
     asmlinkage long (*org_pwritev)(unsigned long fd, const struct iovec __user *vec, unsigned long vlen, unsigned long pos_l, unsigned long pos_h);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pwritev,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2895,7 +2897,7 @@ static asmlinkage long custom_pwritev(unsigned long fd, const struct iovec __use
 static asmlinkage long custom_pwritev2(unsigned long fd, const struct iovec __user *vec, unsigned long vlen, unsigned long pos_l, unsigned long pos_h, rwf_t flags)
 {
     asmlinkage long (*org_pwritev2)(unsigned long fd, const struct iovec __user *vec, unsigned long vlen, unsigned long pos_l, unsigned long pos_h, rwf_t flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pwritev2,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2908,7 +2910,7 @@ static asmlinkage long custom_pwritev2(unsigned long fd, const struct iovec __us
 static asmlinkage long custom_getcwd(char __user *buf, unsigned long size)
 {
     asmlinkage long (*org_getcwd)(char __user *buf, unsigned long size);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getcwd,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2921,7 +2923,7 @@ static asmlinkage long custom_getcwd(char __user *buf, unsigned long size)
 static asmlinkage long custom_mkdir(const char __user *pathname, umode_t mode)
 {
     asmlinkage long (*org_mkdir)(const char __user *pathname, umode_t mode);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mkdir,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2934,7 +2936,7 @@ static asmlinkage long custom_mkdir(const char __user *pathname, umode_t mode)
 static asmlinkage long custom_chdir(const char __user *filename)
 {
     asmlinkage long (*org_chdir)(const char __user *filename);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:chdir,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2947,7 +2949,7 @@ static asmlinkage long custom_chdir(const char __user *filename)
 static asmlinkage long custom_fchdir(unsigned int fd)
 {
     asmlinkage long (*org_fchdir)(unsigned int fd);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fchdir,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2960,7 +2962,7 @@ static asmlinkage long custom_fchdir(unsigned int fd)
 static asmlinkage long custom_rmdir(const char __user *pathname)
 {
     asmlinkage long (*org_rmdir)(const char __user *pathname);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:rmdir,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2973,7 +2975,7 @@ static asmlinkage long custom_rmdir(const char __user *pathname)
 static asmlinkage long custom_lookup_dcookie(u64 cookie64, char __user *buf, size_t len)
 {
     asmlinkage long (*org_lookup_dcookie)(u64 cookie64, char __user *buf, size_t len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:lookup_dcookie,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2986,7 +2988,7 @@ static asmlinkage long custom_lookup_dcookie(u64 cookie64, char __user *buf, siz
 static asmlinkage long custom_quotactl(unsigned int cmd, const char __user *special, qid_t id, void __user *addr)
 {
     asmlinkage long (*org_quotactl)(unsigned int cmd, const char __user *special, qid_t id, void __user *addr);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:quotactl,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -2999,7 +3001,7 @@ static asmlinkage long custom_quotactl(unsigned int cmd, const char __user *spec
 static asmlinkage long custom_getdents(unsigned int fd, struct linux_dirent __user *dirent, unsigned int count)
 {
     asmlinkage long (*org_getdents)(unsigned int fd, struct linux_dirent __user *dirent, unsigned int count);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getdents,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3012,7 +3014,7 @@ static asmlinkage long custom_getdents(unsigned int fd, struct linux_dirent __us
 static asmlinkage long custom_getdents64(unsigned int fd, struct linux_dirent64 __user *dirent, unsigned int count)
 {
     asmlinkage long (*org_getdents64)(unsigned int fd, struct linux_dirent64 __user *dirent, unsigned int count);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getdents64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3026,7 +3028,7 @@ static asmlinkage long custom_getdents64(unsigned int fd, struct linux_dirent64 
 static asmlinkage long custom_setsockopt(int fd, int level, int optname, char __user *optval, int optlen)
 {
     asmlinkage long (*org_setsockopt)(int fd, int level, int optname, char __user *optval, int optlen);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setsockopt,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3039,7 +3041,7 @@ static asmlinkage long custom_setsockopt(int fd, int level, int optname, char __
 static asmlinkage long custom_getsockopt(int fd, int level, int optname, char __user *optval, int __user *optlen)
 {
     asmlinkage long (*org_getsockopt)(int fd, int level, int optname, char __user *optval, int __user *optlen);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getsockopt,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3052,7 +3054,7 @@ static asmlinkage long custom_getsockopt(int fd, int level, int optname, char __
 static asmlinkage long custom_bind(int fd, struct sockaddr __user *umyaddr, int addrlen)
 {
     asmlinkage long (*org_bind)(int fd, struct sockaddr __user *umyaddr, int addrlen);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:bind,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3065,7 +3067,7 @@ static asmlinkage long custom_bind(int fd, struct sockaddr __user *umyaddr, int 
 static asmlinkage long custom_connect(int fd, struct sockaddr __user *uservaddr, int addrlen)
 {
     asmlinkage long (*org_connect)(int fd, struct sockaddr __user *uservaddr, int addrlen);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:connect,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3078,7 +3080,7 @@ static asmlinkage long custom_connect(int fd, struct sockaddr __user *uservaddr,
 static asmlinkage long custom_accept(int fd, struct sockaddr __user *upeer_sockaddr, int __user *upeer_addrlen)
 {
     asmlinkage long (*org_accept)(int fd, struct sockaddr __user *upeer_sockaddr, int __user *upeer_addrlen);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:accept,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3091,7 +3093,7 @@ static asmlinkage long custom_accept(int fd, struct sockaddr __user *upeer_socka
 static asmlinkage long custom_accept4(int fd, struct sockaddr __user *upeer_sockaddr, int __user *upeer_addrlen, int flags)
 {
     asmlinkage long (*org_accept4)(int fd, struct sockaddr __user *upeer_sockaddr, int __user *upeer_addrlen, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:accept4,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3104,7 +3106,7 @@ static asmlinkage long custom_accept4(int fd, struct sockaddr __user *upeer_sock
 static asmlinkage long custom_getsockname(int fd, struct sockaddr __user *usockaddr, int __user *usockaddr_len)
 {
     asmlinkage long (*org_getsockname)(int fd, struct sockaddr __user *usockaddr, int __user *usockaddr_len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getsockname,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3117,7 +3119,7 @@ static asmlinkage long custom_getsockname(int fd, struct sockaddr __user *usocka
 static asmlinkage long custom_getpeername(int fd, struct sockaddr __user *usockaddr, int __user *usockaddr_len)
 {
     asmlinkage long (*org_getpeername)(int fd, struct sockaddr __user *usockaddr, int __user *usockaddr_len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getpeername,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3130,7 +3132,7 @@ static asmlinkage long custom_getpeername(int fd, struct sockaddr __user *usocka
 static asmlinkage long custom_send(int fd, void __user *buff, size_t len, unsigned int flags)
 {
     asmlinkage long (*org_send)(int fd, void __user *buff, size_t len, unsigned int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:send,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3143,7 +3145,7 @@ static asmlinkage long custom_send(int fd, void __user *buff, size_t len, unsign
 static asmlinkage long custom_sendto(int fd, void __user *buff, size_t len, unsigned int flags, struct sockaddr __user *addr, int addr_len)
 {
     asmlinkage long (*org_sendto)(int fd, void __user *buff, size_t len, unsigned int flags, struct sockaddr __user *addr, int addr_len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sendto,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3156,7 +3158,7 @@ static asmlinkage long custom_sendto(int fd, void __user *buff, size_t len, unsi
 static asmlinkage long custom_sendmsg(int fd, struct user_msghdr __user *msg, unsigned flags)
 {
     asmlinkage long (*org_sendmsg)(int fd, struct user_msghdr __user *msg, unsigned flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sendmsg,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3169,7 +3171,7 @@ static asmlinkage long custom_sendmsg(int fd, struct user_msghdr __user *msg, un
 static asmlinkage long custom_sendmmsg(int fd, struct mmsghdr __user *msg, unsigned int vlen, unsigned flags)
 {
     asmlinkage long (*org_sendmmsg)(int fd, struct mmsghdr __user *msg, unsigned int vlen, unsigned flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sendmmsg,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3182,7 +3184,7 @@ static asmlinkage long custom_sendmmsg(int fd, struct mmsghdr __user *msg, unsig
 static asmlinkage long custom_recv(int fd, void __user *ubuf, size_t size, unsigned int flags)
 {
     asmlinkage long (*org_recv)(int fd, void __user *ubuf, size_t size, unsigned int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:recv,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3195,7 +3197,7 @@ static asmlinkage long custom_recv(int fd, void __user *ubuf, size_t size, unsig
 static asmlinkage long custom_recvfrom(int fd, void __user *ubuf, size_t size, unsigned int flags, struct sockaddr __user *addr, int __user *addr_len)
 {
     asmlinkage long (*org_recvfrom)(int fd, void __user *ubuf, size_t size, unsigned int flags, struct sockaddr __user *addr, int __user *addr_len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:recvfrom,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3208,7 +3210,7 @@ static asmlinkage long custom_recvfrom(int fd, void __user *ubuf, size_t size, u
 static asmlinkage long custom_recvmsg(int fd, struct user_msghdr __user *msg, unsigned flags)
 {
     asmlinkage long (*org_recvmsg)(int fd, struct user_msghdr __user *msg, unsigned flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:recvmsg,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3221,7 +3223,7 @@ static asmlinkage long custom_recvmsg(int fd, struct user_msghdr __user *msg, un
 static asmlinkage long custom_recvmmsg(int fd, struct mmsghdr __user *msg, unsigned int vlen, unsigned flags, struct timespec __user *timeout)
 {
     asmlinkage long (*org_recvmmsg)(int fd, struct mmsghdr __user *msg, unsigned int vlen, unsigned flags, struct timespec __user *timeout);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:recvmmsg,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3234,7 +3236,7 @@ static asmlinkage long custom_recvmmsg(int fd, struct mmsghdr __user *msg, unsig
 static asmlinkage long custom_socket(int family, int type, int protocol)
 {
     asmlinkage long (*org_socket)(int family, int type, int protocol);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:socket,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3247,7 +3249,7 @@ static asmlinkage long custom_socket(int family, int type, int protocol)
 static asmlinkage long custom_socketpair(int family, int type, int protocol, int __user *usockvec)
 {
     asmlinkage long (*org_socketpair)(int family, int type, int protocol, int __user *usockvec);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:socketpair,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3260,7 +3262,7 @@ static asmlinkage long custom_socketpair(int family, int type, int protocol, int
 static asmlinkage long custom_socketcall(int call, unsigned long __user *args)
 {
     asmlinkage long (*org_socketcall)(int call, unsigned long __user *args);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:socketcall,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3273,7 +3275,7 @@ static asmlinkage long custom_socketcall(int call, unsigned long __user *args)
 static asmlinkage long custom_listen(int fd, int backlog)
 {
     asmlinkage long (*org_listen)(int fd, int backlog);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:listen,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3286,7 +3288,7 @@ static asmlinkage long custom_listen(int fd, int backlog)
 static asmlinkage long custom_poll(struct pollfd __user *ufds, unsigned int nfds, int timeout)
 {
     asmlinkage long (*org_poll)(struct pollfd __user *ufds, unsigned int nfds, int timeout);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:poll,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3299,7 +3301,7 @@ static asmlinkage long custom_poll(struct pollfd __user *ufds, unsigned int nfds
 static asmlinkage long custom_select(int n, fd_set __user *inp, fd_set __user *outp, fd_set __user *exp, struct timeval __user *tvp)
 {
     asmlinkage long (*org_select)(int n, fd_set __user *inp, fd_set __user *outp, fd_set __user *exp, struct timeval __user *tvp);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:select,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3312,7 +3314,7 @@ static asmlinkage long custom_select(int n, fd_set __user *inp, fd_set __user *o
 static asmlinkage long custom_old_select(struct sel_arg_struct __user *arg)
 {
     asmlinkage long (*org_old_select)(struct sel_arg_struct __user *arg);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:old_select,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3325,7 +3327,7 @@ static asmlinkage long custom_old_select(struct sel_arg_struct __user *arg)
 static asmlinkage long custom_epoll_create(int size)
 {
     asmlinkage long (*org_epoll_create)(int size);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:epoll_create,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3338,7 +3340,7 @@ static asmlinkage long custom_epoll_create(int size)
 static asmlinkage long custom_epoll_create1(int flags)
 {
     asmlinkage long (*org_epoll_create1)(int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:epoll_create1,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3351,7 +3353,7 @@ static asmlinkage long custom_epoll_create1(int flags)
 static asmlinkage long custom_epoll_ctl(int epfd, int op, int fd, struct epoll_event __user *event)
 {
     asmlinkage long (*org_epoll_ctl)(int epfd, int op, int fd, struct epoll_event __user *event);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:epoll_ctl,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3364,7 +3366,7 @@ static asmlinkage long custom_epoll_ctl(int epfd, int op, int fd, struct epoll_e
 static asmlinkage long custom_epoll_wait(int epfd, struct epoll_event __user *events, int maxevents, int timeout)
 {
     asmlinkage long (*org_epoll_wait)(int epfd, struct epoll_event __user *events, int maxevents, int timeout);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:epoll_wait,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3377,7 +3379,7 @@ static asmlinkage long custom_epoll_wait(int epfd, struct epoll_event __user *ev
 static asmlinkage long custom_epoll_pwait(int epfd, struct epoll_event __user *events, int maxevents, int timeout, const sigset_t __user *sigmask, size_t sigsetsize)
 {
     asmlinkage long (*org_epoll_pwait)(int epfd, struct epoll_event __user *events, int maxevents, int timeout, const sigset_t __user *sigmask, size_t sigsetsize);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:epoll_pwait,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3390,7 +3392,7 @@ static asmlinkage long custom_epoll_pwait(int epfd, struct epoll_event __user *e
 static asmlinkage long custom_gethostname(char __user *name, int len)
 {
     asmlinkage long (*org_gethostname)(char __user *name, int len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:gethostname,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3403,7 +3405,7 @@ static asmlinkage long custom_gethostname(char __user *name, int len)
 static asmlinkage long custom_sethostname(char __user *name, int len)
 {
     asmlinkage long (*org_sethostname)(char __user *name, int len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sethostname,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3416,7 +3418,7 @@ static asmlinkage long custom_sethostname(char __user *name, int len)
 static asmlinkage long custom_setdomainname(char __user *name, int len)
 {
     asmlinkage long (*org_setdomainname)(char __user *name, int len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setdomainname,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3429,7 +3431,7 @@ static asmlinkage long custom_setdomainname(char __user *name, int len)
 static asmlinkage long custom_newuname(struct new_utsname __user *name)
 {
     asmlinkage long (*org_newuname)(struct new_utsname __user *name);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:newuname,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3442,7 +3444,7 @@ static asmlinkage long custom_newuname(struct new_utsname __user *name)
 static asmlinkage long custom_uname(struct old_utsname __user *ubuf)
 {
     asmlinkage long (*org_uname)(struct old_utsname __user *ubuf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:uname,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3455,7 +3457,7 @@ static asmlinkage long custom_uname(struct old_utsname __user *ubuf)
 static asmlinkage long custom_olduname(struct oldold_utsname __user *)
 {
     asmlinkage long (*org_olduname)(struct oldold_utsname __user *);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:olduname,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3468,7 +3470,7 @@ static asmlinkage long custom_olduname(struct oldold_utsname __user *)
 static asmlinkage long custom_getrlimit(unsigned int resource, struct rlimit __user *rlim)
 {
     asmlinkage long (*org_getrlimit)(unsigned int resource, struct rlimit __user *rlim);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getrlimit,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3482,7 +3484,7 @@ static asmlinkage long custom_getrlimit(unsigned int resource, struct rlimit __u
 static asmlinkage long custom_old_getrlimit(unsigned int resource, struct rlimit __user *rlim)
 {
     asmlinkage long (*org_old_getrlimit)(unsigned int resource, struct rlimit __user *rlim);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:old_getrlimit,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3496,7 +3498,7 @@ static asmlinkage long custom_old_getrlimit(unsigned int resource, struct rlimit
 static asmlinkage long custom_setrlimit(unsigned int resource, struct rlimit __user *rlim)
 {
     asmlinkage long (*org_setrlimit)(unsigned int resource, struct rlimit __user *rlim);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setrlimit,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3509,7 +3511,7 @@ static asmlinkage long custom_setrlimit(unsigned int resource, struct rlimit __u
 static asmlinkage long custom_prlimit64(pid_t pid, unsigned int resource, const struct rlimit64 __user *new_rlim, struct rlimit64 __user *old_rlim)
 {
     asmlinkage long (*org_prlimit64)(pid_t pid, unsigned int resource, const struct rlimit64 __user *new_rlim, struct rlimit64 __user *old_rlim);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:prlimit64,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3522,7 +3524,7 @@ static asmlinkage long custom_prlimit64(pid_t pid, unsigned int resource, const 
 static asmlinkage long custom_getrusage(int who, struct rusage __user *ru)
 {
     asmlinkage long (*org_getrusage)(int who, struct rusage __user *ru);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getrusage,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3535,7 +3537,7 @@ static asmlinkage long custom_getrusage(int who, struct rusage __user *ru)
 static asmlinkage long custom_umask(int mask)
 {
     asmlinkage long (*org_umask)(int mask);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:umask,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3549,7 +3551,7 @@ static asmlinkage long custom_umask(int mask)
 static asmlinkage long custom_msgget(key_t key, int msgflg)
 {
     asmlinkage long (*org_msgget)(key_t key, int msgflg);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:msgget,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3562,7 +3564,7 @@ static asmlinkage long custom_msgget(key_t key, int msgflg)
 static asmlinkage long custom_msgsnd(int msqid, struct msgbuf __user *msgp, size_t msgsz, int msgflg)
 {
     asmlinkage long (*org_msgsnd)(int msqid, struct msgbuf __user *msgp, size_t msgsz, int msgflg);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:msgsnd,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3575,7 +3577,7 @@ static asmlinkage long custom_msgsnd(int msqid, struct msgbuf __user *msgp, size
 static asmlinkage long custom_msgrcv(int msqid, struct msgbuf __user *msgp, size_t msgsz, long msgtyp, int msgflg)
 {
     asmlinkage long (*org_msgrcv)(int msqid, struct msgbuf __user *msgp, size_t msgsz, long msgtyp, int msgflg);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:msgrcv,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3588,7 +3590,7 @@ static asmlinkage long custom_msgrcv(int msqid, struct msgbuf __user *msgp, size
 static asmlinkage long custom_msgctl(int msqid, int cmd, struct msqid_ds __user *buf)
 {
     asmlinkage long (*org_msgctl)(int msqid, int cmd, struct msqid_ds __user *buf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:msgctl,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3602,7 +3604,7 @@ static asmlinkage long custom_msgctl(int msqid, int cmd, struct msqid_ds __user 
 static asmlinkage long custom_semget(key_t key, int nsems, int semflg)
 {
     asmlinkage long (*org_semget)(key_t key, int nsems, int semflg);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:semget,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3615,7 +3617,7 @@ static asmlinkage long custom_semget(key_t key, int nsems, int semflg)
 static asmlinkage long custom_semop(int semid, struct sembuf __user *sops, unsigned nsops)
 {
     asmlinkage long (*org_semop)(int semid, struct sembuf __user *sops, unsigned nsops);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:semop,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3628,7 +3630,7 @@ static asmlinkage long custom_semop(int semid, struct sembuf __user *sops, unsig
 static asmlinkage long custom_semctl(int semid, int semnum, int cmd, unsigned long arg)
 {
     asmlinkage long (*org_semctl)(int semid, int semnum, int cmd, unsigned long arg);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:semctl,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3641,7 +3643,7 @@ static asmlinkage long custom_semctl(int semid, int semnum, int cmd, unsigned lo
 static asmlinkage long custom_semtimedop(int semid, struct sembuf __user *sops, unsigned nsops, const struct timespec __user *timeout)
 {
     asmlinkage long (*org_semtimedop)(int semid, struct sembuf __user *sops, unsigned nsops, const struct timespec __user *timeout);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:semtimedop,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3654,7 +3656,7 @@ static asmlinkage long custom_semtimedop(int semid, struct sembuf __user *sops, 
 static asmlinkage long custom_shmat(int shmid, char __user *shmaddr, int shmflg)
 {
     asmlinkage long (*org_shmat)(int shmid, char __user *shmaddr, int shmflg);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:shmat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3667,7 +3669,7 @@ static asmlinkage long custom_shmat(int shmid, char __user *shmaddr, int shmflg)
 static asmlinkage long custom_shmget(key_t key, size_t size, int flag)
 {
     asmlinkage long (*org_shmget)(key_t key, size_t size, int flag);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:shmget,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3680,7 +3682,7 @@ static asmlinkage long custom_shmget(key_t key, size_t size, int flag)
 static asmlinkage long custom_shmdt(char __user *shmaddr)
 {
     asmlinkage long (*org_shmdt)(char __user *shmaddr);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:shmdt,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3693,7 +3695,7 @@ static asmlinkage long custom_shmdt(char __user *shmaddr)
 static asmlinkage long custom_shmctl(int shmid, int cmd, struct shmid_ds __user *buf)
 {
     asmlinkage long (*org_shmctl)(int shmid, int cmd, struct shmid_ds __user *buf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:shmctl,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3706,7 +3708,7 @@ static asmlinkage long custom_shmctl(int shmid, int cmd, struct shmid_ds __user 
 static asmlinkage long custom_ipc(unsigned int call, int first, unsigned long second, unsigned long third, void __user *ptr, long fifth)
 {
     asmlinkage long (*org_ipc)(unsigned int call, int first, unsigned long second, unsigned long third, void __user *ptr, long fifth);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:ipc,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3720,7 +3722,7 @@ static asmlinkage long custom_ipc(unsigned int call, int first, unsigned long se
 static asmlinkage long custom_mq_open(const char __user *name, int oflag, umode_t mode, struct mq_attr __user *attr)
 {
     asmlinkage long (*org_mq_open)(const char __user *name, int oflag, umode_t mode, struct mq_attr __user *attr);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mq_open,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3733,7 +3735,7 @@ static asmlinkage long custom_mq_open(const char __user *name, int oflag, umode_
 static asmlinkage long custom_mq_unlink(const char __user *name)
 {
     asmlinkage long (*org_mq_unlink)(const char __user *name);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mq_unlink,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3746,7 +3748,7 @@ static asmlinkage long custom_mq_unlink(const char __user *name)
 static asmlinkage long custom_mq_timedsend(mqd_t mqdes, const char __user *msg_ptr, size_t msg_len, unsigned int msg_prio, const struct timespec __user *abs_timeout)
 {
     asmlinkage long (*org_mq_timedsend)(mqd_t mqdes, const char __user *msg_ptr, size_t msg_len, unsigned int msg_prio, const struct timespec __user *abs_timeout);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mq_timedsend,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3759,7 +3761,7 @@ static asmlinkage long custom_mq_timedsend(mqd_t mqdes, const char __user *msg_p
 static asmlinkage long custom_mq_timedreceive(mqd_t mqdes, char __user *msg_ptr, size_t msg_len, unsigned int __user *msg_prio, const struct timespec __user *abs_timeout)
 {
     asmlinkage long (*org_mq_timedreceive)(mqd_t mqdes, char __user *msg_ptr, size_t msg_len, unsigned int __user *msg_prio, const struct timespec __user *abs_timeout);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mq_timedreceive,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3772,7 +3774,7 @@ static asmlinkage long custom_mq_timedreceive(mqd_t mqdes, char __user *msg_ptr,
 static asmlinkage long custom_mq_notify(mqd_t mqdes, const struct sigevent __user *notification)
 {
     asmlinkage long (*org_mq_notify)(mqd_t mqdes, const struct sigevent __user *notification);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mq_notify,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3785,7 +3787,7 @@ static asmlinkage long custom_mq_notify(mqd_t mqdes, const struct sigevent __use
 static asmlinkage long custom_mq_getsetattr(mqd_t mqdes, const struct mq_attr __user *mqstat, struct mq_attr __user *omqstat)
 {
     asmlinkage long (*org_mq_getsetattr)(mqd_t mqdes, const struct mq_attr __user *mqstat, struct mq_attr __user *omqstat);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mq_getsetattr,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3799,7 +3801,7 @@ static asmlinkage long custom_mq_getsetattr(mqd_t mqdes, const struct mq_attr __
 static asmlinkage long custom_pciconfig_iobase(long which, unsigned long bus, unsigned long devfn)
 {
     asmlinkage long (*org_pciconfig_iobase)(long which, unsigned long bus, unsigned long devfn);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pciconfig_iobase,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3812,7 +3814,7 @@ static asmlinkage long custom_pciconfig_iobase(long which, unsigned long bus, un
 static asmlinkage long custom_pciconfig_read(unsigned long bus, unsigned long dfn, unsigned long off, unsigned long len, void __user *buf)
 {
     asmlinkage long (*org_pciconfig_read)(unsigned long bus, unsigned long dfn, unsigned long off, unsigned long len, void __user *buf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pciconfig_read,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3825,7 +3827,7 @@ static asmlinkage long custom_pciconfig_read(unsigned long bus, unsigned long df
 static asmlinkage long custom_pciconfig_write(unsigned long bus, unsigned long dfn, unsigned long off, unsigned long len, void __user *buf)
 {
     asmlinkage long (*org_pciconfig_write)(unsigned long bus, unsigned long dfn, unsigned long off, unsigned long len, void __user *buf);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pciconfig_write,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3839,7 +3841,7 @@ static asmlinkage long custom_pciconfig_write(unsigned long bus, unsigned long d
 static asmlinkage long custom_prctl(int option, unsigned long arg2, unsigned long arg3, unsigned long arg4, unsigned long arg5)
 {
     asmlinkage long (*org_prctl)(int option, unsigned long arg2, unsigned long arg3, unsigned long arg4, unsigned long arg5);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:prctl,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3852,7 +3854,7 @@ static asmlinkage long custom_prctl(int option, unsigned long arg2, unsigned lon
 static asmlinkage long custom_swapon(const char __user *specialfile, int swap_flags)
 {
     asmlinkage long (*org_swapon)(const char __user *specialfile, int swap_flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:swapon,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3865,7 +3867,7 @@ static asmlinkage long custom_swapon(const char __user *specialfile, int swap_fl
 static asmlinkage long custom_swapoff(const char __user *specialfile)
 {
     asmlinkage long (*org_swapoff)(const char __user *specialfile);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:swapoff,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3878,7 +3880,7 @@ static asmlinkage long custom_swapoff(const char __user *specialfile)
 static asmlinkage long custom_sysctl(struct __sysctl_args __user *args)
 {
     asmlinkage long (*org_sysctl)(struct __sysctl_args __user *args);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sysctl,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3891,7 +3893,7 @@ static asmlinkage long custom_sysctl(struct __sysctl_args __user *args)
 static asmlinkage long custom_sysinfo(struct sysinfo __user *info)
 {
     asmlinkage long (*org_sysinfo)(struct sysinfo __user *info);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sysinfo,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3904,7 +3906,7 @@ static asmlinkage long custom_sysinfo(struct sysinfo __user *info)
 static asmlinkage long custom_sysfs(int option, unsigned long arg1, unsigned long arg2)
 {
     asmlinkage long (*org_sysfs)(int option, unsigned long arg1, unsigned long arg2);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sysfs,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3917,7 +3919,7 @@ static asmlinkage long custom_sysfs(int option, unsigned long arg1, unsigned lon
 static asmlinkage long custom_syslog(int type, char __user *buf, int len)
 {
     asmlinkage long (*org_syslog)(int type, char __user *buf, int len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:syslog,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3930,7 +3932,7 @@ static asmlinkage long custom_syslog(int type, char __user *buf, int len)
 static asmlinkage long custom_uselib(const char __user *library)
 {
     asmlinkage long (*org_uselib)(const char __user *library);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:uselib,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3943,7 +3945,7 @@ static asmlinkage long custom_uselib(const char __user *library)
 static asmlinkage long custom_ni_syscall(void)
 {
     asmlinkage long (*org_ni_syscall)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:ni_syscall,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3956,7 +3958,7 @@ static asmlinkage long custom_ni_syscall(void)
 static asmlinkage long custom_ptrace(long request, long pid, unsigned long addr, unsigned long data)
 {
     asmlinkage long (*org_ptrace)(long request, long pid, unsigned long addr, unsigned long data);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:ptrace,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3970,7 +3972,7 @@ static asmlinkage long custom_ptrace(long request, long pid, unsigned long addr,
 static asmlinkage long custom_add_key(const char __user *_type, const char __user *_description, const void __user *_payload, size_t plen, key_serial_t destringid)
 {
     asmlinkage long (*org_add_key)(const char __user *_type, const char __user *_description, const void __user *_payload, size_t plen, key_serial_t destringid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:add_key,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3984,7 +3986,7 @@ static asmlinkage long custom_add_key(const char __user *_type, const char __use
 static asmlinkage long custom_request_key(const char __user *_type, const char __user *_description, const char __user *_callout_info, key_serial_t destringid)
 {
     asmlinkage long (*org_request_key)(const char __user *_type, const char __user *_description, const char __user *_callout_info, key_serial_t destringid);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:request_key,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -3998,7 +4000,7 @@ static asmlinkage long custom_request_key(const char __user *_type, const char _
 static asmlinkage long custom_keyctl(int cmd, unsigned long arg2, unsigned long arg3, unsigned long arg4, unsigned long arg5)
 {
     asmlinkage long (*org_keyctl)(int cmd, unsigned long arg2, unsigned long arg3, unsigned long arg4, unsigned long arg5);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:keyctl,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4012,7 +4014,7 @@ static asmlinkage long custom_keyctl(int cmd, unsigned long arg2, unsigned long 
 static asmlinkage long custom_ioprio_set(int which, int who, int ioprio)
 {
     asmlinkage long (*org_ioprio_set)(int which, int who, int ioprio);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:ioprio_set,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4025,7 +4027,7 @@ static asmlinkage long custom_ioprio_set(int which, int who, int ioprio)
 static asmlinkage long custom_ioprio_get(int which, int who)
 {
     asmlinkage long (*org_ioprio_get)(int which, int who);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:ioprio_get,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4038,7 +4040,7 @@ static asmlinkage long custom_ioprio_get(int which, int who)
 static asmlinkage long custom_set_mempolicy(int mode, const unsigned long __user *nmask, unsigned long maxnode)
 {
     asmlinkage long (*org_set_mempolicy)(int mode, const unsigned long __user *nmask, unsigned long maxnode);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:set_mempolicy,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4051,7 +4053,7 @@ static asmlinkage long custom_set_mempolicy(int mode, const unsigned long __user
 static asmlinkage long custom_migrate_pages(pid_t pid, unsigned long maxnode, const unsigned long __user *from, const unsigned long __user *to)
 {
     asmlinkage long (*org_migrate_pages)(pid_t pid, unsigned long maxnode, const unsigned long __user *from, const unsigned long __user *to);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:migrate_pages,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4064,7 +4066,7 @@ static asmlinkage long custom_migrate_pages(pid_t pid, unsigned long maxnode, co
 static asmlinkage long custom_move_pages(pid_t pid, unsigned long nr_pages, const void __user * __user *pages, const int __user *nodes, int __user *status, int flags)
 {
     asmlinkage long (*org_move_pages)(pid_t pid, unsigned long nr_pages, const void __user * __user *pages, const int __user *nodes, int __user *status, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:move_pages,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4077,7 +4079,7 @@ static asmlinkage long custom_move_pages(pid_t pid, unsigned long nr_pages, cons
 static asmlinkage long custom_mbind(unsigned long start, unsigned long len, unsigned long mode, const unsigned long __user *nmask, unsigned long maxnode, unsigned flags)
 {
     asmlinkage long (*org_mbind)(unsigned long start, unsigned long len, unsigned long mode, const unsigned long __user *nmask, unsigned long maxnode, unsigned flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mbind,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4090,7 +4092,7 @@ static asmlinkage long custom_mbind(unsigned long start, unsigned long len, unsi
 static asmlinkage long custom_get_mempolicy(int __user *policy, unsigned long __user *nmask, unsigned long maxnode, unsigned long addr, unsigned long flags)
 {
     asmlinkage long (*org_get_mempolicy)(int __user *policy, unsigned long __user *nmask, unsigned long maxnode, unsigned long addr, unsigned long flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:get_mempolicy,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4104,7 +4106,7 @@ static asmlinkage long custom_get_mempolicy(int __user *policy, unsigned long __
 static asmlinkage long custom_inotify_init(void)
 {
     asmlinkage long (*org_inotify_init)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:inotify_init,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4117,7 +4119,7 @@ static asmlinkage long custom_inotify_init(void)
 static asmlinkage long custom_inotify_init1(int flags)
 {
     asmlinkage long (*org_inotify_init1)(int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:inotify_init1,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4130,7 +4132,7 @@ static asmlinkage long custom_inotify_init1(int flags)
 static asmlinkage long custom_inotify_add_watch(int fd, const char __user *path, u32 mask)
 {
     asmlinkage long (*org_inotify_add_watch)(int fd, const char __user *path, u32 mask);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:inotify_add_watch,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4143,7 +4145,7 @@ static asmlinkage long custom_inotify_add_watch(int fd, const char __user *path,
 static asmlinkage long custom_inotify_rm_watch(int fd, __s32 wd)
 {
     asmlinkage long (*org_inotify_rm_watch)(int fd, __s32 wd);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:inotify_rm_watch,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4157,7 +4159,7 @@ static asmlinkage long custom_inotify_rm_watch(int fd, __s32 wd)
 static asmlinkage long custom_spu_run(int fd, __u32 __user *unpc, __u32 __user *ustatus)
 {
     asmlinkage long (*org_spu_run)(int fd, __u32 __user *unpc, __u32 __user *ustatus);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:spu_run,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4170,7 +4172,7 @@ static asmlinkage long custom_spu_run(int fd, __u32 __user *unpc, __u32 __user *
 static asmlinkage long custom_spu_create(const char __user *name, unsigned int flags, umode_t mode, int fd)
 {
     asmlinkage long (*org_spu_create)(const char __user *name, unsigned int flags, umode_t mode, int fd);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:spu_create,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4184,7 +4186,7 @@ static asmlinkage long custom_spu_create(const char __user *name, unsigned int f
 static asmlinkage long custom_mknodat(int dfd, const char __user * filename, umode_t mode, unsigned dev)
 {
     asmlinkage long (*org_mknodat)(int dfd, const char __user * filename, umode_t mode, unsigned dev);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mknodat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4197,7 +4199,7 @@ static asmlinkage long custom_mknodat(int dfd, const char __user * filename, umo
 static asmlinkage long custom_mkdirat(int dfd, const char __user * pathname, umode_t mode)
 {
     asmlinkage long (*org_mkdirat)(int dfd, const char __user * pathname, umode_t mode);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mkdirat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4210,7 +4212,7 @@ static asmlinkage long custom_mkdirat(int dfd, const char __user * pathname, umo
 static asmlinkage long custom_unlinkat(int dfd, const char __user * pathname, int flag)
 {
     asmlinkage long (*org_unlinkat)(int dfd, const char __user * pathname, int flag);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:unlinkat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4223,7 +4225,7 @@ static asmlinkage long custom_unlinkat(int dfd, const char __user * pathname, in
 static asmlinkage long custom_symlinkat(const char __user * oldname, int newdfd, const char __user * newname)
 {
     asmlinkage long (*org_symlinkat)(const char __user * oldname, int newdfd, const char __user * newname);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:symlinkat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4236,7 +4238,7 @@ static asmlinkage long custom_symlinkat(const char __user * oldname, int newdfd,
 static asmlinkage long custom_linkat(int olddfd, const char __user *oldname, int newdfd, const char __user *newname, int flags)
 {
     asmlinkage long (*org_linkat)(int olddfd, const char __user *oldname, int newdfd, const char __user *newname, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:linkat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4249,7 +4251,7 @@ static asmlinkage long custom_linkat(int olddfd, const char __user *oldname, int
 static asmlinkage long custom_renameat(int olddfd, const char __user * oldname, int newdfd, const char __user * newname)
 {
     asmlinkage long (*org_renameat)(int olddfd, const char __user * oldname, int newdfd, const char __user * newname);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:renameat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4262,7 +4264,7 @@ static asmlinkage long custom_renameat(int olddfd, const char __user * oldname, 
 static asmlinkage long custom_renameat2(int olddfd, const char __user *oldname, int newdfd, const char __user *newname, unsigned int flags)
 {
     asmlinkage long (*org_renameat2)(int olddfd, const char __user *oldname, int newdfd, const char __user *newname, unsigned int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:renameat2,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4275,7 +4277,7 @@ static asmlinkage long custom_renameat2(int olddfd, const char __user *oldname, 
 static asmlinkage long custom_futimesat(int dfd, const char __user *filename, struct timeval __user *utimes)
 {
     asmlinkage long (*org_futimesat)(int dfd, const char __user *filename, struct timeval __user *utimes);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:futimesat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4288,7 +4290,7 @@ static asmlinkage long custom_futimesat(int dfd, const char __user *filename, st
 static asmlinkage long custom_faccessat(int dfd, const char __user *filename, int mode)
 {
     asmlinkage long (*org_faccessat)(int dfd, const char __user *filename, int mode);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:faccessat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4301,7 +4303,7 @@ static asmlinkage long custom_faccessat(int dfd, const char __user *filename, in
 static asmlinkage long custom_fchmodat(int dfd, const char __user * filename, umode_t mode)
 {
     asmlinkage long (*org_fchmodat)(int dfd, const char __user * filename, umode_t mode);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fchmodat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4314,7 +4316,7 @@ static asmlinkage long custom_fchmodat(int dfd, const char __user * filename, um
 static asmlinkage long custom_fchownat(int dfd, const char __user *filename, uid_t user, gid_t group, int flag)
 {
     asmlinkage long (*org_fchownat)(int dfd, const char __user *filename, uid_t user, gid_t group, int flag);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fchownat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4327,7 +4329,7 @@ static asmlinkage long custom_fchownat(int dfd, const char __user *filename, uid
 static asmlinkage long custom_openat(int dfd, const char __user *filename, int flags, umode_t mode)
 {
     asmlinkage long (*org_openat)(int dfd, const char __user *filename, int flags, umode_t mode);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:openat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4340,7 +4342,7 @@ static asmlinkage long custom_openat(int dfd, const char __user *filename, int f
 static asmlinkage long custom_newfstatat(int dfd, const char __user *filename, struct stat __user *statbuf, int flag)
 {
     asmlinkage long (*org_newfstatat)(int dfd, const char __user *filename, struct stat __user *statbuf, int flag);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:newfstatat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4353,7 +4355,7 @@ static asmlinkage long custom_newfstatat(int dfd, const char __user *filename, s
 static asmlinkage long custom_readlinkat(int dfd, const char __user *path, char __user *buf, int bufsiz)
 {
     asmlinkage long (*org_readlinkat)(int dfd, const char __user *path, char __user *buf, int bufsiz);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:readlinkat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4366,7 +4368,7 @@ static asmlinkage long custom_readlinkat(int dfd, const char __user *path, char 
 static asmlinkage long custom_utimensat(int dfd, const char __user *filename, struct timespec __user *utimes, int flags)
 {
     asmlinkage long (*org_utimensat)(int dfd, const char __user *filename, struct timespec __user *utimes, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:utimensat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4379,7 +4381,7 @@ static asmlinkage long custom_utimensat(int dfd, const char __user *filename, st
 static asmlinkage long custom_unshare(unsigned long unshare_flags)
 {
     asmlinkage long (*org_unshare)(unsigned long unshare_flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:unshare,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4393,7 +4395,7 @@ static asmlinkage long custom_unshare(unsigned long unshare_flags)
 static asmlinkage long custom_splice(int fd_in, loff_t __user *off_in, int fd_out, loff_t __user *off_out, size_t len, unsigned int flags)
 {
     asmlinkage long (*org_splice)(int fd_in, loff_t __user *off_in, int fd_out, loff_t __user *off_out, size_t len, unsigned int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:splice,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4407,7 +4409,7 @@ static asmlinkage long custom_splice(int fd_in, loff_t __user *off_in, int fd_ou
 static asmlinkage long custom_vmsplice(int fd, const struct iovec __user *iov, unsigned long nr_segs, unsigned int flags)
 {
     asmlinkage long (*org_vmsplice)(int fd, const struct iovec __user *iov, unsigned long nr_segs, unsigned int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:vmsplice,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4421,7 +4423,7 @@ static asmlinkage long custom_vmsplice(int fd, const struct iovec __user *iov, u
 static asmlinkage long custom_tee(int fdin, int fdout, size_t len, unsigned int flags)
 {
     asmlinkage long (*org_tee)(int fdin, int fdout, size_t len, unsigned int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:tee,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4435,7 +4437,7 @@ static asmlinkage long custom_tee(int fdin, int fdout, size_t len, unsigned int 
 static asmlinkage long custom_sync_file_range(int fd, loff_t offset, loff_t nbytes, unsigned int flags)
 {
     asmlinkage long (*org_sync_file_range)(int fd, loff_t offset, loff_t nbytes, unsigned int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sync_file_range,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4448,7 +4450,7 @@ static asmlinkage long custom_sync_file_range(int fd, loff_t offset, loff_t nbyt
 static asmlinkage long custom_sync_file_range2(int fd, unsigned int flags, loff_t offset, loff_t nbytes)
 {
     asmlinkage long (*org_sync_file_range2)(int fd, unsigned int flags, loff_t offset, loff_t nbytes);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:sync_file_range2,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4461,7 +4463,7 @@ static asmlinkage long custom_sync_file_range2(int fd, unsigned int flags, loff_
 static asmlinkage long custom_get_robust_list(int pid, struct robust_list_head __user * __user *head_ptr, size_t __user *len_ptr)
 {
     asmlinkage long (*org_get_robust_list)(int pid, struct robust_list_head __user * __user *head_ptr, size_t __user *len_ptr);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:get_robust_list,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4474,7 +4476,7 @@ static asmlinkage long custom_get_robust_list(int pid, struct robust_list_head _
 static asmlinkage long custom_set_robust_list(struct robust_list_head __user *head, size_t len)
 {
     asmlinkage long (*org_set_robust_list)(struct robust_list_head __user *head, size_t len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:set_robust_list,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4487,7 +4489,7 @@ static asmlinkage long custom_set_robust_list(struct robust_list_head __user *he
 static asmlinkage long custom_getcpu(unsigned __user *cpu, unsigned __user *node, struct getcpu_cache __user *cache)
 {
     asmlinkage long (*org_getcpu)(unsigned __user *cpu, unsigned __user *node, struct getcpu_cache __user *cache);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getcpu,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4500,7 +4502,7 @@ static asmlinkage long custom_getcpu(unsigned __user *cpu, unsigned __user *node
 static asmlinkage long custom_signalfd(int ufd, sigset_t __user *user_mask, size_t sizemask)
 {
     asmlinkage long (*org_signalfd)(int ufd, sigset_t __user *user_mask, size_t sizemask);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:signalfd,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4513,7 +4515,7 @@ static asmlinkage long custom_signalfd(int ufd, sigset_t __user *user_mask, size
 static asmlinkage long custom_signalfd4(int ufd, sigset_t __user *user_mask, size_t sizemask, int flags)
 {
     asmlinkage long (*org_signalfd4)(int ufd, sigset_t __user *user_mask, size_t sizemask, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:signalfd4,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4526,7 +4528,7 @@ static asmlinkage long custom_signalfd4(int ufd, sigset_t __user *user_mask, siz
 static asmlinkage long custom_timerfd_create(int clockid, int flags)
 {
     asmlinkage long (*org_timerfd_create)(int clockid, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:timerfd_create,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4539,7 +4541,7 @@ static asmlinkage long custom_timerfd_create(int clockid, int flags)
 static asmlinkage long custom_timerfd_settime(int ufd, int flags, const struct itimerspec __user *utmr, struct itimerspec __user *otmr)
 {
     asmlinkage long (*org_timerfd_settime)(int ufd, int flags, const struct itimerspec __user *utmr, struct itimerspec __user *otmr);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:timerfd_settime,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4552,7 +4554,7 @@ static asmlinkage long custom_timerfd_settime(int ufd, int flags, const struct i
 static asmlinkage long custom_timerfd_gettime(int ufd, struct itimerspec __user *otmr)
 {
     asmlinkage long (*org_timerfd_gettime)(int ufd, struct itimerspec __user *otmr);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:timerfd_gettime,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4565,7 +4567,7 @@ static asmlinkage long custom_timerfd_gettime(int ufd, struct itimerspec __user 
 static asmlinkage long custom_eventfd(unsigned int count)
 {
     asmlinkage long (*org_eventfd)(unsigned int count);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:eventfd,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4578,7 +4580,7 @@ static asmlinkage long custom_eventfd(unsigned int count)
 static asmlinkage long custom_eventfd2(unsigned int count, int flags)
 {
     asmlinkage long (*org_eventfd2)(unsigned int count, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:eventfd2,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4591,7 +4593,7 @@ static asmlinkage long custom_eventfd2(unsigned int count, int flags)
 static asmlinkage long custom_memfd_create(const char __user *uname_ptr, unsigned int flags)
 {
     asmlinkage long (*org_memfd_create)(const char __user *uname_ptr, unsigned int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:memfd_create,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4604,7 +4606,7 @@ static asmlinkage long custom_memfd_create(const char __user *uname_ptr, unsigne
 static asmlinkage long custom_userfaultfd(int flags)
 {
     asmlinkage long (*org_userfaultfd)(int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:userfaultfd,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4617,7 +4619,7 @@ static asmlinkage long custom_userfaultfd(int flags)
 static asmlinkage long custom_fallocate(int fd, int mode, loff_t offset, loff_t len)
 {
     asmlinkage long (*org_fallocate)(int fd, int mode, loff_t offset, loff_t len);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fallocate,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4630,7 +4632,7 @@ static asmlinkage long custom_fallocate(int fd, int mode, loff_t offset, loff_t 
 static asmlinkage long custom_old_readdir(unsigned int, struct old_linux_dirent __user *, unsigned int)
 {
     asmlinkage long (*org_old_readdir)(unsigned int, struct old_linux_dirent __user *, unsigned int);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:old_readdir,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4642,7 +4644,7 @@ static asmlinkage long custom_old_readdir(unsigned int, struct old_linux_dirent 
 static asmlinkage long custom_pselect6(int n, fd_set __user *inp, fd_set __user *outp, fd_set __user *exp, struct timespec __user *tsp, void __user *sig)
 {
     asmlinkage long (*org_pselect6)(int n, fd_set __user *inp, fd_set __user *outp, fd_set __user *exp, struct timespec __user *tsp, void __user *sig);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pselect6,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4655,7 +4657,7 @@ static asmlinkage long custom_pselect6(int n, fd_set __user *inp, fd_set __user 
 static asmlinkage long custom_ppoll(struct pollfd __user *ufds, unsigned int nfds, struct timespec __user *tsp, const sigset_t __user *sigmask, size_t sigsetsize)
 {
     asmlinkage long (*org_ppoll)(struct pollfd __user *ufds, unsigned int nfds, struct timespec __user *tsp, const sigset_t __user *sigmask, size_t sigsetsize);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:ppoll,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4668,7 +4670,7 @@ static asmlinkage long custom_ppoll(struct pollfd __user *ufds, unsigned int nfd
 static asmlinkage long custom_fanotify_init(unsigned int flags, unsigned int event_f_flags)
 {
     asmlinkage long (*org_fanotify_init)(unsigned int flags, unsigned int event_f_flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fanotify_init,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4681,7 +4683,7 @@ static asmlinkage long custom_fanotify_init(unsigned int flags, unsigned int eve
 static asmlinkage long custom_fanotify_mark(int fanotify_fd, unsigned int flags, u64 mask, int fd, const char  __user *pathname)
 {
     asmlinkage long (*org_fanotify_mark)(int fanotify_fd, unsigned int flags, u64 mask, int fd, const char  __user *pathname);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fanotify_mark,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4694,7 +4696,7 @@ static asmlinkage long custom_fanotify_mark(int fanotify_fd, unsigned int flags,
 static asmlinkage long custom_syncfs(int fd)
 {
     asmlinkage long (*org_syncfs)(int fd);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:syncfs,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4708,7 +4710,7 @@ static asmlinkage long custom_syncfs(int fd)
 static asmlinkage long custom_fork(void)
 {
     asmlinkage long (*org_fork)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:fork,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4721,7 +4723,7 @@ static asmlinkage long custom_fork(void)
 static asmlinkage long custom_vfork(void)
 {
     asmlinkage long (*org_vfork)(void);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:vfork,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4735,7 +4737,7 @@ static asmlinkage long custom_vfork(void)
 static asmlinkage long custom_clone(unsigned long, unsigned long, int __user *, unsigned long, int __user *)
 {
     asmlinkage long (*org_clone)(unsigned long, unsigned long, int __user *, unsigned long, int __user *);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:clone,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4749,7 +4751,7 @@ static asmlinkage long custom_clone(unsigned long, unsigned long, int __user *, 
 static asmlinkage long custom_clone(unsigned long, unsigned long, int, int __user *, int __user *, unsigned long)
 {
     asmlinkage long (*org_clone)(unsigned long, unsigned long, int, int __user *, int __user *, unsigned long);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:clone,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4762,7 +4764,7 @@ static asmlinkage long custom_clone(unsigned long, unsigned long, int, int __use
 static asmlinkage long custom_clone(unsigned long clone_flags, unsigned long newsp, int __user *parent_tid, int __user *child_tid, unsigned long tls)
 {
     asmlinkage long (*org_clone)(unsigned long clone_flags, unsigned long newsp, int __user *parent_tid, int __user *child_tid, unsigned long tls);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:clone,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4778,7 +4780,7 @@ static asmlinkage long custom_clone(unsigned long clone_flags, unsigned long new
 static asmlinkage long custom_execve(const char __user *filename, const char __user *const __user *argv, const char __user *const __user *envp)
 {
     asmlinkage long (*org_execve)(const char __user *filename, const char __user *const __user *argv, const char __user *const __user *envp);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:execve,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4792,7 +4794,7 @@ static asmlinkage long custom_execve(const char __user *filename, const char __u
 static asmlinkage long custom_perf_event_open(struct perf_event_attr __user *attr_uptr, pid_t pid, int cpu, int group_fd, unsigned long flags)
 {
     asmlinkage long (*org_perf_event_open)(struct perf_event_attr __user *attr_uptr, pid_t pid, int cpu, int group_fd, unsigned long flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:perf_event_open,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4806,7 +4808,7 @@ static asmlinkage long custom_perf_event_open(struct perf_event_attr __user *att
 static asmlinkage long custom_mmap_pgoff(unsigned long addr, unsigned long len, unsigned long prot, unsigned long flags, unsigned long fd, unsigned long pgoff)
 {
     asmlinkage long (*org_mmap_pgoff)(unsigned long addr, unsigned long len, unsigned long prot, unsigned long flags, unsigned long fd, unsigned long pgoff);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mmap_pgoff,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4819,7 +4821,7 @@ static asmlinkage long custom_mmap_pgoff(unsigned long addr, unsigned long len, 
 static asmlinkage long custom_old_mmap(struct mmap_arg_struct __user *arg)
 {
     asmlinkage long (*org_old_mmap)(struct mmap_arg_struct __user *arg);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:old_mmap,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4832,7 +4834,7 @@ static asmlinkage long custom_old_mmap(struct mmap_arg_struct __user *arg)
 static asmlinkage long custom_name_to_handle_at(int dfd, const char __user *name, struct file_handle __user *handle, int __user *mnt_id, int flag)
 {
     asmlinkage long (*org_name_to_handle_at)(int dfd, const char __user *name, struct file_handle __user *handle, int __user *mnt_id, int flag);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:name_to_handle_at,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4845,7 +4847,7 @@ static asmlinkage long custom_name_to_handle_at(int dfd, const char __user *name
 static asmlinkage long custom_open_by_handle_at(int mountdirfd, struct file_handle __user *handle, int flags)
 {
     asmlinkage long (*org_open_by_handle_at)(int mountdirfd, struct file_handle __user *handle, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:open_by_handle_at,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4858,7 +4860,7 @@ static asmlinkage long custom_open_by_handle_at(int mountdirfd, struct file_hand
 static asmlinkage long custom_setns(int fd, int nstype)
 {
     asmlinkage long (*org_setns)(int fd, int nstype);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:setns,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4871,7 +4873,7 @@ static asmlinkage long custom_setns(int fd, int nstype)
 static asmlinkage long custom_process_vm_readv(pid_t pid, const struct iovec __user *lvec, unsigned long liovcnt, const struct iovec __user *rvec, unsigned long riovcnt, unsigned long flags)
 {
     asmlinkage long (*org_process_vm_readv)(pid_t pid, const struct iovec __user *lvec, unsigned long liovcnt, const struct iovec __user *rvec, unsigned long riovcnt, unsigned long flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:process_vm_readv,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4884,7 +4886,7 @@ static asmlinkage long custom_process_vm_readv(pid_t pid, const struct iovec __u
 static asmlinkage long custom_process_vm_writev(pid_t pid, const struct iovec __user *lvec, unsigned long liovcnt, const struct iovec __user *rvec, unsigned long riovcnt, unsigned long flags)
 {
     asmlinkage long (*org_process_vm_writev)(pid_t pid, const struct iovec __user *lvec, unsigned long liovcnt, const struct iovec __user *rvec, unsigned long riovcnt, unsigned long flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:process_vm_writev,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4898,7 +4900,7 @@ static asmlinkage long custom_process_vm_writev(pid_t pid, const struct iovec __
 static asmlinkage long custom_kcmp(pid_t pid1, pid_t pid2, int type, unsigned long idx1, unsigned long idx2)
 {
     asmlinkage long (*org_kcmp)(pid_t pid1, pid_t pid2, int type, unsigned long idx1, unsigned long idx2);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:kcmp,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4911,7 +4913,7 @@ static asmlinkage long custom_kcmp(pid_t pid1, pid_t pid2, int type, unsigned lo
 static asmlinkage long custom_finit_module(int fd, const char __user *uargs, int flags)
 {
     asmlinkage long (*org_finit_module)(int fd, const char __user *uargs, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:finit_module,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4924,7 +4926,7 @@ static asmlinkage long custom_finit_module(int fd, const char __user *uargs, int
 static asmlinkage long custom_seccomp(unsigned int op, unsigned int flags, const char __user *uargs)
 {
     asmlinkage long (*org_seccomp)(unsigned int op, unsigned int flags, const char __user *uargs);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:seccomp,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4937,7 +4939,7 @@ static asmlinkage long custom_seccomp(unsigned int op, unsigned int flags, const
 static asmlinkage long custom_getrandom(char __user *buf, size_t count, unsigned int flags)
 {
     asmlinkage long (*org_getrandom)(char __user *buf, size_t count, unsigned int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:getrandom,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4950,7 +4952,7 @@ static asmlinkage long custom_getrandom(char __user *buf, size_t count, unsigned
 static asmlinkage long custom_bpf(int cmd, union bpf_attr *attr, unsigned int size)
 {
     asmlinkage long (*org_bpf)(int cmd, union bpf_attr *attr, unsigned int size);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:bpf,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4964,7 +4966,7 @@ static asmlinkage long custom_bpf(int cmd, union bpf_attr *attr, unsigned int si
 static asmlinkage long custom_execveat(int dfd, const char __user *filename, const char __user *const __user *argv, const char __user *const __user *envp, int flags)
 {
     asmlinkage long (*org_execveat)(int dfd, const char __user *filename, const char __user *const __user *argv, const char __user *const __user *envp, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:execveat,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4978,7 +4980,7 @@ static asmlinkage long custom_execveat(int dfd, const char __user *filename, con
 static asmlinkage long custom_membarrier(int cmd, int flags)
 {
     asmlinkage long (*org_membarrier)(int cmd, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:membarrier,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -4991,7 +4993,7 @@ static asmlinkage long custom_membarrier(int cmd, int flags)
 static asmlinkage long custom_copy_file_range(int fd_in, loff_t __user *off_in, int fd_out, loff_t __user *off_out, size_t len, unsigned int flags)
 {
     asmlinkage long (*org_copy_file_range)(int fd_in, loff_t __user *off_in, int fd_out, loff_t __user *off_out, size_t len, unsigned int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:copy_file_range,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -5005,7 +5007,7 @@ static asmlinkage long custom_copy_file_range(int fd_in, loff_t __user *off_in, 
 static asmlinkage long custom_mlock2(unsigned long start, size_t len, int flags)
 {
     asmlinkage long (*org_mlock2)(unsigned long start, size_t len, int flags);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:mlock2,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -5019,7 +5021,7 @@ static asmlinkage long custom_mlock2(unsigned long start, size_t len, int flags)
 static asmlinkage long custom_pkey_mprotect(unsigned long start, size_t len, unsigned long prot, int pkey)
 {
     asmlinkage long (*org_pkey_mprotect)(unsigned long start, size_t len, unsigned long prot, int pkey);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pkey_mprotect,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -5032,7 +5034,7 @@ static asmlinkage long custom_pkey_mprotect(unsigned long start, size_t len, uns
 static asmlinkage long custom_pkey_alloc(unsigned long flags, unsigned long init_val)
 {
     asmlinkage long (*org_pkey_alloc)(unsigned long flags, unsigned long init_val);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pkey_alloc,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -5045,7 +5047,7 @@ static asmlinkage long custom_pkey_alloc(unsigned long flags, unsigned long init
 static asmlinkage long custom_pkey_free(int pkey)
 {
     asmlinkage long (*org_pkey_free)(int pkey);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:pkey_free,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }
@@ -5058,7 +5060,7 @@ static asmlinkage long custom_pkey_free(int pkey)
 static asmlinkage long custom_statx(int dfd, const char __user *path, unsigned flags, unsigned mask, struct statx __user *buffer)
 {
     asmlinkage long (*org_statx)(int dfd, const char __user *path, unsigned flags, unsigned mask, struct statx __user *buffer);
-    if(current->real_parent->pid == 12970)
+    if(current->real_parent->pid == PARENTID)
     {
     	printk(KERN_WARNING "ISOLATES:statx,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);
     }

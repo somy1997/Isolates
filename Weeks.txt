@@ -170,7 +170,7 @@ static asmlinkage long custom_close(unsigned int fd)
 Regex used in gedit :
 
 Matching syscalls : ^asmlinkage long sys_(\w+)\((.*)\);$
-Replacement       : #ifdef __NR_\1\nstatic asmlinkage long custom_\1(\2)\n{\n    asmlinkage long (*org_\1)(\2);\n    if(current->real_parent->pid == 12970)\n    {\n    	printk(KERN_WARNING "ISOLATES:\1,%s,%d,%d\\\\n", current->comm, current->pid, current->cred->uid.val);\n    }\n    org_\1 = (asmlinkage long (*)(\2)) org_sys_table[__NR_\1];\n}\n#endif\n
+Replacement       : #ifdef __NR_\1\nstatic asmlinkage long custom_\1(\2)\n{\n    asmlinkage long (*org_\1)(\2);\n    if(current->real_parent->pid == PARENTPID)\n    {\n    	printk(KERN_WARNING "ISOLATES:\1,%s,%d,%d\\\\n", current->comm, current->pid, current->cred->uid.val);\n    }\n    org_\1 = (asmlinkage long (*)(\2)) org_sys_table[__NR_\1];\n}\n#endif\n
 Matching the entire line for replication and repetition : (org_\w+ = .*)
 Matching 0 param  : ^\s+org_(\w+) = \(asmlinkage long \(\*\)\(void\).*;$
 Replacement       : \0\n    return org_\1();
@@ -212,3 +212,21 @@ Binary searching to find the errant syscalls :
 Commenting printk first to check if it works
 Matching  : printk.*
 Replacing : //\0\n\t\t;
+
+Rewriting the code by removing the predefined ifdefs from syscalls.h in reallops and using binary search to determine which syscalls are creating the problems.
+Macros : argument x :
+#x results in "x", stringifies x
+##x results in x , means the argument supplied to x, helps in reading (x = open) _##x as _open instead of _x as _x
+gcc -E shows the expanded macros, remove the include files to avoid fatal error when library not found
+Regex for using macros :
+#define STOREORIG(x) old_sys_table[__NR_##x] = sys_call_table[__NR_##x];
+Match   : old_sys_table\[__NR_(\w+)\] = sys_call_table.*;
+Replace : STOREORIG(\1);
+#define APPLYCUST(x) sys_call_table[__NR_##x] = (sys_call_ptr_t)custom_##x;
+Match   : sys_call_table\[__NR_(\w+)\] = \(sys_call_ptr_t\).*;
+Replace : APPLYCUST(\1);
+#define APPLYORIG(x) sys_call_table[__NR_##x] = old_sys_table[__NR_##x];
+Match   : sys_call_table\[__NR_(\w+)\] = old_sys_table.*;
+Replace : APPLYORIG(\1);
+
+Observation : The processes created inside a bash have UID of the parent process.

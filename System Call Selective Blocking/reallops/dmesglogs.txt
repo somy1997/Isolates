@@ -1,0 +1,74 @@
+[  771.640243] ISOLATES:Custom ReAllOps module inserted successfully
+[  785.489729] ISOLATES:open,bash,6229,1000,/home/nbs/Desktop/,DEFAULT,5573
+[  785.874456] ISOLATES:open,bash,6233,1000,/home/nbs/Desktop/,DEFAULT,5573
+[  786.137150] ISOLATES:open,bash,6234,1000,/home/nbs/Desktop/,DEFAULT,5573
+[  793.994603] ISOLATES:open,bash,6261,1000,.,DEFAULT,5573
+[  794.330558] ISOLATES:open,bash,6262,1000,.,DEFAULT,5573
+[  794.531459] ISOLATES:open,bash,6263,1000,.,DEFAULT,5573
+[  796.666924] ISOLATES:open,ls,6270,1000,/etc/ld.so.cache,O_WRONLY,5573
+[  796.666929] ISOLATES:open,ls,6270,1000,/lib/x86_64-linux-gnu/tls/x86_64/libselinux.so.1,DEFAULT,5573
+[  796.666935] ISOLATES:open,ls,6270,1000,/lib/x86_64-linux-gnu/tls/libselinux.so.1,DEFAULT,5573
+[  796.666939] ISOLATES:open,ls,6270,1000,/lib/x86_64-linux-gnu/x86_64/libselinux.so.1,DEFAULT,5573
+[  796.666944] ISOLATES:open,ls,6270,1000,/lib/x86_64-linux-gnu/libselinux.so.1,DEFAULT,5573
+[  803.700577] ISOLATES:open,ls,6292,1000,/etc/ld.so.cache,O_WRONLY,5573
+[  803.700582] ISOLATES:open,ls,6292,1000,/lib/x86_64-linux-gnu/tls/x86_64/libselinux.so.1,DEFAULT,5573
+[  803.700589] ISOLATES:open,ls,6292,1000,/lib/x86_64-linux-gnu/tls/libselinux.so.1,DEFAULT,5573
+[  803.700599] ISOLATES:open,ls,6292,1000,/lib/x86_64-linux-gnu/x86_64/libselinux.so.1,DEFAULT,5573
+[  803.700603] ISOLATES:open,ls,6292,1000,/lib/x86_64-linux-gnu/libselinux.so.1,DEFAULT,5573
+[  814.692198] ISOLATES:socket,simplestHTTPSer,6326,1000
+[  814.692241] ISOLATES:socket,simplestHTTPSer,6326,1000
+[  814.692251] ISOLATES:setsockopt,simplestHTTPSer,6326,1000
+[  814.692265] ISOLATES:bind,simplestHTTPSer,6326,1000
+[  814.692272] ISOLATES:socket,simplestHTTPSer,6326,1000
+[  814.692278] ISOLATES:setsockopt,simplestHTTPSer,6326,1000
+[  814.692281] ISOLATES:bind,simplestHTTPSer,6326,1000
+[  814.692299] ISOLATES:socket,simplestHTTPSer,6326,1000
+[  814.692305] ISOLATES:setsockopt,simplestHTTPSer,6326,1000
+[  814.692308] ISOLATES:setsockopt,simplestHTTPSer,6326,1000
+[  814.692385] ISOLATES:setsockopt,simplestHTTPSer,6326,1000
+[  814.692389] ISOLATES:bind,simplestHTTPSer,6326,1000
+[  814.692393] ISOLATES:listen,simplestHTTPSer,6326,1000
+[  814.692401] ISOLATES:getsockname,simplestHTTPSer,6326,1000
+[  814.692419] ISOLATES:accept4,simplestHTTPSer,6326,1000
+[  826.093724] ISOLATES:accept4,simplestHTTPSer,6326,1000
+[  826.093743] ISOLATES:getsockname,simplestHTTPSer,6326,1000
+[  826.093751] ISOLATES:setsockopt,simplestHTTPSer,6326,1000
+[  826.093755] ISOLATES:setsockopt,simplestHTTPSer,6326,1000
+[  826.093757] ISOLATES:setsockopt,simplestHTTPSer,6326,1000
+[  826.093759] ISOLATES:setsockopt,simplestHTTPSer,6326,1000
+[  826.095791] ISOLATES:accept4,simplestHTTPSer,6326,1000
+[  843.858428] ISOLATES:Custom ReAllOps module removed successfully
+[ 2238.225790] ISOLATES:Custom ReAllOps module inserted successfully
+[ 2246.203566] ISOLATES:open,ls,13722,1000,/etc/ld.so.cache,O_WRONLY,5573
+[ 2246.203571] ISOLATES:open,ls,13722,1000,/lib/x86_64-linux-gnu/tls/x86_64/libselinux.so.1,DEFAULT,5573
+[ 2246.203578] ISOLATES:open,ls,13722,1000,/lib/x86_64-linux-gnu/tls/libselinux.so.1,DEFAULT,5573
+[ 2246.203582] ISOLATES:open,ls,13722,1000,/lib/x86_64-linux-gnu/x86_64/libselinux.so.1,DEFAULT,5573
+[ 2246.203587] ISOLATES:open,ls,13722,1000,/lib/x86_64-linux-gnu/libselinux.so.1,DEFAULT,5573
+[ 2257.894257] ISOLATES:Custom ReAllOps module removed successfully
+[ 3530.284548] ISOLATES:Custom ReAllOps module inserted successfully
+[ 3532.612857] ISOLATES:open,ls,19338,1000,/etc/ld.so.cache,O_WRONLY,5573
+[ 3532.612863] ISOLATES:open,ls,19338,1000,/lib/x86_64-linux-gnu/tls/x86_64/libselinux.so.1,DEFAULT,5573
+[ 3532.612870] ISOLATES:open,ls,19338,1000,/lib/x86_64-linux-gnu/tls/libselinux.so.1,DEFAULT,5573
+[ 3532.612874] ISOLATES:open,ls,19338,1000,/lib/x86_64-linux-gnu/x86_64/libselinux.so.1,DEFAULT,5573
+[ 3532.612878] ISOLATES:open,ls,19338,1000,/lib/x86_64-linux-gnu/libselinux.so.1,DEFAULT,5573
+[ 3534.253600] ISOLATES:open,ls,19346,1000,/etc/ld.so.cache,O_WRONLY,5573
+[ 3534.253603] ISOLATES:open,ls,19346,1000,/lib/x86_64-linux-gnu/tls/x86_64/libselinux.so.1,DEFAULT,5573
+[ 3534.253607] ISOLATES:open,ls,19346,1000,/lib/x86_64-linux-gnu/tls/libselinux.so.1,DEFAULT,5573
+[ 3534.253609] ISOLATES:open,ls,19346,1000,/lib/x86_64-linux-gnu/x86_64/libselinux.so.1,DEFAULT,5573
+[ 3534.253611] ISOLATES:open,ls,19346,1000,/lib/x86_64-linux-gnu/libselinux.so.1,DEFAULT,5573
+[ 3548.190742] ISOLATES:socket,simplestHTTPSer,19388,1000
+[ 3548.190776] ISOLATES:socket,simplestHTTPSer,19388,1000
+[ 3548.190785] ISOLATES:setsockopt,simplestHTTPSer,19388,1000
+[ 3548.190797] ISOLATES:bind,simplestHTTPSer,19388,1000
+[ 3548.190805] ISOLATES:socket,simplestHTTPSer,19388,1000
+[ 3548.190810] ISOLATES:setsockopt,simplestHTTPSer,19388,1000
+[ 3548.190813] ISOLATES:bind,simplestHTTPSer,19388,1000
+[ 3548.190831] ISOLATES:socket,simplestHTTPSer,19388,1000
+[ 3548.190836] ISOLATES:setsockopt,simplestHTTPSer,19388,1000
+[ 3548.190839] ISOLATES:setsockopt,simplestHTTPSer,19388,1000
+[ 3548.190914] ISOLATES:setsockopt,simplestHTTPSer,19388,1000
+[ 3548.190918] ISOLATES:bind,simplestHTTPSer,19388,1000
+[ 3548.190922] ISOLATES:listen,simplestHTTPSer,19388,1000
+[ 3548.190936] ISOLATES:getsockname,simplestHTTPSer,19388,1000
+[ 3548.190953] ISOLATES:accept4,simplestHTTPSer,19388,1000
+[ 3556.902516] ISOLATES:Custom ReAllOps module removed successfully
