@@ -216,21 +216,210 @@ Replacing : //\0\n\t\t;
 Rewriting the code by removing the predefined ifdefs from syscalls.h and using macros in reallops and using binary search to determine which syscalls are creating the problems.
 Macros : argument x :
 #x results in "x", stringifies x
-##x results in x , means the argument supplied to x, helps in reading (x = open) _##x as _open instead of _x as _x
+##x results in x , means the argument supplied to x, helps in reading (x = open) _##x as _open instead of _x as _x, useful for concatenating tokens, if not concatenating tokens then we can directly use x
 Multiple words separated by space can be given as arguments example : #define a(x) x - 5 : a(5 + 5) resolves to 5 + 5 - 5
 Variable arguments can be given to macros, refer https://www.geeksforgeeks.org/variable-length-arguments-for-macros/
 gcc -E shows the expanded macros, remove the include files to avoid fatal error when library not found
 Regex for using macros :
-#define STOREORIG(x) old_sys_table[__NR_##x] = sys_call_table[__NR_##x];
+#define STOREORIG(x) old_sys_table[__NR_##x] = sys_call_table[__NR_##x]
 Match   : old_sys_table\[__NR_(\w+)\] = sys_call_table.*;
 Replace : STOREORIG(\1);
-#define APPLYCUST(x) sys_call_table[__NR_##x] = (sys_call_ptr_t)custom_##x;
+#define APPLYCUST(x) sys_call_table[__NR_##x] = (sys_call_ptr_t)custom_##x
 Match   : sys_call_table\[__NR_(\w+)\] = \(sys_call_ptr_t\).*;
 Replace : APPLYCUST(\1);
-#define APPLYORIG(x) sys_call_table[__NR_##x] = old_sys_table[__NR_##x];
+#define APPLYORIG(x) sys_call_table[__NR_##x] = old_sys_table[__NR_##x]
 Match   : sys_call_table\[__NR_(\w+)\] = old_sys_table.*;
 Replace : APPLYORIG(\1);
+#define CUSTFUNC0(x) \
+static asmlinkage long custom_##x(void)\
+{\
+    asmlinkage long (*org_##x)(void);\
+    if(current->real_parent->pid == PARENTPID)\
+    {\
+    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
+    }\
+    org_##x = (asmlinkage long (*)(void)) org_sys_table[__NR_##x];\
+    return org_##x();\
+}
+Match   : ^asmlinkage long sys_(\w+)\(void\);$
+Replace : CUSTFUNC0(\1)
+#define CUSTFUNC1(x,t1,p1) \
+static asmlinkage long custom_##x(t1 p1)\
+{\
+    asmlinkage long (*org_##x)(t1);\
+    if(current->real_parent->pid == PARENTPID)\
+    {\
+    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
+    }\
+    org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+    return org_##x(p1);\
+}
+Match   : ^asmlinkage long sys_(\w+)\(([^,\n]* \*?)(\w+)\);$
+Replace : CUSTFUNC1(\1, \2, \3)
+#define CUSTFUNC2(x,t1,p1,t2,p2) \
+static asmlinkage long custom_##x(t1 p1, t2 p2)\
+{\
+    asmlinkage long (*org_##x)(t1, t2);\
+    if(current->real_parent->pid == PARENTPID)\
+    {\
+    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
+    }\
+    org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+    return org_##x(p1, p2);\
+}
+Match   : ^asmlinkage long sys_(\w+)\(([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+)\);$
+Replace : CUSTFUNC2(\1, \2, \3, \4, \5)
+#define CUSTFUNC3(x,t1,p1,t2,p2,t3,p3) \
+static asmlinkage long custom_##x(t1 p1, t2 p2, t3 p3)\
+{\
+    asmlinkage long (*org_##x)(t1, t2, t3);\
+    if(current->real_parent->pid == PARENTPID)\
+    {\
+    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
+    }\
+    org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+    return org_##x(p1, p2, p3);\
+}
+Match   : ^asmlinkage long sys_(\w+)\(([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+)\);$
+Replace : CUSTFUNC3(\1, \2, \3, \4, \5, \6, \7)
+#define CUSTFUNC4(x,t1,p1,t2,p2,t3,p3,t4,p4) \
+static asmlinkage long custom_##x(t1 p1, t2 p2, t3 p3, t4 p4)\
+{\
+    asmlinkage long (*org_##x)(t1, t2, t3, t4);\
+    if(current->real_parent->pid == PARENTPID)\
+    {\
+    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
+    }\
+    org_##x = (asmlinkage long (*)(t1, t2, t3, t4)) org_sys_table[__NR_##x];\
+    return org_##x(p1, p2, p3, p4);\
+}
+Match   : ^asmlinkage long sys_(\w+)\(([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+)\);$
+Replace : CUSTFUNC4(\1, \2, \3, \4, \5, \6, \7, \8, \9)
+#define CUSTFUNC5(x,t1,p1,t2,p2,t3,p3,t4,p4,t5,p5) \
+static asmlinkage long custom_##x(t1 p1, t2 p2, t3 p3, t4 p4, t5 p5)\
+{\
+    asmlinkage long (*org_##x)(t1, t2, t3, t4, t5);\
+    if(current->real_parent->pid == PARENTPID)\
+    {\
+    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
+    }\
+    org_##x = (asmlinkage long (*)(t1, t2, t3, t4, t5)) org_sys_table[__NR_##x];\
+    return org_##x(p1, p2, p3, p4, p5);\
+}
+Match   : ^asmlinkage long sys_(\w+)\(([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+)\);$
+Replace : CUSTFUNC5(\1, \2, \3, \4, \5, \6, \7, \8, \9, \10, \11)
+#define CUSTFUNC6(x,t1,p1,t2,p2,t3,p3,t4,p4,t5,p5,t6,p6) \
+static asmlinkage long custom_##x(t1 p1, t2 p2, t3 p3, t4 p4, t5 p5, t6 p6)\
+{\
+    asmlinkage long (*org_##x)(t1, t2, t3, t4, t5, t6);\
+    if(current->real_parent->pid == PARENTPID)\
+    {\
+    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
+    }\
+    org_##x = (asmlinkage long (*)(t1, t2, t3, t4, t5, t6)) org_sys_table[__NR_##x];\
+    return org_##x(p1, p2, p3, p4, p5, p6);\
+}
+Match   : ^asmlinkage long sys_(\w+)\(([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+),([^,\n]* \*?)(\w+)\);$
+Replace : CUSTFUNC6(\1, \2, \3, \4, \5, \6, \7, \8, \9, \10, \11, \12, \13)
 
 Observation : The processes created inside a bash have UID of the parent process.
 
 Create an excel sheet syscalltoflag.csv with all the syscalls signatures and the conditions on the flags.
+
+Digression : C doesn't have function overloading. So, even though the function sys_sigsuspend has 2 definitions, only 1 would be active as only one of the MACROS out of CONFIG_OLD_SIGSUSPEND and CONFIG_OLD_SIGSUSPEND3 would be defined.
+
+Command for gcc -E compilation :
+gcc -E -I/usr/src/linux-headers-4.15.0-45-generic/include/ -I/usr/src/linux-headers-4.15.0-45-generic/arch/x86/include/ -I/usr/src/linux-headers-4.15.0-45-generic/arch/x86/include/generated -I/usr/src/linux-headers-4.15.0-45/include/uapi/ -I/usr/src/linux-headers-4.15.0-45-generic/arch/x86/include/generated/uapi/ allops.c
+
+Copied /usr/src/linux-headers-4.15.0-45/include/uapi/asm-generic/unistd.h to reallops/unistd.c for quick reference.
+Copied /usr/src/linux-headers-4.15.0-45/include/linux/syscalls.h to reallops/syscalls.c for quick reference.
+
+Function calls showing errors stored in reallops/errors.txt
+
+Some function calls have different __NR_... names like umount is linked with __NR_umount2 instead of __NR_umount, newuname is linked with __NR_uname
+#define __NR_umount2 39
+__SYSCALL(__NR_umount2, sys_umount)
+#define __NR_umount 1076
+__SYSCALL(__NR_umount, sys_oldumount)
+#define __NR_uname 160
+__SYSCALL(__NR_uname, sys_newuname)
+
+For statfs64, there is a conditional dependence for definition of __NR_statfs64 on  __BITS_PER_LONG == 64 && !defined(__SYSCALL_COMPAT) defined at the end of unistd.c file. True statfs64, fstatfs64, stat64, fstat64, lstat64, fstatat64, truncate64, ftruncate64, fadvise64_64, fcntl64, sendfile64, llseek.
+#define __NR3264_statfs 43
+__SC_COMP_3264(__NR3264_statfs, sys_statfs64, sys_statfs, \
+	       compat_sys_statfs64)
+
+For newstat, there was 2 definition depending on the conditions. True for newstat, newlstat, newfstat.
+#define __NR3264_stat 1038
+__SC_3264(__NR3264_stat, sys_stat64, sys_newstat)
+#define __NR_stat 1049
+__SYSCALL(__NR_stat, sys_newstat)
+
+No .*16 functions like chown16,... was present in unistd.c even though present in syscalls.c probably due to the macro constant CONFIG_HAVE_UID16.
+
+Some syscalls were dependent on __ARCH_WANT_SYSCALL_DEPRECATED. True for bdflush, oldumount, send, recv, sysctl.
+
+For ni_syscall, following was defined in unistd.c. Currently putting it with nfsservctl.
+/* fs/nfsctl.c */
+#define __NR_nfsservctl 42
+__SYSCALL(__NR_nfsservctl, sys_ni_syscall)
+#define __NR_fork 1079
+#ifdef CONFIG_MMU
+__SYSCALL(__NR_fork, sys_fork)
+#else
+__SYSCALL(__NR_fork, sys_ni_syscall)
+#endif /* CONFIG_MMU */
+
+For sync_file_range2 following conditions were defined.
+#ifdef __ARCH_WANT_SYNC_FILE_RANGE2
+#define __NR_sync_file_range2 84
+__SC_COMP(__NR_sync_file_range2, sys_sync_file_range2, \
+	  compat_sys_sync_file_range2)
+#else
+#define __NR_sync_file_range 84
+__SC_COMP(__NR_sync_file_range, sys_sync_file_range, \
+	  compat_sys_sync_file_range)
+#endif
+
+There were links to function sys_mmap but it was not listed in syscalls.c.
+
+Adding extra macros to accomodate custom __NR_... :
+#define STOREORIGCONST(x,y) org_sys_table[__NR_##y] = sys_call_table[__NR_##y]
+#define APPLYCUSTCONST(x,y) sys_call_table[__NR_##y] = (sys_call_ptr_t)custom_##x
+#define APPLYORIGCONST(x,y) sys_call_table[__NR_##y] = org_sys_table[__NR_##y]
+Following is for CUSTFUNC0CONST(ni_syscall, nfsservctl)
+#define CUSTFUNC0CONST(x,y) \
+static asmlinkage long custom_##x(void)\
+{\
+    asmlinkage long (*org_##x)(void);\
+    if(current->real_parent->pid == PARENTPID)\
+    {\
+    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
+    }\
+    org_##x = (asmlinkage long (*)(void)) org_sys_table[__NR_##y];\
+    return org_##x();\
+}
+Following is for CUSTFUNC1CONST(newuname, struct new_utsname __user *, name, uname)
+#define CUSTFUNC1CONST(x,t1,p1,y) \
+static asmlinkage long custom_##x(t1 p1)\
+{\
+    asmlinkage long (*org_##x)(t1);\
+    if(current->real_parent->pid == PARENTPID)\
+    {\
+    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
+    }\
+    org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##y];\
+    return org_##x(p1);\
+}
+Following is for CUSTFUNC2CONST(umount, char __user *, name,  int , flags, umount2)
+#define CUSTFUNC2CONST(x,t1,p1,t2,p2,y) \
+static asmlinkage long custom_##x(t1 p1, t2 p2)\
+{\
+    asmlinkage long (*org_##x)(t1, t2);\
+    if(current->real_parent->pid == PARENTPID)\
+    {\
+    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
+    }\
+    org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##y];\
+    return org_##x(p1, p2);\
+}

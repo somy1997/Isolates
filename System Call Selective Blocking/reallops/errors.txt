@@ -1,0 +1,477 @@
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_stime’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_stime’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:119:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(stime, time_t __user *, tptr)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: note: each undeclared identifier is reported only once for each function it appears in
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:119:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(stime, time_t __user *, tptr)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_sigpending’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_sigpending’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:154:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(sigpending, old_sigset_t __user *, set)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_sigprocmask’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_sigprocmask’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:155:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(sigprocmask, int , how,  old_sigset_t __user *, set,  old_sigset_t __user *, oset)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_nice’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_nice’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:169:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(nice, int , increment)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_waitpid’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_waitpid’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:193:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(waitpid, pid_t , pid,  int __user *, stat_addr,  int , options)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_sigsuspend’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_sigsuspend’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:198:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(sigsuspend, old_sigset_t , mask)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: At top level:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:66:24: error: conflicting types for ‘custom_sigsuspend’
+ static asmlinkage long custom_##x(t1 p1, t2 p2, t3 p3)\
+                        ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:199:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(sigsuspend, int , unused1,  int , unused2,  old_sigset_t , mask)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:44:24: note: previous definition of ‘custom_sigsuspend’ was here
+ static asmlinkage long custom_##x(t1 p1)\
+                        ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:198:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(sigsuspend, old_sigset_t , mask)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_sigsuspend’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_sigsuspend’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:199:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(sigsuspend, int , unused1,  int , unused2,  old_sigset_t , mask)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_sgetmask’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:40:57: error: ‘__NR_sgetmask’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(void)) org_sys_table[__NR_##x];\
+                                                         ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:213:1: note: in expansion of macro ‘CUSTFUNC0’
+ CUSTFUNC0(sgetmask)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_ssetmask’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_ssetmask’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:214:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(ssetmask, int , newmask)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_signal’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_signal’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:215:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(signal, int , sig,  __sighandler_t , handler)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_bdflush’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_bdflush’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:220:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(bdflush, int , func,  long , data)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_umount’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_umount’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:222:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(umount, char __user *, name,  int , flags)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_oldumount’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_oldumount’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:223:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(oldumount, char __user *, name)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_statfs64’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_statfs64’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:228:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(statfs64, const char __user *, path,  size_t , sz,  struct statfs64 __user *, buf)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_fstatfs64’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_fstatfs64’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:230:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(fstatfs64, unsigned int , fd,  size_t , sz,  struct statfs64 __user *, buf)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_newstat’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_newstat’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:233:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(newstat, const char __user *, filename,  struct stat __user *, statbuf)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_newlstat’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_newlstat’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:234:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(newlstat, const char __user *, filename,  struct stat __user *, statbuf)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_newfstat’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_newfstat’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:235:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(newfstat, unsigned int , fd,  struct stat __user *, statbuf)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_stat64’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_stat64’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:237:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(stat64, const char __user *, filename,  struct stat64 __user *, statbuf)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_fstat64’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_fstat64’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:238:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(fstat64, unsigned long , fd,  struct stat64 __user *, statbuf)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_lstat64’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_lstat64’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:239:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(lstat64, const char __user *, filename,  struct stat64 __user *, statbuf)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_fstatat64’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:84:67: error: ‘__NR_fstatat64’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3, t4)) org_sys_table[__NR_##x];\
+                                                                   ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:240:1: note: in expansion of macro ‘CUSTFUNC4’
+ CUSTFUNC4(fstatat64, int , dfd,  const char __user *, filename,  struct stat64 __user *, statbuf,  int , flag)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_truncate64’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_truncate64’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:241:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(truncate64, const char __user *, path,  loff_t , length)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_ftruncate64’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_ftruncate64’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:242:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(ftruncate64, unsigned int , fd,  loff_t , length)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_fadvise64_64’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:84:67: error: ‘__NR_fadvise64_64’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3, t4)) org_sys_table[__NR_##x];\
+                                                                   ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:261:1: note: in expansion of macro ‘CUSTFUNC4’
+ CUSTFUNC4(fadvise64_64, int , fd,  loff_t , offset,  loff_t , len,  int , advice)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_fcntl64’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_fcntl64’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:279:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(fcntl64, unsigned int , fd,  unsigned int , cmd,  unsigned long , arg)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_sendfile64’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:84:67: error: ‘__NR_sendfile64’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3, t4)) org_sys_table[__NR_##x];\
+                                                                   ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:294:1: note: in expansion of macro ‘CUSTFUNC4’
+ CUSTFUNC4(sendfile64, int , out_fd,  int , in_fd,  loff_t __user *, offset,  size_t , count)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_chown16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_chown16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:304:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(chown16, const char __user *, filename,  old_uid_t , user,  old_gid_t , group)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_lchown16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_lchown16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:305:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(lchown16, const char __user *, filename,  old_uid_t , user,  old_gid_t , group)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_fchown16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_fchown16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:306:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(fchown16, unsigned int , fd,  old_uid_t , user,  old_gid_t , group)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_setregid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_setregid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:307:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(setregid16, old_gid_t , rgid,  old_gid_t , egid)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_setgid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_setgid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:308:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(setgid16, old_gid_t , gid)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_setreuid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_setreuid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:309:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(setreuid16, old_uid_t , ruid,  old_uid_t , euid)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_setuid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_setuid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:310:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(setuid16, old_uid_t , uid)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_setresuid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_setresuid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:311:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(setresuid16, old_uid_t , ruid,  old_uid_t , euid,  old_uid_t , suid)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_getresuid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_getresuid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:312:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(getresuid16, old_uid_t __user *, ruid,  old_uid_t __user *, euid,  old_uid_t __user *, suid)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_setresgid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_setresgid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:313:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(setresgid16, old_gid_t , rgid,  old_gid_t , egid,  old_gid_t , sgid)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_getresgid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_getresgid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:314:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(getresgid16, old_gid_t __user *, rgid,  old_gid_t __user *, egid,  old_gid_t __user *, sgid)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_setfsuid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_setfsuid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:315:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(setfsuid16, old_uid_t , uid)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_setfsgid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_setfsgid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:316:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(setfsgid16, old_gid_t , gid)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_getgroups16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_getgroups16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:317:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(getgroups16, int , gidsetsize,  old_gid_t __user *, grouplist)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_setgroups16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_setgroups16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:318:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(setgroups16, int , gidsetsize,  old_gid_t __user *, grouplist)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_getuid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:40:57: error: ‘__NR_getuid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(void)) org_sys_table[__NR_##x];\
+                                                         ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:319:1: note: in expansion of macro ‘CUSTFUNC0’
+ CUSTFUNC0(getuid16)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_geteuid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:40:57: error: ‘__NR_geteuid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(void)) org_sys_table[__NR_##x];\
+                                                         ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:320:1: note: in expansion of macro ‘CUSTFUNC0’
+ CUSTFUNC0(geteuid16)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_getgid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:40:57: error: ‘__NR_getgid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(void)) org_sys_table[__NR_##x];\
+                                                         ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:321:1: note: in expansion of macro ‘CUSTFUNC0’
+ CUSTFUNC0(getgid16)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_getegid16’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:40:57: error: ‘__NR_getegid16’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(void)) org_sys_table[__NR_##x];\
+                                                         ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:322:1: note: in expansion of macro ‘CUSTFUNC0’
+ CUSTFUNC0(getegid16)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_llseek’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:95:71: error: ‘__NR_llseek’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3, t4, t5)) org_sys_table[__NR_##x];\
+                                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:326:1: note: in expansion of macro ‘CUSTFUNC5’
+ CUSTFUNC5(llseek, unsigned int , fd,  unsigned long , offset_high,  unsigned long , offset_low,  loff_t __user *, result,  unsigned int , whence)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_send’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:84:67: error: ‘__NR_send’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3, t4)) org_sys_table[__NR_##x];\
+                                                                   ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:355:1: note: in expansion of macro ‘CUSTFUNC4’
+ CUSTFUNC4(send, int , fd,  void __user *, buff,  size_t , len,  unsigned int , flags)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_recv’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:84:67: error: ‘__NR_recv’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3, t4)) org_sys_table[__NR_##x];\
+                                                                   ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:359:1: note: in expansion of macro ‘CUSTFUNC4’
+ CUSTFUNC4(recv, int , fd,  void __user *, ubuf,  size_t , size,  unsigned int , flags)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_socketcall’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_socketcall’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:365:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(socketcall, int , call,  unsigned long __user *, args)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_old_select’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_old_select’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:369:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(old_select, struct sel_arg_struct __user *, arg)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_gethostname’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_gethostname’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:375:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(gethostname, char __user *, name,  int , len)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_newuname’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_newuname’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:378:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(newuname, struct new_utsname __user *, name)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_old_getrlimit’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:62:59: error: ‘__NR_old_getrlimit’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:382:1: note: in expansion of macro ‘CUSTFUNC2’
+ CUSTFUNC2(old_getrlimit, unsigned int , resource,  struct rlimit __user *, rlim)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_ipc’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:106:75: error: ‘__NR_ipc’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3, t4, t5, t6)) org_sys_table[__NR_##x];\
+                                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:399:1: note: in expansion of macro ‘CUSTFUNC6’
+ CUSTFUNC6(ipc, unsigned int , call,  int , first,  unsigned long , second,  unsigned long , third,  void __user *, ptr,  long , fifth)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_pciconfig_iobase’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_pciconfig_iobase’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:406:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(pciconfig_iobase, long , which,  unsigned long , bus,  unsigned long , devfn)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_pciconfig_read’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:95:71: error: ‘__NR_pciconfig_read’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3, t4, t5)) org_sys_table[__NR_##x];\
+                                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:407:1: note: in expansion of macro ‘CUSTFUNC5’
+ CUSTFUNC5(pciconfig_read, unsigned long , bus,  unsigned long , dfn,  unsigned long , off,  unsigned long , len,  void __user *, buf)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_pciconfig_write’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:95:71: error: ‘__NR_pciconfig_write’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3, t4, t5)) org_sys_table[__NR_##x];\
+                                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:408:1: note: in expansion of macro ‘CUSTFUNC5’
+ CUSTFUNC5(pciconfig_write, unsigned long , bus,  unsigned long , dfn,  unsigned long , off,  unsigned long , len,  void __user *, buf)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_sysctl’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_sysctl’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:412:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(sysctl, struct __sysctl_args __user *, args)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_ni_syscall’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:40:57: error: ‘__NR_ni_syscall’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(void)) org_sys_table[__NR_##x];\
+                                                         ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:417:1: note: in expansion of macro ‘CUSTFUNC0’
+ CUSTFUNC0(ni_syscall)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_spu_run’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:73:63: error: ‘__NR_spu_run’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+                                                               ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:433:1: note: in expansion of macro ‘CUSTFUNC3’
+ CUSTFUNC3(spu_run, int , fd,  __u32 __user *, unpc,  __u32 __user *, ustatus)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_spu_create’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:84:67: error: ‘__NR_spu_create’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3, t4)) org_sys_table[__NR_##x];\
+                                                                   ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:434:1: note: in expansion of macro ‘CUSTFUNC4’
+ CUSTFUNC4(spu_create, const char __user *, name,  unsigned int , flags,  umode_t , mode,  int , fd)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_sync_file_range2’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:84:67: error: ‘__NR_sync_file_range2’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3, t4)) org_sys_table[__NR_##x];\
+                                                                   ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:455:1: note: in expansion of macro ‘CUSTFUNC4’
+ CUSTFUNC4(sync_file_range2, int , fd,  unsigned int , flags,  loff_t , offset,  loff_t , nbytes)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_mmap_pgoff’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:106:75: error: ‘__NR_mmap_pgoff’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1, t2, t3, t4, t5, t6)) org_sys_table[__NR_##x];\
+                                                                           ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:484:1: note: in expansion of macro ‘CUSTFUNC6’
+ CUSTFUNC6(mmap_pgoff, unsigned long , addr,  unsigned long , len,  unsigned long , prot,  unsigned long , flags,  unsigned long , fd,  unsigned long , pgoff)
+ ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c: In function ‘custom_old_mmap’:
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:51:55: error: ‘__NR_old_mmap’ undeclared (first use in this function)
+     org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+                                                       ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:485:1: note: in expansion of macro ‘CUSTFUNC1’
+ CUSTFUNC1(old_mmap, struct mmap_arg_struct __user *, arg)
+ ^
+make[2]: *** [/home/nbs/Desktop/intercept_log/reallops/reallops.o] Error 1
+make[1]: *** [_module_/home/nbs/Desktop/intercept_log/reallops] Error 2
+make: *** [all] Error 2
