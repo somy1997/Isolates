@@ -423,3 +423,6 @@ static asmlinkage long custom_##x(t1 p1, t2 p2)\
     org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##y];\
     return org_##x(p1, p2);\
 }
+
+Still after correcting the above issues, the problem of system getting hanged after rmmod remains. Applying binary search to identify the syscalls creating this problem :
+nanosleep is creating problem. After rmmodding it shows error like Bad RIP value copied into dmesglogs. Also, the capability of copying text between mac and parallels is gone.

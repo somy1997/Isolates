@@ -312,7 +312,9 @@ asmlinkage long sys_newuname(struct new_utsname __user *name);
 /*
 asmlinkage long sys_uname(struct old_utsname __user *ubuf);
 */
+/*
 asmlinkage long sys_olduname(struct oldold_utsname __user *);
+*/
 asmlinkage long sys_getrlimit(unsigned int resource, struct rlimit __user *rlim);
 /*
 asmlinkage long sys_old_getrlimit(unsigned int resource, struct rlimit __user *rlim);
@@ -417,7 +419,9 @@ asmlinkage long sys_eventfd2(unsigned int count, int flags);
 asmlinkage long sys_memfd_create(const char __user *uname_ptr, unsigned int flags);
 asmlinkage long sys_userfaultfd(int flags);
 asmlinkage long sys_fallocate(int fd, int mode, loff_t offset, loff_t len);
+/*
 asmlinkage long sys_old_readdir(unsigned int, struct old_linux_dirent __user *, unsigned int);
+*/
 asmlinkage long sys_pselect6(int n, fd_set __user *inp, fd_set __user *outp, fd_set __user *exp, struct timespec __user *tsp, void __user *sig);
 asmlinkage long sys_ppoll(struct pollfd __user *ufds, unsigned int nfds, struct timespec __user *tsp, const sigset_t __user *sigmask, size_t sigsetsize);
 asmlinkage long sys_fanotify_init(unsigned int flags, unsigned int event_f_flags);

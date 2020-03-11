@@ -475,3 +475,43 @@
 make[2]: *** [/home/nbs/Desktop/intercept_log/reallops/reallops.o] Error 1
 make[1]: *** [_module_/home/nbs/Desktop/intercept_log/reallops] Error 2
 make: *** [all] Error 2
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:29:36: error: ‘__NR_olduname’ undeclared here (not in a function)
+ #define STOREORIG(x) org_sys_table[__NR_##x] = sys_call_table[__NR_##x]
+                                    ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:464:5: note: in expansion of macro ‘STOREORIG’
+     STOREORIG(olduname);
+     ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:29:22: warning: data definition has no type or storage class
+ #define STOREORIG(x) org_sys_table[__NR_##x] = sys_call_table[__NR_##x]
+                      ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:464:5: note: in expansion of macro ‘STOREORIG’
+     STOREORIG(olduname);
+     ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:29:22: error: type defaults to ‘int’ in declaration of ‘org_sys_table’ [-Werror=implicit-int]
+ #define STOREORIG(x) org_sys_table[__NR_##x] = sys_call_table[__NR_##x]
+                      ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:464:5: note: in expansion of macro ‘STOREORIG’
+     STOREORIG(olduname);
+     ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:29:36: error: ‘__NR_old_readdir’ undeclared here (not in a function)
+ #define STOREORIG(x) org_sys_table[__NR_##x] = sys_call_table[__NR_##x]
+                                    ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:567:5: note: in expansion of macro ‘STOREORIG’
+     STOREORIG(old_readdir);
+     ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:29:22: warning: data definition has no type or storage class
+ #define STOREORIG(x) org_sys_table[__NR_##x] = sys_call_table[__NR_##x]
+                      ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:567:5: note: in expansion of macro ‘STOREORIG’
+     STOREORIG(old_readdir);
+     ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:29:22: error: type defaults to ‘int’ in declaration of ‘org_sys_table’ [-Werror=implicit-int]
+ #define STOREORIG(x) org_sys_table[__NR_##x] = sys_call_table[__NR_##x]
+                      ^
+/home/nbs/Desktop/intercept_log/reallops/reallops.c:567:5: note: in expansion of macro ‘STOREORIG’
+     STOREORIG(old_readdir);
+     ^
+cc1: some warnings being treated as errors
+make[2]: *** [/home/nbs/Desktop/intercept_log/reallops/reallops.o] Error 1
+make[1]: *** [_module_/home/nbs/Desktop/intercept_log/reallops] Error 2
+make: *** [all] Error 2

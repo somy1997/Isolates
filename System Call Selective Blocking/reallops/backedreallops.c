@@ -25,7 +25,7 @@
 #include <trace/syscall.h>
 */
 
-#define PARENTPID 2584
+#define PARENTPID 2879
 #define STOREORIG(x) org_sys_table[__NR_##x] = sys_call_table[__NR_##x]
 #define APPLYCUST(x) sys_call_table[__NR_##x] = (sys_call_ptr_t)custom_##x
 #define APPLYORIG(x) sys_call_table[__NR_##x] = org_sys_table[__NR_##x]
@@ -987,7 +987,7 @@ static void __exit hello_exit(void)
     // Overwrite the syscall table entry
 
 // Newly copied below
-     
+
      
     // Re-enable write protection
     write_cr0(read_cr0() | 0x10000);
