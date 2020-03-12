@@ -25,7 +25,7 @@
 #include <trace/syscall.h>
 */
 
-#define PARENTPID 2584
+#define PARENTPID 21192
 #define STOREORIG(x) org_sys_table[__NR_##x] = sys_call_table[__NR_##x]
 #define APPLYCUST(x) sys_call_table[__NR_##x] = (sys_call_ptr_t)custom_##x
 #define APPLYORIG(x) sys_call_table[__NR_##x] = org_sys_table[__NR_##x]
@@ -643,7 +643,7 @@ static asmlinkage long custom_open(const char __user *filename, int flags, umode
 static int __init hello_init(void)
 {
     
-    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module inserted successfully\n");
+    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module inserting\n");
     
     sys_call_table = (sys_call_ptr_t *)kallsyms_lookup_name(sym_name);
 
@@ -969,17 +969,353 @@ static int __init hello_init(void)
     // Overwrite the syscall table entry
     
 // Newly copied below
+    APPLYCUST(time);
+    APPLYCUST(gettimeofday);
+    APPLYCUST(settimeofday);
+    APPLYCUST(adjtimex);
+    APPLYCUST(times);
+    APPLYCUST(gettid);
+/*    APPLYCUST(nanosleep);*/
+    APPLYCUST(alarm);
+    APPLYCUST(getpid);
+    APPLYCUST(getppid);
+    APPLYCUST(getuid);
+    APPLYCUST(geteuid);
+    APPLYCUST(getgid);
+    APPLYCUST(getegid);
+    APPLYCUST(getresuid);
+    APPLYCUST(getresgid);
+    APPLYCUST(getpgid);
+    APPLYCUST(getpgrp);
+    APPLYCUST(getsid);
+    APPLYCUST(getgroups);
+    APPLYCUST(setregid);
+    APPLYCUST(setgid);
+    APPLYCUST(setreuid);
+    APPLYCUST(setuid);
+    APPLYCUST(setresuid);
+    APPLYCUST(setresgid);
+    APPLYCUST(setfsuid);
+    APPLYCUST(setfsgid);
+    APPLYCUST(setpgid);
+    APPLYCUST(setsid);
+    APPLYCUST(setgroups);
+    
+    APPLYCUST(acct);
+    APPLYCUST(capget);
+    APPLYCUST(capset);
+    APPLYCUST(personality);
+    APPLYCUST(sigaltstack);
+    APPLYCUST(getitimer);
+    APPLYCUST(setitimer);
+    APPLYCUST(timer_create);
+    APPLYCUST(timer_gettime);
+    APPLYCUST(timer_getoverrun);
+    APPLYCUST(timer_settime);
+    APPLYCUST(timer_delete);
+    APPLYCUST(clock_settime);
+    APPLYCUST(clock_gettime);
+    APPLYCUST(clock_adjtime);
+    APPLYCUST(clock_getres);
+    APPLYCUST(clock_nanosleep);
+    APPLYCUST(sched_setscheduler);
+    APPLYCUST(sched_setparam);
+    APPLYCUST(sched_setattr);
+    APPLYCUST(sched_getscheduler);
+    APPLYCUST(sched_getparam);
+    APPLYCUST(sched_getattr);
+    APPLYCUST(sched_setaffinity);
+    APPLYCUST(sched_getaffinity);
+    APPLYCUST(sched_yield);
+    APPLYCUST(sched_get_priority_max);
+    APPLYCUST(sched_get_priority_min);
+    APPLYCUST(sched_rr_get_interval);
+    APPLYCUST(setpriority);
+    APPLYCUST(getpriority);
+    APPLYCUST(shutdown);
+    APPLYCUST(reboot);
+    APPLYCUST(restart_syscall);
+    
+    APPLYCUST(kexec_load);
+    APPLYCUST(kexec_file_load);
+    APPLYCUST(exit);
+    APPLYCUST(exit_group);
+/*    APPLYCUST(wait4);*/
+    APPLYCUST(waitid);
+    APPLYCUST(set_tid_address);
+    APPLYCUST(futex);
+    
+    APPLYCUST(init_module);
+/*    APPLYCUST(delete_module);*/
+    APPLYCUST(rt_sigsuspend);
+    APPLYCUST(rt_sigaction);
+    APPLYCUST(rt_sigprocmask);
+    APPLYCUST(rt_sigpending);
+    APPLYCUST(rt_sigtimedwait);
+    APPLYCUST(rt_tgsigqueueinfo);
 
-       
+    APPLYCUST(kill);
+    APPLYCUST(tgkill);
+    APPLYCUST(tkill);
+    APPLYCUST(rt_sigqueueinfo);
+    APPLYCUST(pause);
+    APPLYCUST(sync);
+    APPLYCUST(fsync);
+    APPLYCUST(fdatasync);
+    APPLYCUST(mount);
+    APPLYCUSTCONST(umount,umount2);
+    APPLYCUST(truncate);
+    APPLYCUST(ftruncate);
+    APPLYCUST(stat);
+    APPLYCUST(statfs);
+    APPLYCUST(lstat);
+    APPLYCUST(fstat);
+    APPLYCUST(ustat);
+    APPLYCUST(setxattr);
+    APPLYCUST(lsetxattr);
+    APPLYCUST(fsetxattr);
+    APPLYCUST(getxattr);
+    APPLYCUST(lgetxattr);
+    APPLYCUST(fgetxattr);
+    APPLYCUST(listxattr);
+    APPLYCUST(llistxattr);
+    APPLYCUST(flistxattr);
+    APPLYCUST(removexattr);
+    APPLYCUST(lremovexattr);
+    APPLYCUST(fremovexattr);
+    
+    APPLYCUST(brk);
+    APPLYCUST(mprotect);
+    APPLYCUST(mremap);
+    APPLYCUST(remap_file_pages);
+    APPLYCUST(msync);
+    APPLYCUST(fadvise64);
+    APPLYCUST(munmap);
+    APPLYCUST(mlock);
+    APPLYCUST(munlock);
+    APPLYCUST(mlockall);
+    APPLYCUST(munlockall);
+    APPLYCUST(madvise);
+    APPLYCUST(mincore);
+    APPLYCUST(pivot_root);
+    APPLYCUST(chroot);
+    APPLYCUST(mknod);
+    APPLYCUST(link);
+    APPLYCUST(symlink);
+    APPLYCUST(unlink);
+    APPLYCUST(rename);
+    APPLYCUST(chmod);
+    APPLYCUST(fchmod);
+    APPLYCUST(fcntl);
+    APPLYCUST(pipe);
+    APPLYCUST(pipe2);
+    APPLYCUST(dup);
+    APPLYCUST(dup2);
+    APPLYCUST(dup3);
+    APPLYCUST(ioperm);
+    APPLYCUST(ioctl);
+    APPLYCUST(flock);
+    APPLYCUST(io_setup);
+    APPLYCUST(io_destroy);
+    APPLYCUST(io_getevents);
+    APPLYCUST(io_submit);
+    APPLYCUST(io_cancel);
+    APPLYCUST(sendfile);
+    APPLYCUST(readlink);
+    APPLYCUST(creat);
+    
+    APPLYCUST(open);
+    APPLYCUST(close);
+    
+    APPLYCUST(access);
+    APPLYCUST(vhangup);
+    APPLYCUST(chown);
+    APPLYCUST(lchown);
+    APPLYCUST(fchown);
+    APPLYCUST(utime);
+    APPLYCUST(utimes);
+    APPLYCUST(lseek);
+    
+    APPLYCUST(read);
+
+    APPLYCUST(readahead);
+    APPLYCUST(readv);
+
+    APPLYCUST(write);
+
+    APPLYCUST(writev);
+    APPLYCUST(pread64);
+    APPLYCUST(pwrite64);
+    APPLYCUST(preadv);
+    APPLYCUST(preadv2);
+    APPLYCUST(pwritev);
+    APPLYCUST(pwritev2);
+    APPLYCUST(getcwd);
+    APPLYCUST(mkdir);
+    APPLYCUST(chdir);
+    APPLYCUST(fchdir);
+    APPLYCUST(rmdir);
+    APPLYCUST(lookup_dcookie);
+    APPLYCUST(quotactl);
+    APPLYCUST(getdents);
+    APPLYCUST(getdents64);
+
+    APPLYCUST(setsockopt);
+    APPLYCUST(getsockopt);
+    APPLYCUST(bind);
+    APPLYCUST(connect);
+    APPLYCUST(accept);
+    APPLYCUST(accept4);
+    APPLYCUST(getsockname);
+    APPLYCUST(getpeername);
+    APPLYCUST(sendto);
+    APPLYCUST(sendmsg);
+    APPLYCUST(sendmmsg);
+    APPLYCUST(recvfrom);
+    APPLYCUST(recvmsg);
+    APPLYCUST(recvmmsg);
+    APPLYCUST(socket);
+    APPLYCUST(socketpair);
+    APPLYCUST(listen);
+
+/*    APPLYCUST(poll);*/
+/*    APPLYCUST(select);*/
+
+    APPLYCUST(epoll_create);
+    APPLYCUST(epoll_create1);
+    APPLYCUST(epoll_ctl);
+
+/*    APPLYCUST(epoll_wait);*/
+    
+    APPLYCUST(epoll_pwait);
+
+    APPLYCUST(sethostname);
+    APPLYCUST(setdomainname);
+    APPLYCUSTCONST(newuname,uname);
+
+    APPLYCUST(getrlimit);
+    APPLYCUST(setrlimit);
+    APPLYCUST(prlimit64);
+    APPLYCUST(getrusage);
+    APPLYCUST(umask);
+    APPLYCUST(msgget);
+    APPLYCUST(msgsnd);
+    APPLYCUST(msgrcv);
+    APPLYCUST(msgctl);
+
+    APPLYCUST(semget);
+    APPLYCUST(semop);
+    APPLYCUST(semctl);
+    APPLYCUST(semtimedop);
+    APPLYCUST(shmat);
+    APPLYCUST(shmget);
+    APPLYCUST(shmdt);
+    APPLYCUST(shmctl);
+    
+    APPLYCUST(mq_open);
+    APPLYCUST(mq_unlink);
+    APPLYCUST(mq_timedsend);
+    APPLYCUST(mq_timedreceive);
+    APPLYCUST(mq_notify);
+    APPLYCUST(mq_getsetattr);
+    APPLYCUST(prctl);
+    APPLYCUST(swapon);
+    APPLYCUST(swapoff);
+    APPLYCUST(sysinfo);
+    APPLYCUST(sysfs);
+    APPLYCUST(syslog);
+    APPLYCUST(uselib);
+    APPLYCUSTCONST(ni_syscall,nfsservctl);
+    APPLYCUST(ptrace);
+    APPLYCUST(add_key);
+    APPLYCUST(request_key);
+    APPLYCUST(keyctl);
+    APPLYCUST(ioprio_set);
+    APPLYCUST(ioprio_get);
+    APPLYCUST(set_mempolicy);
+    APPLYCUST(migrate_pages);
+    APPLYCUST(move_pages);
+    APPLYCUST(mbind);
+    APPLYCUST(get_mempolicy);
+    APPLYCUST(inotify_init);
+    APPLYCUST(inotify_init1);
+    APPLYCUST(inotify_add_watch);
+    APPLYCUST(inotify_rm_watch);
+
+    APPLYCUST(mknodat);
+    APPLYCUST(mkdirat);
+    APPLYCUST(unlinkat);
+    APPLYCUST(symlinkat);
+    APPLYCUST(linkat);
+    APPLYCUST(renameat);
+    APPLYCUST(renameat2);
+    APPLYCUST(futimesat);
+    APPLYCUST(faccessat);
+    APPLYCUST(fchmodat);
+    APPLYCUST(fchownat);
+    APPLYCUST(openat);
+    APPLYCUST(newfstatat);
+    APPLYCUST(readlinkat);
+    APPLYCUST(utimensat);
+
+    APPLYCUST(unshare);
+    APPLYCUST(splice);
+    APPLYCUST(vmsplice);
+    APPLYCUST(tee);
+    APPLYCUST(sync_file_range);
+    APPLYCUST(get_robust_list);
+    APPLYCUST(set_robust_list);
+    APPLYCUST(getcpu);
+    APPLYCUST(signalfd);
+    APPLYCUST(signalfd4);
+    APPLYCUST(timerfd_create);
+    APPLYCUST(timerfd_settime);
+    APPLYCUST(timerfd_gettime);
+    APPLYCUST(eventfd);
+    APPLYCUST(eventfd2);
+    APPLYCUST(memfd_create);
+    APPLYCUST(userfaultfd);
+    APPLYCUST(fallocate);
+    APPLYCUST(pselect6);
+    APPLYCUST(ppoll);
+    APPLYCUST(fanotify_init);
+    APPLYCUST(fanotify_mark);
+    APPLYCUST(syncfs);
+    APPLYCUST(fork);
+    APPLYCUST(vfork);
+    APPLYCUST(clone);
+    APPLYCUST(execve);
+    APPLYCUST(perf_event_open);
+    APPLYCUST(name_to_handle_at);
+    APPLYCUST(open_by_handle_at);
+    APPLYCUST(setns);
+    APPLYCUST(process_vm_readv);
+    APPLYCUST(process_vm_writev);
+    APPLYCUST(kcmp);
+    APPLYCUST(finit_module);
+    APPLYCUST(seccomp);
+    APPLYCUST(getrandom);
+    APPLYCUST(bpf);
+    APPLYCUST(execveat);
+    APPLYCUST(membarrier);
+    APPLYCUST(copy_file_range);
+    APPLYCUST(mlock2);
+    APPLYCUST(pkey_mprotect);
+    APPLYCUST(pkey_alloc);
+    APPLYCUST(pkey_free);
+    APPLYCUST(statx);
+
     // Re-enable write protection
     write_cr0(read_cr0() | 0x10000);
 
+    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module inserted successfully\n");
+    
     return 0;
 }
 
 static void __exit hello_exit(void)
 {
-    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module removed successfully\n");
+    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module removing\n");
     
     // Temporarily disable write protection
     write_cr0(read_cr0() & (~0x10000));
@@ -987,10 +1323,346 @@ static void __exit hello_exit(void)
     // Overwrite the syscall table entry
 
 // Newly copied below
-     
-     
+    APPLYORIG(time);
+    APPLYORIG(gettimeofday);
+    APPLYORIG(settimeofday);
+    APPLYORIG(adjtimex);
+    APPLYORIG(times);
+    APPLYORIG(gettid);
+/*    APPLYORIG(nanosleep);*/
+    APPLYORIG(alarm);
+    APPLYORIG(getpid);
+    APPLYORIG(getppid);
+    APPLYORIG(getuid);
+    APPLYORIG(geteuid);
+    APPLYORIG(getgid);
+    APPLYORIG(getegid);
+    APPLYORIG(getresuid);
+    APPLYORIG(getresgid);
+    APPLYORIG(getpgid);
+    APPLYORIG(getpgrp);
+    APPLYORIG(getsid);
+    APPLYORIG(getgroups);
+    APPLYORIG(setregid);
+    APPLYORIG(setgid);
+    APPLYORIG(setreuid);
+    APPLYORIG(setuid);
+    APPLYORIG(setresuid);
+    APPLYORIG(setresgid);
+    APPLYORIG(setfsuid);
+    APPLYORIG(setfsgid);
+    APPLYORIG(setpgid);
+    APPLYORIG(setsid);
+    APPLYORIG(setgroups);
+    
+    APPLYORIG(acct);
+    APPLYORIG(capget);
+    APPLYORIG(capset);
+    APPLYORIG(personality);
+    APPLYORIG(sigaltstack);
+    APPLYORIG(getitimer);
+    APPLYORIG(setitimer);
+    APPLYORIG(timer_create);
+    APPLYORIG(timer_gettime);
+    APPLYORIG(timer_getoverrun);
+    APPLYORIG(timer_settime);
+    APPLYORIG(timer_delete);
+    APPLYORIG(clock_settime);
+    APPLYORIG(clock_gettime);
+    APPLYORIG(clock_adjtime);
+    APPLYORIG(clock_getres);
+    APPLYORIG(clock_nanosleep);
+    APPLYORIG(sched_setscheduler);
+    APPLYORIG(sched_setparam);
+    APPLYORIG(sched_setattr);
+    APPLYORIG(sched_getscheduler);
+    APPLYORIG(sched_getparam);
+    APPLYORIG(sched_getattr);
+    APPLYORIG(sched_setaffinity);
+    APPLYORIG(sched_getaffinity);
+    APPLYORIG(sched_yield);
+    APPLYORIG(sched_get_priority_max);
+    APPLYORIG(sched_get_priority_min);
+    APPLYORIG(sched_rr_get_interval);
+    APPLYORIG(setpriority);
+    APPLYORIG(getpriority);
+    APPLYORIG(shutdown);
+    APPLYORIG(reboot);
+    APPLYORIG(restart_syscall);
+    
+    APPLYORIG(kexec_load);
+    APPLYORIG(kexec_file_load);
+    APPLYORIG(exit);
+    APPLYORIG(exit_group);
+/*    APPLYORIG(wait4);*/
+    APPLYORIG(waitid);
+    APPLYORIG(set_tid_address);
+    APPLYORIG(futex);
+    
+    APPLYORIG(init_module);
+/*    APPLYORIG(delete_module);*/
+    APPLYORIG(rt_sigsuspend);
+    APPLYORIG(rt_sigaction);
+    APPLYORIG(rt_sigprocmask);
+    APPLYORIG(rt_sigpending);
+    APPLYORIG(rt_sigtimedwait);
+    APPLYORIG(rt_tgsigqueueinfo);
+
+    APPLYORIG(kill);
+    APPLYORIG(tgkill);
+    APPLYORIG(tkill);
+    APPLYORIG(rt_sigqueueinfo);
+    APPLYORIG(pause);
+    APPLYORIG(sync);
+    APPLYORIG(fsync);
+    APPLYORIG(fdatasync);
+    APPLYORIG(mount);
+    APPLYORIGCONST(umount,umount2);
+    APPLYORIG(truncate);
+    APPLYORIG(ftruncate);
+    APPLYORIG(stat);
+    APPLYORIG(statfs);
+    APPLYORIG(lstat);
+    APPLYORIG(fstat);
+    APPLYORIG(ustat);
+    APPLYORIG(setxattr);
+    APPLYORIG(lsetxattr);
+    APPLYORIG(fsetxattr);
+    APPLYORIG(getxattr);
+    APPLYORIG(lgetxattr);
+    APPLYORIG(fgetxattr);
+    APPLYORIG(listxattr);
+    APPLYORIG(llistxattr);
+    APPLYORIG(flistxattr);
+    APPLYORIG(removexattr);
+    APPLYORIG(lremovexattr);
+    APPLYORIG(fremovexattr);
+    
+    APPLYORIG(brk);
+    APPLYORIG(mprotect);
+    APPLYORIG(mremap);
+    APPLYORIG(remap_file_pages);
+    APPLYORIG(msync);
+    APPLYORIG(fadvise64);
+    APPLYORIG(munmap);
+    APPLYORIG(mlock);
+    APPLYORIG(munlock);
+    APPLYORIG(mlockall);
+    APPLYORIG(munlockall);
+    APPLYORIG(madvise);
+    APPLYORIG(mincore);
+    APPLYORIG(pivot_root);
+    APPLYORIG(chroot);
+    APPLYORIG(mknod);
+    APPLYORIG(link);
+    APPLYORIG(symlink);
+    APPLYORIG(unlink);
+    APPLYORIG(rename);
+    APPLYORIG(chmod);
+    APPLYORIG(fchmod);
+    APPLYORIG(fcntl);
+    APPLYORIG(pipe);
+    APPLYORIG(pipe2);
+    APPLYORIG(dup);
+    APPLYORIG(dup2);
+    APPLYORIG(dup3);
+    APPLYORIG(ioperm);
+    APPLYORIG(ioctl);
+    APPLYORIG(flock);
+    APPLYORIG(io_setup);
+    APPLYORIG(io_destroy);
+    APPLYORIG(io_getevents);
+    APPLYORIG(io_submit);
+    APPLYORIG(io_cancel);
+    APPLYORIG(sendfile);
+    APPLYORIG(readlink);
+    APPLYORIG(creat);
+    
+    APPLYORIG(open);
+    APPLYORIG(close);
+    
+    APPLYORIG(access);
+    APPLYORIG(vhangup);
+    APPLYORIG(chown);
+    APPLYORIG(lchown);
+    APPLYORIG(fchown);
+    APPLYORIG(utime);
+    APPLYORIG(utimes);
+    APPLYORIG(lseek);
+    
+    APPLYORIG(read);
+
+    APPLYORIG(readahead);
+    APPLYORIG(readv);
+
+    APPLYORIG(write);
+
+    APPLYORIG(writev);
+    APPLYORIG(pread64);
+    APPLYORIG(pwrite64);
+    APPLYORIG(preadv);
+    APPLYORIG(preadv2);
+    APPLYORIG(pwritev);
+    APPLYORIG(pwritev2);
+    APPLYORIG(getcwd);
+    APPLYORIG(mkdir);
+    APPLYORIG(chdir);
+    APPLYORIG(fchdir);
+    APPLYORIG(rmdir);
+    APPLYORIG(lookup_dcookie);
+    APPLYORIG(quotactl);
+    APPLYORIG(getdents);
+    APPLYORIG(getdents64);
+
+    APPLYORIG(setsockopt);
+    APPLYORIG(getsockopt);
+    APPLYORIG(bind);
+    APPLYORIG(connect);
+    APPLYORIG(accept);
+    APPLYORIG(accept4);
+    APPLYORIG(getsockname);
+    APPLYORIG(getpeername);
+    APPLYORIG(sendto);
+    APPLYORIG(sendmsg);
+    APPLYORIG(sendmmsg);
+    APPLYORIG(recvfrom);
+    APPLYORIG(recvmsg);
+    APPLYORIG(recvmmsg);
+    APPLYORIG(socket);
+    APPLYORIG(socketpair);
+    APPLYORIG(listen);
+
+/*    APPLYORIG(poll);*/
+/*    APPLYORIG(select);*/
+
+    APPLYORIG(epoll_create);
+    APPLYORIG(epoll_create1);
+    APPLYORIG(epoll_ctl);
+
+/*    APPLYORIG(epoll_wait);*/
+    
+    APPLYORIG(epoll_pwait);
+
+    APPLYORIG(sethostname);
+    APPLYORIG(setdomainname);
+    APPLYORIGCONST(newuname,uname);
+
+    APPLYORIG(getrlimit);
+    APPLYORIG(setrlimit);
+    APPLYORIG(prlimit64);
+    APPLYORIG(getrusage);
+    APPLYORIG(umask);
+    APPLYORIG(msgget);
+    APPLYORIG(msgsnd);
+    APPLYORIG(msgrcv);
+    APPLYORIG(msgctl);
+
+    APPLYORIG(semget);
+    APPLYORIG(semop);
+    APPLYORIG(semctl);
+    APPLYORIG(semtimedop);
+    APPLYORIG(shmat);
+    APPLYORIG(shmget);
+    APPLYORIG(shmdt);
+    APPLYORIG(shmctl);
+    
+    APPLYORIG(mq_open);
+    APPLYORIG(mq_unlink);
+    APPLYORIG(mq_timedsend);
+    APPLYORIG(mq_timedreceive);
+    APPLYORIG(mq_notify);
+    APPLYORIG(mq_getsetattr);
+    APPLYORIG(prctl);
+    APPLYORIG(swapon);
+    APPLYORIG(swapoff);
+    APPLYORIG(sysinfo);
+    APPLYORIG(sysfs);
+    APPLYORIG(syslog);
+    APPLYORIG(uselib);
+    APPLYORIGCONST(ni_syscall,nfsservctl);
+    APPLYORIG(ptrace);
+    APPLYORIG(add_key);
+    APPLYORIG(request_key);
+    APPLYORIG(keyctl);
+    APPLYORIG(ioprio_set);
+    APPLYORIG(ioprio_get);
+    APPLYORIG(set_mempolicy);
+    APPLYORIG(migrate_pages);
+    APPLYORIG(move_pages);
+    APPLYORIG(mbind);
+    APPLYORIG(get_mempolicy);
+    APPLYORIG(inotify_init);
+    APPLYORIG(inotify_init1);
+    APPLYORIG(inotify_add_watch);
+    APPLYORIG(inotify_rm_watch);
+
+    APPLYORIG(mknodat);
+    APPLYORIG(mkdirat);
+    APPLYORIG(unlinkat);
+    APPLYORIG(symlinkat);
+    APPLYORIG(linkat);
+    APPLYORIG(renameat);
+    APPLYORIG(renameat2);
+    APPLYORIG(futimesat);
+    APPLYORIG(faccessat);
+    APPLYORIG(fchmodat);
+    APPLYORIG(fchownat);
+    APPLYORIG(openat);
+    APPLYORIG(newfstatat);
+    APPLYORIG(readlinkat);
+    APPLYORIG(utimensat);
+
+    APPLYORIG(unshare);
+    APPLYORIG(splice);
+    APPLYORIG(vmsplice);
+    APPLYORIG(tee);
+    APPLYORIG(sync_file_range);
+    APPLYORIG(get_robust_list);
+    APPLYORIG(set_robust_list);
+    APPLYORIG(getcpu);
+    APPLYORIG(signalfd);
+    APPLYORIG(signalfd4);
+    APPLYORIG(timerfd_create);
+    APPLYORIG(timerfd_settime);
+    APPLYORIG(timerfd_gettime);
+    APPLYORIG(eventfd);
+    APPLYORIG(eventfd2);
+    APPLYORIG(memfd_create);
+    APPLYORIG(userfaultfd);
+    APPLYORIG(fallocate);
+    APPLYORIG(pselect6);
+    APPLYORIG(ppoll);
+    APPLYORIG(fanotify_init);
+    APPLYORIG(fanotify_mark);
+    APPLYORIG(syncfs);
+    APPLYORIG(fork);
+    APPLYORIG(vfork);
+    APPLYORIG(clone);
+    APPLYORIG(execve);
+    APPLYORIG(perf_event_open);
+    APPLYORIG(name_to_handle_at);
+    APPLYORIG(open_by_handle_at);
+    APPLYORIG(setns);
+    APPLYORIG(process_vm_readv);
+    APPLYORIG(process_vm_writev);
+    APPLYORIG(kcmp);
+    APPLYORIG(finit_module);
+    APPLYORIG(seccomp);
+    APPLYORIG(getrandom);
+    APPLYORIG(bpf);
+    APPLYORIG(execveat);
+    APPLYORIG(membarrier);
+    APPLYORIG(copy_file_range);
+    APPLYORIG(mlock2);
+    APPLYORIG(pkey_mprotect);
+    APPLYORIG(pkey_alloc);
+    APPLYORIG(pkey_free);
+    APPLYORIG(statx);
+
     // Re-enable write protection
     write_cr0(read_cr0() | 0x10000);
+    
+    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module removed successfully\n");
     
 }
 

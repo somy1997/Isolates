@@ -20,3 +20,13 @@ insmod : $(modname).ko
 
 rmmod :
 	sudo rmmod $(modname)
+	
+init :
+	cp backedreallops.c reallops.c
+	gedit reallops.c temp.c &
+	
+backup :
+	cd .. && cp -r * ../M.\ Tech\ Project/System\ Call\ Selective\ Blocking/
+	
+clins :
+	make clean all insmod

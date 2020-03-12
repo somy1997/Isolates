@@ -213,6 +213,8 @@ Commenting printk first to check if it works
 Matching  : printk.*
 Replacing : //\0\n\t\t;
 
+Week 10 :
+
 Rewriting the code by removing the predefined ifdefs from syscalls.h and using macros in reallops and using binary search to determine which syscalls are creating the problems.
 Macros : argument x :
 #x results in "x", stringifies x
@@ -426,3 +428,15 @@ static asmlinkage long custom_##x(t1 p1, t2 p2)\
 
 Still after correcting the above issues, the problem of system getting hanged after rmmod remains. Applying binary search to identify the syscalls creating this problem :
 nanosleep is creating problem. After rmmodding it shows error like Bad RIP value copied into dmesglogs. Also, the capability of copying text between mac and parallels is gone.
+wait4 is creating problem. After rmmodding, the terminal tab closes automatically. dmesg has bad RIP value.
+delete_module is creating problem. After rmmodding, the make returns with error. dmesg has bad RIP value.
+gedit is behaving strangely. When pressing enter several times, 2 cursors appear, some lines disappear or get repeated. On doing a save, it corrects itself.
+Sometimes the error in dmesg is showing up after some time so its really difficult to pin point which syscall was responsible.
+I think we need to load the module when the computer wakes up itself so that no context is erased when the new syscalls are loaded and then removed.
+poll is creating problem. After rmmodding the screen turns black and hangs.
+select might be creating some problem. After rmmodding, some Bad RIP errors appeared in dmesg.
+A pattern emerges in the dmesg logs having Bad RIP value, the ORIG_RAX value is same.
+epoll_wait is creating problem. After rmmoding the system hangs, on pressing enter on the terminal, it keeps getting entered multiple times.
+Further, I don't think this is much of a problem as the problems only come when we rmmod stuff.
+
+https://cs.opensource.google/gvisor/gvisor = a user space sandboxing application written in Go.

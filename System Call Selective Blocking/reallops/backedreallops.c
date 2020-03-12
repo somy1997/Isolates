@@ -25,7 +25,7 @@
 #include <trace/syscall.h>
 */
 
-#define PARENTPID 2879
+#define PARENTPID 102938
 #define STOREORIG(x) org_sys_table[__NR_##x] = sys_call_table[__NR_##x]
 #define APPLYCUST(x) sys_call_table[__NR_##x] = (sys_call_ptr_t)custom_##x
 #define APPLYORIG(x) sys_call_table[__NR_##x] = org_sys_table[__NR_##x]
@@ -643,7 +643,7 @@ static asmlinkage long custom_open(const char __user *filename, int flags, umode
 static int __init hello_init(void)
 {
     
-    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module inserted successfully\n");
+    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module inserting\n");
     
     sys_call_table = (sys_call_ptr_t *)kallsyms_lookup_name(sym_name);
 
@@ -970,16 +970,17 @@ static int __init hello_init(void)
     
 // Newly copied below
 
-       
     // Re-enable write protection
     write_cr0(read_cr0() | 0x10000);
 
+    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module inserted successfully\n");
+    
     return 0;
 }
 
 static void __exit hello_exit(void)
 {
-    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module removed successfully\n");
+    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module removing\n");
     
     // Temporarily disable write protection
     write_cr0(read_cr0() & (~0x10000));
@@ -988,9 +989,10 @@ static void __exit hello_exit(void)
 
 // Newly copied below
 
-     
     // Re-enable write protection
     write_cr0(read_cr0() | 0x10000);
+    
+    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module removed successfully\n");
     
 }
 
