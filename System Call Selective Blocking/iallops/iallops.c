@@ -7,6 +7,7 @@
 #include <linux/cred.h>
 #include <linux/fcntl.h>
 #include <linux/string.h>
+#include <linux/proc_fs.h>
 
 /*
 // Files included by /usr/src/linux-headers-4.15.0-45/include/linux/syscalls.h :
@@ -25,7 +26,7 @@
 #include <trace/syscall.h>
 */
 
-#define PARENTPID 2495
+#define PARENTPID ppid
 #define STOREORIG(x) org_sys_table[__NR_##x] = sys_call_table[__NR_##x]
 #define APPLYCUST(x) sys_call_table[__NR_##x] = (sys_call_ptr_t)custom_##x
 #define APPLYORIG(x) sys_call_table[__NR_##x] = org_sys_table[__NR_##x]
@@ -150,6 +151,21 @@ char *sym_name = "sys_call_table";
 typedef asmlinkage long (*sys_call_ptr_t)(const struct pt_regs *);
 static sys_call_ptr_t *sys_call_table;
 static sys_call_ptr_t org_sys_table[2048];
+
+static struct proc_dir_entry *ent;
+static struct file_operations ops;
+static long ppid = -1;
+
+static ssize_t ppid_write(struct file *file, const char __user *buf, size_t count, loff_t *pos) 
+{
+    if(kstrtol_from_user(buf, count, 10, &ppid))
+    {
+/*    	ppid = -1;*/
+    	printk(KERN_WARNING "ppid to be intercepted could not be read\n");
+	}
+    printk(KERN_WARNING "ppid to be intercepted changed to %ld\n", ppid);
+    return count;
+}
 
 CUSTFUNC1(time, time_t __user *, tloc)
 /*
@@ -642,8 +658,14 @@ static asmlinkage long custom_open(const char __user *filename, int flags, umode
 
 static int __init hello_init(void)
 {
+	printk(KERN_ALERT "ISOLATES:PPID Writer device inserting\n");
+    ent = proc_create("ppid", 0666, NULL, &ops);
+    if(!ent) return -ENOENT;
+    ops.owner = THIS_MODULE;
+    ops.write = ppid_write;
+    printk(KERN_ALERT "ISOLATES:PPID Writer device inserted successfully\n");
     
-    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module inserting\n");
+    printk(KERN_ALERT "ISOLATES:IAllOps module inserting\n");
     
     sys_call_table = (sys_call_ptr_t *)kallsyms_lookup_name(sym_name);
 
@@ -1308,14 +1330,14 @@ static int __init hello_init(void)
     // Re-enable write protection
     write_cr0(read_cr0() | 0x10000);
 
-    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module inserted successfully\n");
+    printk(KERN_ALERT "ISOLATES:IAllOps module inserted successfully\n");
     
     return 0;
 }
 
 static void __exit hello_exit(void)
 {
-    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module removing\n");
+    printk(KERN_ALERT "ISOLATES:IAllOps module removing\n");
     
     // Temporarily disable write protection
     write_cr0(read_cr0() & (~0x10000));
@@ -1662,7 +1684,11 @@ static void __exit hello_exit(void)
     // Re-enable write protection
     write_cr0(read_cr0() | 0x10000);
     
-    printk(KERN_ALERT "ISOLATES:Custom ReAllOps module removed successfully\n");
+    printk(KERN_ALERT "ISOLATES:IAllOps module removed successfully\n");
+    
+    printk(KERN_ALERT "ISOLATES:PPID Writer device removing\n");
+    proc_remove(ent);
+    printk(KERN_ALERT "ISOLATES:PPID Writer device removed successfully\n");
     
 }
 

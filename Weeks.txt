@@ -440,3 +440,17 @@ epoll_wait is creating problem. After rmmoding the system hangs, on pressing ent
 Further, I don't think this is much of a problem as the problems only come when we rmmod stuff.
 
 https://cs.opensource.google/gvisor/gvisor = a user space sandboxing application written in Go.
+https://gvisor.dev/ = a user space sandboxing application written in Go.
+
+Week 11 :
+
+Making the module interactive.
+Watched this tutorial on lkm : https://www.youtube.com/playlist?list=PL16941B715F5507C5
+https://youtu.be/_4H-F_5yDvo?list=PL16941B715F5507C5 = 3:10 it says that kernel stack is small as compared to user stack, so some functions in our module might fail because kernel stack now involves 2 calls for each single system call.
+https://www.binarytides.com/linux-commands-hardware-info/ = 16 commands to check hardware info.
+https://unix.stackexchange.com/questions/198950/how-to-get-a-list-of-major-number-driver-associations = Found the list of device associations at linux-.../Documentation/admin-guide/devices.txt
+https://stackoverflow.com/questions/6139493/how-convert-a-char-string-to-int-in-the-linux-kernel = converting string to int
+https://stackoverflow.com/questions/1922761/size-of-pid-t-uid-t-gid-t-on-linux = type of pid_t
+As I couldn't pinpoint the type of pid_t, to be on a safer side and support it across multiple architectures I defined the type of ppid as long.
+
+Observation : Sometimes when printing to kernlog using printk, if \n is not given at the end then the last line doesn't get printed instantly but only when more things are written to the kernlog.

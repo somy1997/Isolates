@@ -22,14 +22,17 @@ rmmod :
 	sudo rmmod $(modname)
 	
 init :
-	cp backedreallops.c reallops.c
-	gedit reallops.c temp.c &
+#	cp backedreallops.c reallops.c
+	gedit $(modname).c &
 	
 backup :
-	cd .. && cp -r * ../M.\ Tech\ Project/System\ Call\ Selective\ Blocking/
+	cp -r ~/Desktop/intercept_log/* ~/Desktop/M.\ Tech\ Project/System\ Call\ Selective\ Blocking/
 	
 clins :
 	make clean all insmod
 
 dmesg :
 	dmesg > dmesglogs.txt
+	
+dmtail :
+	dmesg | tail
