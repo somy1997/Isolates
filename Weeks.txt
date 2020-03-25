@@ -454,3 +454,25 @@ https://stackoverflow.com/questions/1922761/size-of-pid-t-uid-t-gid-t-on-linux =
 As I couldn't pinpoint the type of pid_t, to be on a safer side and support it across multiple architectures I defined the type of ppid as long.
 
 Observation : Sometimes when printing to kernlog using printk, if \n is not given at the end then the last line doesn't get printed instantly but only when more things are written to the kernlog.
+
+Week 12 :
+
+Creating a CGI server for getting the HTTP request, running the statically compiled executable and sending back the response.
+
+Use a fast language like C, C++, Go, Rust, or Assembly.
+Writing the CGI in C++.
+
+// http://www.yolinux.com/TUTORIALS/LinuxTutorialC++CGI.html = Source compilation of CGI library.
+// https://blog.sourcerer.io/building-a-website-with-c-db942c801aee = Building a simple website in C++ using CGI.
+https://linuxconfig.org/simple-cgi-and-apache-examples-on-ubuntu-linux#h4-c = Installing apache and cgi.
+
+Not able to open, was getting file not found error in browser.
+https://askubuntu.com/questions/403067/cgi-bin-not-working = For mitigating the above error. Got following message on enabling cgi. localhost domain is working.
+
+nbs@ubuntu:~/Desktop/cgi_controller/hello$ sudo a2enmod cgi
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+Your MPM seems to be threaded. Selecting cgid instead of cgi.
+Enabling module cgid.
+To activate the new configuration, you need to run:
+  service apache2 restart
+nbs@ubuntu:~/Desktop/cgi_controller/hello$ sudo service apache2 restart
