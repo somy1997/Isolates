@@ -476,3 +476,33 @@ Enabling module cgid.
 To activate the new configuration, you need to run:
   service apache2 restart
 nbs@ubuntu:~/Desktop/cgi_controller/hello$ sudo service apache2 restart
+
+Created the cgi script which calls another programme test with the parameters provided in the query string using system() function in Isolates/CGI_Controller/inout.
+But, this was not what was required.
+
+I need to create my own API gateway which provides functionality like CGI, for example like simplestHTTPServer written in Go. Here I am using apache as one.
+Since, I have little knowledge in creating web servers, I am starting from scratch. 
+As an exercise, I need to create a web api which parses the url and runs the executable mentioned in the path or shows an error using simple HTTP server module in python.
+
+Disabling apache autostart :
+Refer https://askubuntu.com/questions/170640/how-do-i-stop-apache2-from-automatically-starting-on-boot
+
+nbs@ubuntu:~$ sudo update-rc.d apache2 disable
+insserv: warning: current start runlevel(s) (empty) of script `apache2' overrides LSB defaults (2 3 4 5).
+insserv: warning: current stop runlevel(s) (0 1 2 3 4 5 6) of script `apache2' overrides LSB defaults (0 1 6).
+
+This didn't work
+
+nbs@ubuntu:~$ sudo systemctl disable apache2
+apache2.service is not a native service, redirecting to systemd-sysv-install
+Executing /lib/systemd/systemd-sysv-install disable apache2
+insserv: warning: current start runlevel(s) (empty) of script `apache2' overrides LSB defaults (2 3 4 5).
+insserv: warning: current stop runlevel(s) (0 1 2 3 4 5 6) of script `apache2' overrides LSB defaults (0 1 6).
+insserv: warning: current start runlevel(s) (empty) of script `apache2' overrides LSB defaults (2 3 4 5).
+insserv: warning: current stop runlevel(s) (0 1 2 3 4 5 6) of script `apache2' overrides LSB defaults (0 1 6).
+
+This worked
+
+Created a controller which uses path to identify if the given path is executable and then executes it.
+Created custom Handler class which overrides the do_GET() function to execute the path.
+Prints to the terminal.
