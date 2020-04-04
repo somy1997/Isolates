@@ -469,15 +469,15 @@ https://linuxconfig.org/simple-cgi-and-apache-examples-on-ubuntu-linux#h4-c = In
 Not able to open, was getting file not found error in browser.
 https://askubuntu.com/questions/403067/cgi-bin-not-working = For mitigating the above error. Got following message on enabling cgi. localhost domain is working.
 
-nbs@ubuntu:~/Desktop/cgi_controller/hello$ sudo a2enmod cgi
+nbs@ubuntu:~/Desktop/CGI Controller/hello$ sudo a2enmod cgi
 AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
 Your MPM seems to be threaded. Selecting cgid instead of cgi.
 Enabling module cgid.
 To activate the new configuration, you need to run:
   service apache2 restart
-nbs@ubuntu:~/Desktop/cgi_controller/hello$ sudo service apache2 restart
+nbs@ubuntu:~/Desktop/CGI Controller/hello$ sudo service apache2 restart
 
-Created the cgi script which calls another programme test with the parameters provided in the query string using system() function in Isolates/CGI_Controller/inout.
+Created the cgi script which calls another programme test with the parameters provided in the query string using system() function in Isolates/CGI Controller/inout.
 But, this was not what was required.
 
 I need to create my own API gateway which provides functionality like CGI, for example like simplestHTTPServer written in Go. Here I am using apache as one.
@@ -506,3 +506,21 @@ This worked
 Created a controller which uses path to identify if the given path is executable and then executes it.
 Created custom Handler class which overrides the do_GET() function to execute the path.
 Prints to the terminal.
+It is correct but had to use subprocess.popen as it gives controll over the subprocess to kill, redirect stdin, stdout, etc.
+
+Digression : Look at what not to do in experiments given in usenix.
+
+Try to run https://github.com/mattn/go-cgiserver and modify it to run any executable.
+Use some good editor example goland (jetbrains) or vscode for autocomplete.
+Golang has some unique rules like variables starting with small letters are private with some exception like while writing low level libraries.
+
+Created CGI Controller/execserver
+Faced problems opening vscode in vm after installation (shows blank white screen) so editing code in vscode mac and running on vm.
+https://github.com/golang/go/issues/24674 = go lint in vscode was showing error under package main line that permission denied while opening.
+https://stackoverflow.com/questions/6478962/what-does-the-dot-or-period-in-a-go-import-statement-do = dotted import significance getting warnings for it.
+https://blog.golang.org/godoc = Documenting go code, to avoid warnings like exported type CgiHandler should have comment or be unexported. Just follow how it is written for Fprint
+https://stackoverflow.com/questions/15049903/how-to-use-custom-packages = importing custom packages.
+
+Week 13 :
+
+Completed : A tour of go : https://tour.golang.org/list
