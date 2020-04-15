@@ -524,3 +524,56 @@ https://stackoverflow.com/questions/15049903/how-to-use-custom-packages = import
 Week 13 :
 
 Completed : A tour of go : https://tour.golang.org/list
+Pushed the CGI code after modifying to run any executable path from https://github.com/mattn/go-cgiserver .
+Tested in Mac.
+Can be found at Isolates/CGI Controller/execserver .
+
+Week 14 :
+
+Was sick
+
+Week 15 :
+
+Understanding https://github.com/mattn/go-cgiserver again.
+
+Useful Go Routines and Structs and Interfaces :
+Libraries :
+http
+http/cgi
+os
+os/exec
+net/url
+io
+fmt
+path/filepath
+
+http.HandleFunc
+http.ServeMux
+http.ListenAndServe
+http.Handler
+http.ResponseWriter
+http.Request
+http.Error
+http.NotFound
+
+cgi.Handler
+
+os.Stat
+os.FileMode
+os.FileInfo
+
+exec.Cmd
+exec.LookPath
+exec.Command
+
+url.URL
+
+io.Writer
+io.WriteString
+
+fmt.Fprintf
+
+http.ResponseWriter is a Writer
+All the functions of path/filepath are worth referring
+
+https://www.restapitutorial.com/httpstatuscodes.html = http status codes

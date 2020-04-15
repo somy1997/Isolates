@@ -10,7 +10,7 @@ import (
 
 // CgiHandler No Comment
 type CgiHandler struct {
-	http.Handler
+	// http.Handler
 	Root       string
 	DefaultApp string
 	UseLangMap bool
@@ -20,7 +20,7 @@ type CgiHandler struct {
 // CgiServer No Comment
 func CgiServer() *CgiHandler {
 	path, _ := filepath.Abs(".")
-	return &CgiHandler{nil, path, "", false, map[string]string{}}
+	return &CgiHandler{path, "", false, map[string]string{}}
 }
 
 func (h *CgiHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
