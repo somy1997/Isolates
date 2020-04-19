@@ -599,3 +599,6 @@ Content-Type: application/octet-stream
 
 Write a go code to print the environment variables, create an executable and run it using the isolcon server.
 Refer https://www.golangprograms.com/how-to-set-get-and-list-environment-variables.html .
+
+Did above, saved in Isolates/CGI Controller/isolcon/prntenv .
+Interestingly it prints to the webpage instead of downloading the file.
