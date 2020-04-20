@@ -11,9 +11,9 @@ func main() {
 	// os.Setenv("CUSTOM", "500")
 
 	// fetcha all env variables
-	fmt.Println("content-type: text/html")
+	fmt.Print("content-type: text/html\r\n\r\n")
 	fmt.Println("<h1>CGI Environment Variables</h1>")
-	fmt.Println("<p>", os.Environ(), "</p")
+	// fmt.Println("<p>", os.Environ(), "</p>")
 	for _, element := range os.Environ() {
 		variable := strings.Split(element, "=")
 		fmt.Println("<p>", variable[0], "=>", variable[1], "</p>")

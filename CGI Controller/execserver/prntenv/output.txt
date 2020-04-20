@@ -1,0 +1,31 @@
+content-type: text/html
+<h1>CGI Environment Variables</h1>
+<p> [USER=nbs DISPLAY=/private/tmp/com.apple.launchd.ptmsYewoyE/org.macosforge.xquartz:0 LOGNAME=nbs PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/opt/X11/bin:/Library/TeX/texbin:/Users/nbs/Library/Python/3.7/bin:/Users/nbs/Library/Python/3.7/bin SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.uQsvzdW51N/Listeners HOME=/Users/nbs SHELL=/bin/zsh __CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0 TMPDIR=/var/folders/05/hbhzn0_91hj6q1qmzgc049ww0000gn/T/ XPC_SERVICE_NAME=0 XPC_FLAGS=0x0 LANG=en_US.UTF-8 LESS=-R LSCOLORS=Gxfxcxdxbxegedabagacad OLDPWD=/Users/nbs/Mirror/Somy/Y05S10/M. Tech Project/CGI Controller/isolcon/prntenv PAGER=less PWD=/Users/nbs/Mirror/Somy/Y05S10/M. Tech Project/CGI Controller/isolcon SHLVL=1 ZSH=/Users/nbs/.oh-my-zsh ftp_proxy=http://172.16.2.30:8080 http_proxy=http://172.16.2.30:8080 https_proxy=http://172.16.2.30:8080 TERM_PROGRAM=vscode TERM_PROGRAM_VERSION=1.44.2 COLORTERM=truecolor TERM=xterm-256color LC_CTYPE=en_US.UTF-8 _=/Users/nbs/Mirror/Somy/Y05S10/M. Tech Project/CGI Controller/isolcon/./isolcon] </p
+<p> USER => nbs </p>
+<p> DISPLAY => /private/tmp/com.apple.launchd.ptmsYewoyE/org.macosforge.xquartz:0 </p>
+<p> LOGNAME => nbs </p>
+<p> PATH => /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/opt/X11/bin:/Library/TeX/texbin:/Users/nbs/Library/Python/3.7/bin:/Users/nbs/Library/Python/3.7/bin </p>
+<p> SSH_AUTH_SOCK => /private/tmp/com.apple.launchd.uQsvzdW51N/Listeners </p>
+<p> HOME => /Users/nbs </p>
+<p> SHELL => /bin/zsh </p>
+<p> __CF_USER_TEXT_ENCODING => 0x1F5:0x0:0x0 </p>
+<p> TMPDIR => /var/folders/05/hbhzn0_91hj6q1qmzgc049ww0000gn/T/ </p>
+<p> XPC_SERVICE_NAME => 0 </p>
+<p> XPC_FLAGS => 0x0 </p>
+<p> LANG => en_US.UTF-8 </p>
+<p> LESS => -R </p>
+<p> LSCOLORS => Gxfxcxdxbxegedabagacad </p>
+<p> OLDPWD => /Users/nbs/Mirror/Somy/Y05S10/M. Tech Project/CGI Controller/isolcon/prntenv </p>
+<p> PAGER => less </p>
+<p> PWD => /Users/nbs/Mirror/Somy/Y05S10/M. Tech Project/CGI Controller/isolcon </p>
+<p> SHLVL => 1 </p>
+<p> ZSH => /Users/nbs/.oh-my-zsh </p>
+<p> ftp_proxy => http://172.16.2.30:8080 </p>
+<p> http_proxy => http://172.16.2.30:8080 </p>
+<p> https_proxy => http://172.16.2.30:8080 </p>
+<p> TERM_PROGRAM => vscode </p>
+<p> TERM_PROGRAM_VERSION => 1.44.2 </p>
+<p> COLORTERM => truecolor </p>
+<p> TERM => xterm-256color </p>
+<p> LC_CTYPE => en_US.UTF-8 </p>
+<p> _ => /Users/nbs/Mirror/Somy/Y05S10/M. Tech Project/CGI Controller/isolcon/./isolcon </p>

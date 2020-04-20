@@ -26,7 +26,7 @@ func CgiServer() *CgiHandler {
 func (h *CgiHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 	fmt.Println("path", path)
-	var isCGI bool
+	// var isCGI bool
 	file := filepath.FromSlash(path)
 	fmt.Println("file", file)
 	fmt.Println("len", len(file))
@@ -34,8 +34,8 @@ func (h *CgiHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		file = file[:len(file)-1]
 		fmt.Println("file", file)
 	}
-	ext := filepath.Ext(file)
-	bin, isCGI := h.LangMap[ext]
+	// ext := filepath.Ext(file)
+	// bin, isCGI := h.LangMap[ext]
 	file = filepath.Join(h.Root, file)
 
 	f, e := os.Stat(file)
@@ -43,15 +43,15 @@ func (h *CgiHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		if len(h.DefaultApp) > 0 {
 			file = h.DefaultApp
 		}
-		ext := filepath.Ext(file)
-		bin, isCGI = h.LangMap[ext]
+		// ext := filepath.Ext(file)
+		// bin, isCGI = h.LangMap[ext]
 	}
 
-	if isCGI {
+	if true {
 		var cgih cgi.Handler
 		if h.UseLangMap {
 			cgih = cgi.Handler{
-				Path: bin,
+				Path: file,
 				Dir:  h.Root,
 				Root: h.Root,
 				Args: []string{file},
