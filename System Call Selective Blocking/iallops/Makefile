@@ -32,7 +32,7 @@ clins :
 	make clean all insmod
 
 dmesg :
-	dmesg > dmesglogs.txt
+	dmesg | grep ISOL > dmesglogs.txt
 	
 dmtail :
 	dmesg | tail

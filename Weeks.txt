@@ -603,8 +603,15 @@ Refer https://www.golangprograms.com/how-to-set-get-and-list-environment-variabl
 Did above, saved in Isolates/CGI Controller/isolcon/prntenv .
 Interestingly it prints to the webpage instead of downloading the file.
 
+Week 16 :
+
+Corrected isolcon to use cgi.Handler so that it runs cgi protocol.
+
 Change the kernel module so that it is only logging, no blocking.
 Print pid of the cgi server, in the server code itself.
 Run the kernel module using pid of cgi server.
 Give one request using curl.
 Save kernel log, stop everything, send log.
+
+Latest kernel code in Isolates/System Call Selective Blocking/iallops
+Use echo 'ppid' > /proc/ppid to pass ppid to the kernel module

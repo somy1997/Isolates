@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"net/http/cgi"
@@ -58,6 +59,7 @@ var cgih cgi.Handler
 
 func main() {
 	iscgi = true
+	fmt.Println(os.Getpid())
 	http.HandleFunc("/", pagewriter)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

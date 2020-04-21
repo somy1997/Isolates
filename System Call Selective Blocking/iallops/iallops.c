@@ -650,7 +650,7 @@ static asmlinkage long custom_open(const char __user *filename, int flags, umode
     		
     	}
     	printk(KERN_WARNING "ISOLATES:open,%s,%d,%d,%s,%s,%d\n", current->comm, current->pid, current->cred->uid.val, kfilename, kumode, current->real_parent->pid);
-    	return -1;
+    	//return -1;
     }
     org_open = (asmlinkage long (*)(const char __user *filename, int flags, umode_t mode)) org_sys_table[__NR_open];
     return org_open(filename, flags, mode);
