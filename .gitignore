@@ -16,3 +16,4 @@
 *.ko
 *.mod.*
 *.o
+*.ur-safe
