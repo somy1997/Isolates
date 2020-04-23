@@ -1,1 +1,0 @@
-cmd_/home/nbs/Desktop/intercept_log/allops/allops.ko := ld -r -m elf_x86_64 -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /home/nbs/Desktop/intercept_log/allops/allops.ko /home/nbs/Desktop/intercept_log/allops/allops.o /home/nbs/Desktop/intercept_log/allops/allops.mod.o ;  true

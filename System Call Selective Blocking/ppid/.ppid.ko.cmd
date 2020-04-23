@@ -1,1 +1,0 @@
-cmd_/home/nbs/Desktop/intercept_log/ppid/ppid.ko := ld -r -m elf_x86_64 -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /home/nbs/Desktop/intercept_log/ppid/ppid.ko /home/nbs/Desktop/intercept_log/ppid/ppid.o /home/nbs/Desktop/intercept_log/ppid/ppid.mod.o ;  true

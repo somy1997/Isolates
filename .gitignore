@@ -3,3 +3,16 @@
 
 # vscode Files
 .vscode/
+
+# C executables
+*.out
+
+# Files created from kernel module compilation
+.tmp_versions
+*.mk
+*.cmd
+*.symvers
+*.order
+*.ko
+*.mod.*
+*.o
