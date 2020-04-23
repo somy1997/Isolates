@@ -615,3 +615,36 @@ Save kernel log, stop everything, send log.
 
 Latest kernel code in Isolates/System Call Selective Blocking/iallops
 Use echo 'ppid' > /proc/ppid to pass ppid to the kernel module
+
+Done. Logs saved in Isolates/System Call Selective Blocking/iallops/dmesglogs.txt
+
+Meeting with Sandip sir :
+
+Current solutions :
+1. Containers
+2. VMMs : Amazon Firecracker paper
+3. Isolates : Cloud Flare, V8
+
+Another paper : My VM is lighter than your container.
+Agile cold start paper solves the latency of network namespaces by precreating them.
+
+Function as a service system which is very lightweight.
+Making it language agnostic.
+
+Memory exceptions taken care by mmu and cpu exceptions taken care directly, giving runtime errors.
+
+Overheads :
+1. Blocking each system call
+2. Statically compiling : requires more memory, but compared to containers, less memory.
+SOCK Paper : Containers use shared libraries which reduces memory overhead.
+
+Pyinstallers thing ??
+
+Statically compiling : For python, requires complete installation of python, huge overhead, takes lots of time, instead produce executable from python code using pyinstallers.
+
+OSDI paper writing style :
+https://www.usenix.org/system/files/osdi18-cutler.pdf
+https://www.usenix.org/system/files/conference/osdi16/osdi16-litton.pdf
+
+Benchmarking :
+SOCKS Paper
