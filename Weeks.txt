@@ -681,3 +681,5 @@ https://courses.cs.washington.edu/courses/cse551/07sp/programming/assign1/measur
 
 http://arkanis.de/weblog/2017-01-05-measurements-of-system-call-performance-and-overhead = Compares latency between normal function calls and syscalls.
 https://github.com/arkanis/syscall-benchmark = Repository related to the above experiment.
+
+Printing NOT_BLOCKED before execve is called by isolcon.
