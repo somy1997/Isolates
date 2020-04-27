@@ -17,3 +17,6 @@
 *.mod.*
 *.o
 *.ur-safe
+
+# Tarballs
+*.tar.gz

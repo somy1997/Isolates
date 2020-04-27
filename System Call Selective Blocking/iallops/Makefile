@@ -26,7 +26,7 @@ init :
 	gedit $(modname).c &
 	
 backup :
-	cp -r ~/Desktop/intercept_log/* ~/Desktop/M.\ Tech\ Project/System\ Call\ Selective\ Blocking/
+	cp -r ~/Desktop/intercept_log/iallops ~/Desktop/M.\ Tech\ Project/System\ Call\ Selective\ Blocking/
 	
 clins :
 	make clean all insmod

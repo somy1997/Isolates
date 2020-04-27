@@ -378,7 +378,49 @@ CUSTFUNC4(sendfile64, int , out_fd,  int , in_fd,  loff_t __user *, offset,  siz
 */
 CUSTFUNC3(readlink, const char __user *, path,  char __user *, buf,  int , bufsiz)
 CUSTFUNC2(creat, const char __user *, pathname,  umode_t , mode)
+
 // CUSTFUNC3(open, const char __user *, filename,  int , flags,  umode_t , mode)
+
+static asmlinkage long custom_open(const char __user *filename, int flags, umode_t mode)
+{
+    asmlinkage long (*org_open)(const char __user *filename, int flags, umode_t mode);
+	char kfilename[256];
+	char *kumode = "DEFAULT";
+	copy_from_user(kfilename, filename, 256);
+    if(current->real_parent->pid == PARENTPID)
+    {
+    	switch(mode)
+    	{
+    		case O_RDONLY : kumode = "O_RDONLY"; break;
+    		case O_WRONLY : kumode ="O_WRONLY"; break;
+    		case O_RDWR : kumode = "O_RDWR"; break;
+    		case O_CREAT : kumode = "O_CREAT"; break;
+//     		case O_EXCL : kumode = "O_EXCL"; break;
+//     		case O_NOCTTY : kumode = "O_NOCTTY"; break;
+    		case O_TRUNC : kumode = "O_TRUNC"; break;
+    		case O_APPEND : kumode = "O_APPEND"; break;
+//     		case O_NDELAY : kumode = "O_NDELAY"; break;
+//     		case O_NONBLOCK : kumode = "O_NONBLOCK"; break;
+//     		case O_SYNC : kumode = "O_SYNC"; break;
+//     		case O_DSYNC : kumode = "O_DSYNC"; break;
+//     		case FASYNC : kumode = "FASYNC"; break;
+//     		case O_DIRECT : kumode = "O_DIRECT"; break;
+//     		case O_LARGEFILE : kumode = "O_LARGEFILE"; break;
+//     		case O_DIRECTORY : kumode = "O_DIRECTORY"; break;
+//     		case O_NOFOLLOW : kumode = "O_NOFOLLOW"; break;
+//     		case O_NOATIME : kumode = "O_NOATIME"; break;
+//     		case O_CLOEXEC : kumode = "O_CLOEXEC"; break;
+//     		case O_PATH : kumode = "O_PATH"; break;
+//     		case O_TMPFILE : kumode = "O_TMPFILE"; break;
+    		
+    	}
+    	printk(KERN_WARNING "ISOLATES:open,%s,%d,%d,%s,%s,%d\n", current->comm, current->pid, current->cred->uid.val, kfilename, kumode, current->real_parent->pid);
+    	//return -1;
+    }
+    org_open = (asmlinkage long (*)(const char __user *filename, int flags, umode_t mode)) org_sys_table[__NR_open];
+    return org_open(filename, flags, mode);
+}
+
 CUSTFUNC1(close, unsigned int , fd)
 CUSTFUNC2(access, const char __user *, filename,  int , mode)
 CUSTFUNC0(vhangup)
@@ -591,7 +633,21 @@ CUSTFUNC0(vfork)
     STOREORIG(clone);
 */
 CUSTFUNC5(clone, unsigned long , clone_flags,  unsigned long , newsp,  int __user *, parent_tid,  int __user *, child_tid,  unsigned long , tls)
-CUSTFUNC3(execve, const char __user *, filename,  const char __user *const __user *, argv,  const char __user *const __user *, envp)
+
+/*CUSTFUNC3(execve, const char __user *, filename,  const char __user *const __user *, argv,  const char __user *const __user *, envp)*/
+
+static long custom_execve(const char * filename, const char *const * argv, const char *const * envp)
+{ 
+	long (*org_execve)(const char *, const char *const *, const char *const *); 
+	if(get_current()->real_parent->pid == ppid) 
+	{ 
+		printk(KERN_WARNING "ISOLATES:NOT_BLOCKED"); 
+		printk(KERN_WARNING "ISOLATES:execve,%s,%d,%d\n", get_current()->comm, get_current()->pid, get_current()->cred->uid.val); 
+	} 
+	org_execve = ( long (*)(const char *, const char *const *, const char *const *)) org_sys_table[__NR_execve]; 
+	return org_execve(filename, argv, envp);
+}
+
 CUSTFUNC5(perf_event_open, struct perf_event_attr __user *, attr_uptr,  pid_t , pid,  int , cpu,  int , group_fd,  unsigned long , flags)
 /*
 CUSTFUNC6(mmap_pgoff, unsigned long , addr,  unsigned long , len,  unsigned long , prot,  unsigned long , flags,  unsigned long , fd,  unsigned long , pgoff)
@@ -615,46 +671,6 @@ CUSTFUNC4(pkey_mprotect, unsigned long , start,  size_t , len,  unsigned long , 
 CUSTFUNC2(pkey_alloc, unsigned long , flags,  unsigned long , init_val)
 CUSTFUNC1(pkey_free, int , pkey)
 CUSTFUNC5(statx, int , dfd,  const char __user *, path,  unsigned , flags,  unsigned , mask,  struct statx __user *, buffer)
-
-static asmlinkage long custom_open(const char __user *filename, int flags, umode_t mode)
-{
-    asmlinkage long (*org_open)(const char __user *filename, int flags, umode_t mode);
-	char kfilename[256];
-	char *kumode = "DEFAULT";
-	copy_from_user(kfilename, filename, 256);
-    if(current->real_parent->pid == PARENTPID)
-    {
-    	switch(mode)
-    	{
-    		case O_RDONLY : kumode = "O_RDONLY"; break;
-    		case O_WRONLY : kumode ="O_WRONLY"; break;
-    		case O_RDWR : kumode = "O_RDWR"; break;
-    		case O_CREAT : kumode = "O_CREAT"; break;
-//     		case O_EXCL : kumode = "O_EXCL"; break;
-//     		case O_NOCTTY : kumode = "O_NOCTTY"; break;
-    		case O_TRUNC : kumode = "O_TRUNC"; break;
-    		case O_APPEND : kumode = "O_APPEND"; break;
-//     		case O_NDELAY : kumode = "O_NDELAY"; break;
-//     		case O_NONBLOCK : kumode = "O_NONBLOCK"; break;
-//     		case O_SYNC : kumode = "O_SYNC"; break;
-//     		case O_DSYNC : kumode = "O_DSYNC"; break;
-//     		case FASYNC : kumode = "FASYNC"; break;
-//     		case O_DIRECT : kumode = "O_DIRECT"; break;
-//     		case O_LARGEFILE : kumode = "O_LARGEFILE"; break;
-//     		case O_DIRECTORY : kumode = "O_DIRECTORY"; break;
-//     		case O_NOFOLLOW : kumode = "O_NOFOLLOW"; break;
-//     		case O_NOATIME : kumode = "O_NOATIME"; break;
-//     		case O_CLOEXEC : kumode = "O_CLOEXEC"; break;
-//     		case O_PATH : kumode = "O_PATH"; break;
-//     		case O_TMPFILE : kumode = "O_TMPFILE"; break;
-    		
-    	}
-    	printk(KERN_WARNING "ISOLATES:open,%s,%d,%d,%s,%s,%d\n", current->comm, current->pid, current->cred->uid.val, kfilename, kumode, current->real_parent->pid);
-    	//return -1;
-    }
-    org_open = (asmlinkage long (*)(const char __user *filename, int flags, umode_t mode)) org_sys_table[__NR_open];
-    return org_open(filename, flags, mode);
-}
 
 static int __init hello_init(void)
 {

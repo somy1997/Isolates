@@ -648,3 +648,36 @@ https://www.usenix.org/system/files/conference/osdi16/osdi16-litton.pdf
 
 Benchmarking :
 SOCKS Paper
+
+Experiment :
+
+Comparing the effect of adding the wrapper using the module using DTraceToolkit.
+Commands     : https://prefetch.net/blog/2007/03/17/measuring-system-call-time-with-procsystime/
+Installation : http://brendangregg.com/dtracetoolkit.html
+
+Downloaded DTraceToolkit but couldn't extract it.
+
+tar -xvzf gives following errors.
+nbs@ubuntu:~/Desktop$ tar -xvzf DTraceToolkit-0.99.tar.gz 
+
+gzip: stdin: not in gzip format
+tar: Child returned status 1
+tar: Error is not recoverable: exiting now
+
+nbs@ubuntu:~/Desktop$ file DTraceToolkit-0.99.tar.gz 
+DTraceToolkit-0.99.tar.gz: POSIX tar archive
+
+Refer https://itsfoss.com/how-solve-stdin-gzip-format/
+Refer https://itsfoss.com/tar-vs-zip-vs-gz/
+
+Installing DTraceToolkit using above method failed.
+
+Installing dtrace using https://askubuntu.com/questions/60940/how-do-i-install-dtrace
+make all failed using above method.
+
+Finding alternate methods for system call performance measurement.
+
+https://courses.cs.washington.edu/courses/cse551/07sp/programming/assign1/measure_syscall.c = Measures latency without syscall and with syscall. Not particularly useful.
+
+http://arkanis.de/weblog/2017-01-05-measurements-of-system-call-performance-and-overhead = Compares latency between normal function calls and syscalls.
+https://github.com/arkanis/syscall-benchmark = Repository related to the above experiment.
