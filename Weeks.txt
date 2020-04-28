@@ -683,3 +683,16 @@ http://arkanis.de/weblog/2017-01-05-measurements-of-system-call-performance-and-
 https://github.com/arkanis/syscall-benchmark = Repository related to the above experiment.
 
 Printing NOT_BLOCKED before execve is called by isolcon.
+
+Statically build isolcon.
+Print NOT_BLOCKED for each pid until the first execve is called for that pid.
+
+http://blog.wrouesnel.com/articles/Totally%20static%20Go%20builds/ = statically building in go for linux
+CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' .
+
+http://tele.sj.ifsc.edu.br/~msobral/prg2/kernel-ds.pdf = kernel data structures documentation for using maps for storing which pids have already called execve.
+
+https://blog.kowalczyk.info/article/yt/variadic-macros-c.html = variadic macros.
+Defining a macro CUSTSTAT used by other CUSTFUNC* macros.
+
+http://books.gigatux.nl/mirror/kerneldevelopment/0672327201/ch11lev1sec4.html = kmalloc documentation

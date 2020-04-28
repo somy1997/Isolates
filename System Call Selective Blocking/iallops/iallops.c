@@ -33,114 +33,71 @@
 #define STOREORIGCONST(x,y) org_sys_table[__NR_##y] = sys_call_table[__NR_##y]
 #define APPLYCUSTCONST(x,y) sys_call_table[__NR_##y] = (sys_call_ptr_t)custom_##x
 #define APPLYORIGCONST(x,y) sys_call_table[__NR_##y] = org_sys_table[__NR_##y]
-#define CUSTFUNC0(x) \
-static asmlinkage long custom_##x(void)\
-{\
-    asmlinkage long (*org_##x)(void);\
+#define CUSTSTAT(x, y, ...) \
+	asmlinkage long (*org_##x)(__VA_ARGS__);\
     if(current->real_parent->pid == PARENTPID)\
     {\
     	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
     }\
-    org_##x = (asmlinkage long (*)(void)) org_sys_table[__NR_##x];\
+    org_##x = (asmlinkage long (*)(__VA_ARGS__)) org_sys_table[__NR_##y];
+#define CUSTFUNC0(x) \
+static asmlinkage long custom_##x(void)\
+{\
+    CUSTSTAT(x, x, void)\
     return org_##x();\
 }
 #define CUSTFUNC0CONST(x,y) \
 static asmlinkage long custom_##x(void)\
 {\
-    asmlinkage long (*org_##x)(void);\
-    if(current->real_parent->pid == PARENTPID)\
-    {\
-    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
-    }\
-    org_##x = (asmlinkage long (*)(void)) org_sys_table[__NR_##y];\
+    CUSTSTAT(x, y, void)\
     return org_##x();\
 }
 #define CUSTFUNC1(x,t1,p1) \
 static asmlinkage long custom_##x(t1 p1)\
 {\
-    asmlinkage long (*org_##x)(t1);\
-    if(current->real_parent->pid == PARENTPID)\
-    {\
-    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
-    }\
-    org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##x];\
+    CUSTSTAT(x, x, t1)\
     return org_##x(p1);\
 }
 #define CUSTFUNC1CONST(x,t1,p1,y) \
 static asmlinkage long custom_##x(t1 p1)\
 {\
-    asmlinkage long (*org_##x)(t1);\
-    if(current->real_parent->pid == PARENTPID)\
-    {\
-    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
-    }\
-    org_##x = (asmlinkage long (*)(t1)) org_sys_table[__NR_##y];\
+    CUSTSTAT(x, y, t1)\
     return org_##x(p1);\
 }
 #define CUSTFUNC2(x,t1,p1,t2,p2) \
 static asmlinkage long custom_##x(t1 p1, t2 p2)\
 {\
-    asmlinkage long (*org_##x)(t1, t2);\
-    if(current->real_parent->pid == PARENTPID)\
-    {\
-    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
-    }\
-    org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##x];\
+    CUSTSTAT(x, x, t1, t2)\
     return org_##x(p1, p2);\
 }
 #define CUSTFUNC2CONST(x,t1,p1,t2,p2,y) \
 static asmlinkage long custom_##x(t1 p1, t2 p2)\
 {\
-    asmlinkage long (*org_##x)(t1, t2);\
-    if(current->real_parent->pid == PARENTPID)\
-    {\
-    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
-    }\
-    org_##x = (asmlinkage long (*)(t1, t2)) org_sys_table[__NR_##y];\
+    CUSTSTAT(x, y, t1, t2)\
     return org_##x(p1, p2);\
 }
 #define CUSTFUNC3(x,t1,p1,t2,p2,t3,p3) \
 static asmlinkage long custom_##x(t1 p1, t2 p2, t3 p3)\
 {\
-    asmlinkage long (*org_##x)(t1, t2, t3);\
-    if(current->real_parent->pid == PARENTPID)\
-    {\
-    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
-    }\
-    org_##x = (asmlinkage long (*)(t1, t2, t3)) org_sys_table[__NR_##x];\
+    CUSTSTAT(x, x, t1, t2, t3)\
     return org_##x(p1, p2, p3);\
 }
 #define CUSTFUNC4(x,t1,p1,t2,p2,t3,p3,t4,p4) \
 static asmlinkage long custom_##x(t1 p1, t2 p2, t3 p3, t4 p4)\
 {\
-    asmlinkage long (*org_##x)(t1, t2, t3, t4);\
-    if(current->real_parent->pid == PARENTPID)\
-    {\
-    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
-    }\
-    org_##x = (asmlinkage long (*)(t1, t2, t3, t4)) org_sys_table[__NR_##x];\
+    CUSTSTAT(x, x, t1, t2, t3, t4)\
     return org_##x(p1, p2, p3, p4);\
 }
 #define CUSTFUNC5(x,t1,p1,t2,p2,t3,p3,t4,p4,t5,p5) \
 static asmlinkage long custom_##x(t1 p1, t2 p2, t3 p3, t4 p4, t5 p5)\
 {\
-    asmlinkage long (*org_##x)(t1, t2, t3, t4, t5);\
-    if(current->real_parent->pid == PARENTPID)\
-    {\
-    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
-    }\
-    org_##x = (asmlinkage long (*)(t1, t2, t3, t4, t5)) org_sys_table[__NR_##x];\
+    CUSTSTAT(x, x, t1, t2, t3, t4, t5)\
     return org_##x(p1, p2, p3, p4, p5);\
 }
 #define CUSTFUNC6(x,t1,p1,t2,p2,t3,p3,t4,p4,t5,p5,t6,p6) \
 static asmlinkage long custom_##x(t1 p1, t2 p2, t3 p3, t4 p4, t5 p5, t6 p6)\
 {\
-    asmlinkage long (*org_##x)(t1, t2, t3, t4, t5, t6);\
-    if(current->real_parent->pid == PARENTPID)\
-    {\
-    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
-    }\
-    org_##x = (asmlinkage long (*)(t1, t2, t3, t4, t5, t6)) org_sys_table[__NR_##x];\
+    CUSTSTAT(x, x, t1, t2, t3, t4, t5, t6)\
     return org_##x(p1, p2, p3, p4, p5, p6);\
 }
 
