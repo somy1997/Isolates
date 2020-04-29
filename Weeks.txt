@@ -696,3 +696,12 @@ https://blog.kowalczyk.info/article/yt/variadic-macros-c.html = variadic macros.
 Defining a macro CUSTSTAT used by other CUSTFUNC* macros.
 
 http://books.gigatux.nl/mirror/kerneldevelopment/0672327201/ch11lev1sec4.html = kmalloc documentation
+https://manpages.debian.org/wheezy-backports/linux-manual-3.16/krealloc.9 = krealloc documentation
+
+linux/slab.h defines mentions the meaning of different gfp flags.
+For GFP_NOFAIL : asks to think twice before using.
+
+https://stackoverflow.com/questions/19119710/compiling-linux-kernel-module-with-a-custom-header = Compiling modules with custom headers
+https://unix.stackexchange.com/questions/18143/how-to-include-local-header-files-in-linux-kernel-module = Including local headers
+https://www.kernel.org/doc/Documentation/kbuild/modules.txt = Documentation on kbuild modules
+https://stackoverflow.com/questions/625685/linux-kernel-module-linker-warnings-warning-function-module-undefin = Getting same warnings

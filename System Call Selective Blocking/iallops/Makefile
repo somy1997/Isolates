@@ -1,29 +1,36 @@
 modname = $(shell basename $(PWD))
 
-obj-m += $(modname).o
+EXTRA_CFLAGS := -Wno-unused-function -I$(src)
+obj-m := kiallops.o
+kiallops-y := iallops.o map.o
 
-EXTRA_CFLAGS := -Wno-unused-function
 
 #temp : 
-#	echo $(modname)
+#	echo iallops
 
-all : $(modname).c
+all :
 	# make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
-	make -C /usr/src/linux-headers-$(shell uname -r) SUBDIRS=$(PWD) modules
+	make -C /usr/src/linux-headers-$(shell uname -r) SUBDIRS=$(PWD) KBUILD_EXTMOD=$(PWD) modules
+
+map.o :
+	make -C /usr/src/linux-headers-$(shell uname -r) SUBDIRS=$(PWD) map.o
+
+iallops.o :
+	make -C /usr/src/linux-headers-$(shell uname -r) SUBDIRS=$(PWD) iallops.o
 
 clean : 
 	#make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
 	make -C /usr/src/linux-headers-$(shell uname -r) SUBDIRS=$(PWD) clean
 
-insmod : $(modname).ko
-	sudo insmod $(modname).ko
+insmod : iallops.ko
+	sudo insmod iallops.ko
 
 rmmod :
-	sudo rmmod $(modname)
+	sudo rmmod iallops
 	
 init :
 #	cp backedreallops.c reallops.c
-	gedit $(modname).c &
+	gedit iallops.c &
 	
 backup :
 	cp -r ~/Desktop/intercept_log/iallops ~/Desktop/M.\ Tech\ Project/System\ Call\ Selective\ Blocking/

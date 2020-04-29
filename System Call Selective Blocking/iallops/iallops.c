@@ -8,6 +8,7 @@
 #include <linux/fcntl.h>
 #include <linux/string.h>
 #include <linux/proc_fs.h>
+#include "map.h"
 
 /*
 // Files included by /usr/src/linux-headers-4.15.0-45/include/linux/syscalls.h :
@@ -37,7 +38,19 @@
 	asmlinkage long (*org_##x)(__VA_ARGS__);\
     if(current->real_parent->pid == PARENTPID)\
     {\
-    	printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val);\
+    	int cpid = current->pid;\
+    	int *res;\
+    	char scpid[32];\
+    	snprintf(scpid, 32, "%d", cpid);\
+    	res = map_get(&exmap, scpid);\
+    	if(res)\
+    	{\
+    		printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\n", current->comm, cpid, current->cred->uid.val);\
+    	}\
+    	else\
+    	{\
+    		printk(KERN_WARNING "ISOLATES:"#x",%s,%d,%d\t\t\tNOT_BLOCKED\n", current->comm, cpid, current->cred->uid.val);\
+    	}\
     }\
     org_##x = (asmlinkage long (*)(__VA_ARGS__)) org_sys_table[__NR_##y];
 #define CUSTFUNC0(x) \
@@ -112,6 +125,7 @@ static sys_call_ptr_t org_sys_table[2048];
 static struct proc_dir_entry *ent;
 static struct file_operations ops;
 static long ppid = -1;
+static map_int_t exmap;
 
 static ssize_t ppid_write(struct file *file, const char __user *buf, size_t count, loff_t *pos) 
 {
@@ -336,47 +350,47 @@ CUSTFUNC4(sendfile64, int , out_fd,  int , in_fd,  loff_t __user *, offset,  siz
 CUSTFUNC3(readlink, const char __user *, path,  char __user *, buf,  int , bufsiz)
 CUSTFUNC2(creat, const char __user *, pathname,  umode_t , mode)
 
-// CUSTFUNC3(open, const char __user *, filename,  int , flags,  umode_t , mode)
+CUSTFUNC3(open, const char __user *, filename,  int , flags,  umode_t , mode)
 
-static asmlinkage long custom_open(const char __user *filename, int flags, umode_t mode)
-{
-    asmlinkage long (*org_open)(const char __user *filename, int flags, umode_t mode);
-	char kfilename[256];
-	char *kumode = "DEFAULT";
-	copy_from_user(kfilename, filename, 256);
-    if(current->real_parent->pid == PARENTPID)
-    {
-    	switch(mode)
-    	{
-    		case O_RDONLY : kumode = "O_RDONLY"; break;
-    		case O_WRONLY : kumode ="O_WRONLY"; break;
-    		case O_RDWR : kumode = "O_RDWR"; break;
-    		case O_CREAT : kumode = "O_CREAT"; break;
-//     		case O_EXCL : kumode = "O_EXCL"; break;
-//     		case O_NOCTTY : kumode = "O_NOCTTY"; break;
-    		case O_TRUNC : kumode = "O_TRUNC"; break;
-    		case O_APPEND : kumode = "O_APPEND"; break;
-//     		case O_NDELAY : kumode = "O_NDELAY"; break;
-//     		case O_NONBLOCK : kumode = "O_NONBLOCK"; break;
-//     		case O_SYNC : kumode = "O_SYNC"; break;
-//     		case O_DSYNC : kumode = "O_DSYNC"; break;
-//     		case FASYNC : kumode = "FASYNC"; break;
-//     		case O_DIRECT : kumode = "O_DIRECT"; break;
-//     		case O_LARGEFILE : kumode = "O_LARGEFILE"; break;
-//     		case O_DIRECTORY : kumode = "O_DIRECTORY"; break;
-//     		case O_NOFOLLOW : kumode = "O_NOFOLLOW"; break;
-//     		case O_NOATIME : kumode = "O_NOATIME"; break;
-//     		case O_CLOEXEC : kumode = "O_CLOEXEC"; break;
-//     		case O_PATH : kumode = "O_PATH"; break;
-//     		case O_TMPFILE : kumode = "O_TMPFILE"; break;
-    		
-    	}
-    	printk(KERN_WARNING "ISOLATES:open,%s,%d,%d,%s,%s,%d\n", current->comm, current->pid, current->cred->uid.val, kfilename, kumode, current->real_parent->pid);
-    	//return -1;
-    }
-    org_open = (asmlinkage long (*)(const char __user *filename, int flags, umode_t mode)) org_sys_table[__NR_open];
-    return org_open(filename, flags, mode);
-}
+/*static asmlinkage long custom_open(const char __user *filename, int flags, umode_t mode)*/
+/*{*/
+/*    asmlinkage long (*org_open)(const char __user *filename, int flags, umode_t mode);*/
+/*	char kfilename[256];*/
+/*	char *kumode = "DEFAULT";*/
+/*	copy_from_user(kfilename, filename, 256);*/
+/*    if(current->real_parent->pid == PARENTPID)*/
+/*    {*/
+/*    	switch(mode)*/
+/*    	{*/
+/*    		case O_RDONLY : kumode = "O_RDONLY"; break;*/
+/*    		case O_WRONLY : kumode ="O_WRONLY"; break;*/
+/*    		case O_RDWR : kumode = "O_RDWR"; break;*/
+/*    		case O_CREAT : kumode = "O_CREAT"; break;*/
+/*//     		case O_EXCL : kumode = "O_EXCL"; break;*/
+/*//     		case O_NOCTTY : kumode = "O_NOCTTY"; break;*/
+/*    		case O_TRUNC : kumode = "O_TRUNC"; break;*/
+/*    		case O_APPEND : kumode = "O_APPEND"; break;*/
+/*//     		case O_NDELAY : kumode = "O_NDELAY"; break;*/
+/*//     		case O_NONBLOCK : kumode = "O_NONBLOCK"; break;*/
+/*//     		case O_SYNC : kumode = "O_SYNC"; break;*/
+/*//     		case O_DSYNC : kumode = "O_DSYNC"; break;*/
+/*//     		case FASYNC : kumode = "FASYNC"; break;*/
+/*//     		case O_DIRECT : kumode = "O_DIRECT"; break;*/
+/*//     		case O_LARGEFILE : kumode = "O_LARGEFILE"; break;*/
+/*//     		case O_DIRECTORY : kumode = "O_DIRECTORY"; break;*/
+/*//     		case O_NOFOLLOW : kumode = "O_NOFOLLOW"; break;*/
+/*//     		case O_NOATIME : kumode = "O_NOATIME"; break;*/
+/*//     		case O_CLOEXEC : kumode = "O_CLOEXEC"; break;*/
+/*//     		case O_PATH : kumode = "O_PATH"; break;*/
+/*//     		case O_TMPFILE : kumode = "O_TMPFILE"; break;*/
+/*    		*/
+/*    	}*/
+/*    	printk(KERN_WARNING "ISOLATES:open,%s,%d,%d,%s,%s,%d\n", current->comm, current->pid, current->cred->uid.val, kfilename, kumode, current->real_parent->pid);*/
+/*    	//return -1;*/
+/*    }*/
+/*    org_open = (asmlinkage long (*)(const char __user *filename, int flags, umode_t mode)) org_sys_table[__NR_open];*/
+/*    return org_open(filename, flags, mode);*/
+/*}*/
 
 CUSTFUNC1(close, unsigned int , fd)
 CUSTFUNC2(access, const char __user *, filename,  int , mode)
@@ -596,10 +610,13 @@ CUSTFUNC5(clone, unsigned long , clone_flags,  unsigned long , newsp,  int __use
 static long custom_execve(const char * filename, const char *const * argv, const char *const * envp)
 { 
 	long (*org_execve)(const char *, const char *const *, const char *const *); 
-	if(get_current()->real_parent->pid == ppid) 
+	if(current->real_parent->pid == ppid) 
 	{ 
-		printk(KERN_WARNING "ISOLATES:NOT_BLOCKED"); 
-		printk(KERN_WARNING "ISOLATES:execve,%s,%d,%d\n", get_current()->comm, get_current()->pid, get_current()->cred->uid.val); 
+		int cpid = current->pid;
+    	char scpid[32];
+    	snprintf(scpid, 32, "%d", cpid);
+    	map_set(&exmap, scpid, 1);
+    	printk(KERN_WARNING "ISOLATES:execve,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val); 
 	} 
 	org_execve = ( long (*)(const char *, const char *const *, const char *const *)) org_sys_table[__NR_execve]; 
 	return org_execve(filename, argv, envp);
@@ -631,6 +648,7 @@ CUSTFUNC5(statx, int , dfd,  const char __user *, path,  unsigned , flags,  unsi
 
 static int __init hello_init(void)
 {
+	map_init(&exmap);
 	printk(KERN_ALERT "ISOLATES:PPID Writer device inserting\n");
     ent = proc_create("ppid", 0666, NULL, &ops);
     if(!ent) return -ENOENT;
@@ -1310,7 +1328,7 @@ static int __init hello_init(void)
 
 static void __exit hello_exit(void)
 {
-    printk(KERN_ALERT "ISOLATES:IAllOps module removing\n");
+	printk(KERN_ALERT "ISOLATES:IAllOps module removing\n");
     
     // Temporarily disable write protection
     write_cr0(read_cr0() & (~0x10000));
@@ -1662,6 +1680,8 @@ static void __exit hello_exit(void)
     printk(KERN_ALERT "ISOLATES:PPID Writer device removing\n");
     proc_remove(ent);
     printk(KERN_ALERT "ISOLATES:PPID Writer device removed successfully\n");
+    
+    map_deinit(&exmap);
     
 }
 
