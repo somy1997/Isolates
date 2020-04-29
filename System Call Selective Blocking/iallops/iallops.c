@@ -8,7 +8,7 @@
 #include <linux/fcntl.h>
 #include <linux/string.h>
 #include <linux/proc_fs.h>
-#include "map.h"
+#include "custmap.h"
 
 /*
 // Files included by /usr/src/linux-headers-4.15.0-45/include/linux/syscalls.h :
@@ -216,7 +216,32 @@ CUSTFUNC0(restart_syscall)
 CUSTFUNC4(kexec_load, unsigned long , entry,  unsigned long , nr_segments,  struct kexec_segment __user *, segments,  unsigned long , flags)
 CUSTFUNC5(kexec_file_load, int , kernel_fd,  int , initrd_fd,  unsigned long , cmdline_len,  const char __user *, cmdline_ptr,  unsigned long , flags)
 CUSTFUNC1(exit, int , error_code)
-CUSTFUNC1(exit_group, int , error_code)
+/*CUSTFUNC1(exit_group, int , error_code)*/
+
+static long custom_exit_group(int error_code)
+{ 
+	long (*org_exit_group)(int); 
+	if(get_current()->real_parent->pid == ppid) 
+	{ 
+		int cpid = get_current()->pid; 
+		int *res; 
+		char scpid[32]; 
+		snprintf(scpid, 32, "%d", cpid); 
+		res = map_get(&exmap, scpid); 
+		if(res) 
+		{ 
+			printk(KERN_WARNING "ISOLATES:exit_group,%s,%d,%d\n", current->comm, cpid, current->cred->uid.val);
+			map_remove(&exmap, scpid); 
+		} 
+		else 
+		{ 
+			printk(KERN_WARNING "ISOLATES:exit_group,%s,%d,%d\t\t\tNOT_BLOCKED\n", current->comm, cpid, current->cred->uid.val);
+		}
+	} 
+	org_exit_group = ( long (*)(int)) org_sys_table[231]; 
+	return org_exit_group(error_code);
+}
+
 CUSTFUNC4(wait4, pid_t , pid,  int __user *, stat_addr,  int , options,  struct rusage __user *, ru)
 CUSTFUNC5(waitid, int , which,  pid_t , pid,  struct siginfo __user *, infop,  int , options,  struct rusage __user *, ru)
 /*
@@ -616,7 +641,7 @@ static long custom_execve(const char * filename, const char *const * argv, const
     	char scpid[32];
     	snprintf(scpid, 32, "%d", cpid);
     	map_set(&exmap, scpid, 1);
-    	printk(KERN_WARNING "ISOLATES:execve,%s,%d,%d\n", current->comm, current->pid, current->cred->uid.val); 
+    	printk(KERN_WARNING "ISOLATES:execve,%s,%d,%d\n", current->comm, cpid, current->cred->uid.val); 
 	} 
 	org_execve = ( long (*)(const char *, const char *const *, const char *const *)) org_sys_table[__NR_execve]; 
 	return org_execve(filename, argv, envp);

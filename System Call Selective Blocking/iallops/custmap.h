@@ -5,9 +5,86 @@
  * under the terms of the MIT license. See LICENSE for details.
  */
 
-// #include <stdlib.h>
-// #include <string.h>
-#include "map.h"
+#ifndef CUSTMAP_H_
+#define CUSTMAP_H_
+
+#include <linux/string.h>
+#include <linux/slab.h>
+
+//#define MAP_VERSION "0.1.0"
+
+struct map_node_t;
+
+struct map_node_t {
+  unsigned hash;
+  void *value;
+  struct map_node_t *next;
+  /* char key[]; */
+  /* char value[]; */
+};
+
+typedef struct map_node_t map_node_t;
+
+typedef struct {
+  map_node_t **buckets;
+  unsigned nbuckets, nnodes;
+} map_base_t;
+
+typedef struct {
+  unsigned bucketidx;
+  map_node_t *node;
+} map_iter_t;
+
+
+#define map_t(T)\
+  struct { map_base_t base; T *ref; T tmp; }
+
+
+#define map_init(m)\
+  memset(m, 0, sizeof(*(m)))
+
+
+#define map_deinit(m)\
+  map_deinit_(&(m)->base)
+
+
+#define map_get(m, key)\
+  ( (m)->ref = map_get_(&(m)->base, key) )
+
+
+#define map_set(m, key, value)\
+  ( (m)->tmp = (value),\
+    map_set_(&(m)->base, key, &(m)->tmp, sizeof((m)->tmp)) )
+
+
+#define map_remove(m, key)\
+  map_remove_(&(m)->base, key)
+
+
+#define map_iter(m)\
+  map_iter_()
+
+
+#define map_next(m, iter)\
+  map_next_(&(m)->base, iter)
+
+
+static void map_deinit_(map_base_t *m);
+static void *map_get_(map_base_t *m, const char *key);
+static int map_set_(map_base_t *m, const char *key, void *value, int vsize);
+static void map_remove_(map_base_t *m, const char *key);
+static map_iter_t map_iter_(void);
+static const char *map_next_(map_base_t *m, map_iter_t *iter);
+
+
+typedef map_t(void*) map_void_t;
+typedef map_t(char*) map_str_t;
+typedef map_t(int) map_int_t;
+typedef map_t(char) map_char_t;
+typedef map_t(float) map_float_t;
+typedef map_t(double) map_double_t;
+
+//#include "custmap.h"
 
 static unsigned map_hash(const char *str) {
   unsigned hash = 5381;
@@ -22,7 +99,7 @@ static map_node_t *map_newnode(const char *key, void *value, int vsize) {
   map_node_t *node;
   int ksize = strlen(key) + 1;
   int voffset = ksize + ((sizeof(void*) - ksize) % sizeof(void*));
-  node = malloc(sizeof(*node) + voffset + vsize);
+  node = kmalloc(sizeof(*node) + voffset + vsize, GFP_KERNEL);
   if (!node) return NULL;
   memcpy(node + 1, key, ksize);
   node->hash = map_hash(key);
@@ -63,7 +140,7 @@ static int map_resize(map_base_t *m, int nbuckets) {
     }
   }
   /* Reset buckets */
-  buckets = realloc(m->buckets, sizeof(*m->buckets) * nbuckets);
+  buckets = krealloc(m->buckets, sizeof(*m->buckets) * nbuckets, GFP_KERNEL);
   if (buckets != NULL) {
     m->buckets = buckets;
     m->nbuckets = nbuckets;
@@ -99,7 +176,7 @@ static map_node_t **map_getref(map_base_t *m, const char *key) {
 }
 
 
-void map_deinit_(map_base_t *m) {
+static void map_deinit_(map_base_t *m) {
   map_node_t *next, *node;
   int i;
   i = m->nbuckets;
@@ -107,21 +184,21 @@ void map_deinit_(map_base_t *m) {
     node = m->buckets[i];
     while (node) {
       next = node->next;
-      free(node);
+      kfree(node);
       node = next;
     }
   }
-  free(m->buckets);
+  kfree(m->buckets);
 }
 
 
-void *map_get_(map_base_t *m, const char *key) {
+static void *map_get_(map_base_t *m, const char *key) {
   map_node_t **next = map_getref(m, key);
   return next ? (*next)->value : NULL;
 }
 
 
-int map_set_(map_base_t *m, const char *key, void *value, int vsize) {
+static int map_set_(map_base_t *m, const char *key, void *value, int vsize) {
   int n, err;
   map_node_t **next, *node;
   /* Find & replace existing node */
@@ -142,24 +219,24 @@ int map_set_(map_base_t *m, const char *key, void *value, int vsize) {
   m->nnodes++;
   return 0;
   fail:
-  if (node) free(node);
+  if (node) kfree(node);
   return -1;
 }
 
 
-void map_remove_(map_base_t *m, const char *key) {
+static void map_remove_(map_base_t *m, const char *key) {
   map_node_t *node;
   map_node_t **next = map_getref(m, key);
   if (next) {
     node = *next;
     *next = (*next)->next;
-    free(node);
+    kfree(node);
     m->nnodes--;
   }
 }
 
 
-map_iter_t map_iter_(void) {
+static map_iter_t map_iter_(void) {
   map_iter_t iter;
   iter.bucketidx = -1;
   iter.node = NULL;
@@ -167,7 +244,7 @@ map_iter_t map_iter_(void) {
 }
 
 
-const char *map_next_(map_base_t *m, map_iter_t *iter) {
+static const char *map_next_(map_base_t *m, map_iter_t *iter) {
   if (iter->node) {
     iter->node = iter->node->next;
     if (iter->node == NULL) goto nextBucket;
@@ -182,3 +259,5 @@ const char *map_next_(map_base_t *m, map_iter_t *iter) {
   }
   return (char*) (iter->node + 1);
 }
+
+#endif

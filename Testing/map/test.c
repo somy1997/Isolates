@@ -3,6 +3,7 @@
 int main()
 {
     printf("yo\n");
+    printf("%lu %lu\n", sizeof(map_base_t), sizeof(map_node_t));
     map_int_t m;
     map_init(&m);
     map_set(&m, "hello", 1);

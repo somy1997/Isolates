@@ -14,8 +14,19 @@
 
 // #define MAP_VERSION "0.1.0"
 
-struct map_node_t;
+
+struct map_node_t{
+  unsigned hash;
+  void *value;
+  struct map_node_t *next;
+  /* char key[]; */
+  /* char value[]; */
+};
+
 typedef struct map_node_t map_node_t;
+
+// struct map_node_t;
+// typedef struct map_node_t map_node_t;
 
 typedef struct {
   map_node_t **buckets;
