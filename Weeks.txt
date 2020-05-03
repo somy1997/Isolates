@@ -682,6 +682,8 @@ https://courses.cs.washington.edu/courses/cse551/07sp/programming/assign1/measur
 http://arkanis.de/weblog/2017-01-05-measurements-of-system-call-performance-and-overhead = Compares latency between normal function calls and syscalls.
 https://github.com/arkanis/syscall-benchmark = Repository related to the above experiment.
 
+Week 17 :
+
 Printing NOT_BLOCKED before execve is called by isolcon.
 
 Statically build isolcon.
@@ -708,3 +710,9 @@ https://stackoverflow.com/questions/625685/linux-kernel-module-linker-warnings-w
 https://codereview.stackexchange.com/questions/141493/hash-map-implementation = Another map implementation in C.
 https://0xax.gitbooks.io/linux-insides/DataStructures/linux-datastructures-1.html = doubly linked list in linux kernel.
 https://subscription.packtpub.com/book/hardware_and_creative/9781838558802/app04/app04lvl1sec64/kernel-hash-tables = kernel hash tables
+
+Done. Problem was coming because in map.c, I had defined all functions as static and static functions are not exported. By removing static and putting all the functions in header file, the module compiled successfully and it was working.
+
+Week 18 :
+
+Last interaction : Last week Wednesday : 29th April. No interaction after that.
