@@ -28,9 +28,11 @@ Logging calls made to system calls in linux kernel using LKM by creating custom 
 1. **Open System Call** :\
 Commit URL : https://github.com/somy1997/Isolates/tree/b699d702659335e1326287281ea0c010364555a5\
 \
-Source Files                    : Isolates/System Call Logging\
+Source Files                    : Isolates/System Call Logging/open/\
 Custom Open Function LKM Source : Isolates/System Call Logging/open/intercept_open.c\
 Kernel logs                     : Isolates/System Call Logging/dmesglogs.txt
 
 1. **File operations like open, close, read, write** :\
-Commit URL : https://github.com/somy1997/Isolates/tree/49e1e954462e1a02aa2ba477ade0bc3d104d96a9
+Commit URL : https://github.com/somy1997/Isolates/tree/bd39c78b854009e76b89228a3e05ba43fbd2bc3f\
+Source Files                    : Isolates/Logging System Calls/fileops/
+Kernel logs                     : Isolates/Logging System Calls/fileops/dmesglogs.txt
