@@ -10,13 +10,13 @@ Commit URL : https://github.com/somy1997/Isolates/tree/b11fe4b73011aab0e7143dcc7
 
 Methods Tried :
     
-1. **Searching the table in the memory using a while loop** :\
+1. **Searching the table in the memory using a while loop :**\
 Source Files : Isolates/System call intercept via LKM/intercept_open/
     
-1. **Finding System call table's address using System.map** :\
+1. **Finding System call table's address using System.map :**\
 Source Files : Isolates/System call intercept via LKM/intercept_unlink/
     
-1. **Using function kallsyms_lookup_name** :\
+1. **Using function kallsyms_lookup_name :**\
 Source Files : Isolates/System call intercept via LKM/intercept_sof/
 
 We will be using this Method 3 hereon as its most convenient and takes least amount of time.  
@@ -25,14 +25,22 @@ We will be using this Method 3 hereon as its most convenient and takes least amo
 
 Logging calls made to system calls in linux kernel using LKM by creating custom function wrapper over it and for each syscall, logging to kernel details like syscall name, process name, process id and user id.
 
-1. **Open System Call** :\
+1. **Open System Call :**\
 Commit URL : https://github.com/somy1997/Isolates/tree/b699d702659335e1326287281ea0c010364555a5\
 \
 Source Files                    : Isolates/System Call Logging/open/\
 Custom Open Function LKM Source : Isolates/System Call Logging/open/intercept_open.c\
 Kernel logs                     : Isolates/System Call Logging/dmesglogs.txt
 
-1. **File operations like open, close, read, write** :\
+1. **File operations like open, close, read, write :**\
 Commit URL : https://github.com/somy1997/Isolates/tree/bd39c78b854009e76b89228a3e05ba43fbd2bc3f\
 Source Files                    : Isolates/Logging System Calls/fileops/
 Kernel logs                     : Isolates/Logging System Calls/fileops/dmesglogs.txt
+
+## Intercepting Selective System Calls 
+
+Intercepting selective System Calls in linux kernel based on parent PIDs of the processes.
+2. **All operations :**\
+Commit URL : https://github.com/somy1997/Isolates/tree/6769f71da95e3d4e1ef63f892f21662a4d4767d8
+Source Files                    : Isolates/Logging System Calls/reallops/
+Kernel logs                     : 
