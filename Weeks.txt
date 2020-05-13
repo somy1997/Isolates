@@ -117,7 +117,7 @@ real_parent: Points to the process descriptor of the process that created P or t
 parent: Points to the current parent of P (this is the process that must be signaled when the child process terminates, i.e. SIGCHLD). It may occasionally differ from real_parent in some cases, such as when another process issues a ptrace() system call requesting that it be allowed to monitor P.
 
 Tested by blocking open system for all processes that are children of bash by checking parent's (real_parent) pid.
-Commands like ls, dmesg were not running. The go server when built directly was not running and we saw that it was opening some library files .so outside its own folder. But, the go server (simplestHTTPServer) was running when built statically probably because it's not opening anything, just uses execve call.
+Commands like ls, dmesg were not running. The go server when built directly was not running and we saw that it was opening some library files .so outside its own folder. But, the go server (Isolates/Testing/gostaticserver/simplestHTTPServer) was running when built statically probably because it's not opening anything, just uses execve call.
 
 Week 8 :
 
