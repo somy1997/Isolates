@@ -1234,6 +1234,6 @@ Plotting graphs :
 ./oracle.py -v -gg 'ol.csv,ni.csv' 'Open Lambda,Novo Isolates'
 ./oracle.py -v -gg 'cgi.csv,ni.csv' 'Before Intercepting,After Intercepting'
 ./oracle.py -v -gg 'cs.csv,ol.csv' 'Cold Start,Normal Operation'
-./oracle.py -v -gg 'cgipyjson.csv,cgipyqry.csv,cgi.csv' 'Python (JSON Body),Python (Query Paras), Go (JSON & Static Build)'
+./oracle.py -v -gg 'cgipyjson.csv,cgipyqry.csv,cgi.csv' 'Python (JSON Body),Python (Query Params), Go (JSON & Static Build)'
 
 After this all the plots were put in plots folder and csv files put in data folder.
