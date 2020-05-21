@@ -4,9 +4,10 @@ EXTRA_CFLAGS := -Wno-unused-function -I$(src)
 obj-m := kiallops.o
 kiallops-y := iallops.o custmap.o
 
+#qpwd = '$(PWD)'
 
-#temp : 
-#	echo iallops
+#qpwd : 
+#	echo $(qpwd)
 
 all :
 	# make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
@@ -32,8 +33,8 @@ init :
 #	cp backedreallops.c reallops.c
 	gedit iallops.c &
 	
-backup :
-	cp -r ~/Desktop/intercept_log/iallops ~/Desktop/M.\ Tech\ Project/System\ Call\ Selective\ Blocking/
+#backup :
+#	cp -r ~/Desktop/intercept_log/iallops ~/Desktop/M.\ Tech\ Project/System\ Call\ Selective\ Blocking/
 	
 clins :
 	make clean all insmod

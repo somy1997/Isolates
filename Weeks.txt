@@ -123,7 +123,7 @@ Week 8 :
 
 Next, we want to selectively log following network calls made by the static go server and python server when build from source at a location.
 read, write, socket, signal, accept, connect, exit, fork, bind, : socketcall and list : http://man7.org/linux/man-pages/man2/socketcall.2.html
-build python from source and in that location run : ./python -m http.server
+build python from source and in that location run : ./python -m http.server (not done)
 The parameters for some of the calls weren't available in syscalls.h so had to look it up, found the declarations in socket.h file, can be searched using __sys_socket, found in linux-4.19.102/include/linux/socket.h
 Digression : on cscoping __sys_accept4, found its definition in linux-.../net/socket.c and found that __sys_accept actually makes a call to __sys_accept4 itself by putting parameter for flags as 0.
 Digression : Note that declaration of __sys_sendmsg, __sys_sendmmsg and __sys_recvmsg in linux-.../include/linux/socket.h was different from sys_sendmsg, sys_sendmmsg and sys_recvmsg in /usr/src/linux-headers-4.15.0-45/include/linux/syscalls.h where all syscalls are given, they had an extra bool parameter and following comment :
@@ -194,7 +194,7 @@ Added following to Makefile to remove unused functions warnings :
 EXTRA_CFLAGS := -Wno-unused-function
 For some functions couldn't find it in kernel code : got sigaction and rt_sigaction from https://linux.die.net/man/2/rt_sigaction, got uname from http://man7.org/linux/man-pages/man2/uname.2.html.
 Many such syscalls appearing in error were also present in file linux-.../include/linux/compat.h with prefix compat_, found using text string search like pselect6
-Functions like custom_sigaction, custom_send didn't show up in the errors even though the function wasn't written correctly still I wrote them correctly. Still many functions were left like custom_org_readdir. To not confuse org_old, need to change our prefix org_ to org_
+Functions like custom_sigaction, custom_send didn't show up in the errors even though the function wasn't written correctly still I wrote them correctly. Still many functions were left like custom_org_readdir. To not confuse org_old, need to change our prefix old_ to org_
 Found sys_clone in linux-.../arch/openrisc/include/asm/syscalls.h
 
 Regex used in gedit for init and exit modules:
@@ -724,6 +724,516 @@ For now, trying with https://github.com/open-lambda/open-lambda, paper : https:/
 
 Paper title for now : Novo Isolates
 
-Read Weeks.txt and wherever there is a reference to files put links to the commit tree.
+Week 19 :
 
-Reorganize the Project folder and remove redundant files.
+Read Weeks.txt and wherever there is a reference to files putted links to the commit tree.
+Updated README.md file.
+Reorganized the Project folder and remove redundant files.
+
+Installing Openlambda. Following instructions given at https://github.com/open-lambda/open-lambda.
+
+Running sudo ./bootstrap2.sh
+
+Faced some error while installing linux-image-extra-virtual
+Error! Your kernel headers for kernel 4.4.0-178-generic cannot be found.
+Please install the linux-headers-4.4.0-178-generic package,
+or use the --kernelsourcedir option to tell DKMS where it's located
+   ...done.
+But, this didn't stop the installation. So continuing.
+
+Facing handshake timeout with pip install. Also, it suggests to not use sudo with pip install.
+So, using pip install without sudo.
+
+Faced error while pip install rethinkdb.
+Collecting rethinkdb
+  Downloading https://files.pythonhosted.org/packages/3b/a5/c4af76187f7bfdc13a83f63b2b5f61294fcb9bb7322f5a0af631b84360de/rethinkdb-2.4.6-py2.py3-none-any.whl (156kB)
+    100% |████████████████████████████████| 163kB 1.4MB/s 
+Collecting six (from rethinkdb)
+  Could not find a version that satisfies the requirement six (from rethinkdb) (from versions: )
+No matching distribution found for six (from rethinkdb)
+
+Followed https://rethinkdb.com/docs/install-drivers/python/ which asks to install https://rethinkdb.com/docs/install/ubuntu/ first
+Installed rethinkdb successfully after this. Continuing.
+
+For go installation, removed previous installation using sudo rm -rf /usr/local/go and had to use sudo for new installation.
+
+Bootstrapping done.
+
+Running sudo make.
+
+Got error.
+Sending build context to Docker daemon  931.3kB
+Step 1/13 : FROM ubuntu:bionic
+Get https://registry-1.docker.io/v2/: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+Makefile:16: recipe for target 'imgs/lambda' failed
+make: *** [imgs/lambda] Error 1
+
+Refer https://github.com/docker/for-win/issues/611, https://stackoverflow.com/questions/23111631/cannot-download-docker-images-behind-a-proxy
+
+Following error comes with docker build
+Step 2/13 : RUN apt-get -y --fix-missing update
+ ---> Running in af620dd7bb50
+Err:1 http://security.ubuntu.com/ubuntu bionic-security InRelease
+  Temporary failure resolving 'security.ubuntu.com'
+Err:2 http://archive.ubuntu.com/ubuntu bionic InRelease
+  Temporary failure resolving 'archive.ubuntu.com'
+Err:3 http://archive.ubuntu.com/ubuntu bionic-updates InRelease
+  Temporary failure resolving 'archive.ubuntu.com'
+Err:4 http://archive.ubuntu.com/ubuntu bionic-backports InRelease
+  Temporary failure resolving 'archive.ubuntu.com'
+Reading package lists...
+W: Failed to fetch http://archive.ubuntu.com/ubuntu/dists/bionic/InRelease  Temporary failure resolving 'archive.ubuntu.com'
+W: Failed to fetch http://archive.ubuntu.com/ubuntu/dists/bionic-updates/InRelease  Temporary failure resolving 'archive.ubuntu.com'
+W: Failed to fetch http://archive.ubuntu.com/ubuntu/dists/bionic-backports/InRelease  Temporary failure resolving 'archive.ubuntu.com'
+W: Failed to fetch http://security.ubuntu.com/ubuntu/dists/bionic-security/InRelease  Temporary failure resolving 'security.ubuntu.com'
+W: Some index files failed to download. They have been ignored, or old ones used instead.
+
+Using no-cache docker build. Refer http://stackoverflow.com/questions/35594987/how-to-force-docker-for-a-clean-build-of-an-imaged
+Refer https://askubuntu.com/questions/91543/apt-get-update-fails-to-fetch-files-temporary-failure-resolving-error, solution about setting proxy
+Modify dockerfile in open-lambda/lambda, add following line before above line.
+echoing \n, refer https://stackoverflow.com/questions/8467424/echo-newline-in-bash-prints-literal-n.
+echo $'Acquire::https::proxy "https://172.16.2.30:8080/";\nAcquire::ftp::proxy "ftp://172.16.2.30:8080/";\nAcquire::socks::proxy "socks://172.16.2.30:8080/";\nAcquire::http::proxy "http://172.16.2.30:8080/";' > /etc/apt/apt.conf
+It is running now. Continuing.
+
+Following messages were seen.
+
+W: http://archive.ubuntu.com/ubuntu/dists/bionic/restricted/binary-amd64/by-hash/SHA256/81b9542ff39f796dd83159d5ef02161232ae0b766538d8fc02a299fc1ced1f4d: Automatically disabled Acquire::http::Pipeline-Depth due to incorrect response from server/proxy. (man 5 apt.conf)
+
+debconf: delaying package configuration, since apt-utils is not installed
+Not to worry about this, refer https://stackoverflow.com/questions/51023312/docker-having-issues-installing-apt-utils
+
+Setting up xz-utils (5.2.2-1.3) ...
+update-alternatives: using /usr/bin/xz to provide /usr/bin/lzma (lzma) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzma.1.gz because associated file /usr/share/man/man1/xz.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/unlzma.1.gz because associated file /usr/share/man/man1/unxz.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzcat.1.gz because associated file /usr/share/man/man1/xzcat.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzmore.1.gz because associated file /usr/share/man/man1/xzmore.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzless.1.gz because associated file /usr/share/man/man1/xzless.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzdiff.1.gz because associated file /usr/share/man/man1/xzdiff.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzcmp.1.gz because associated file /usr/share/man/man1/xzcmp.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzgrep.1.gz because associated file /usr/share/man/man1/xzgrep.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzegrep.1.gz because associated file /usr/share/man/man1/xzegrep.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzfgrep.1.gz because associated file /usr/share/man/man1/xzfgrep.1.gz (of link group lzma) doesn't exist
+
+Step 6/14 : RUN pip3 install --upgrade pip
+ ---> Running in b6c549d1f0cc
+Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f38b672f6d8>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',)': /simple/pip/
+Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f38b672f7f0>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',)': /simple/pip/
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f38b672f8d0>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',)': /simple/pip/
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f38b672f9b0>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',)': /simple/pip/
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f38b672fa58>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',)': /simple/pip/
+
+Above error can be resolved by setting proxy for the docker container, refer https://stackoverflow.com/questions/27749193/how-to-build-docker-images-with-dockerfile-behind-http-proxy-by-jenkins, set the proxies using ENV.
+
+sudo make completed.
+Removed --no-cache flag from docker build in Makefile.
+
+Running sudo make test-all
+
+It is failing 18/18 tests.
+
+Changed to sudo user using sudo su.
+Unset proxy using unset http_proxy https_proxy.
+Now running sudo make test-all gives 3/18 pass.
+
+But, running a new worker is successful. For this, follow the instructions as given in the .md file but modify ./default-ol/registry/echo.py instead of ./default/registry/echo.py
+
+Forgot password for the VM.
+Changed passwd using sudo passwd nbs, refer https://www.cyberciti.biz/faq/linux-set-change-password-how-to/
+Password : 11111111
+
+Calculating cold start time : 
+Problem is worker is started using ./ol worker command and then we check with status if it is ready or not.
+We can start in detached state using ./ol worker -d but that also executes really fast.
+
+Removed all docker containers and images, refer https://stackoverflow.com/questions/44785585/how-to-delete-all-docker-local-docker-images
+
+Running make produces following error :
+Step 1/18 : FROM ubuntu:bionic
+Get https://registry-1.docker.io/v2/: proxyconnect tcp: tls: oversized record received with length 20527
+Makefile:16: recipe for target 'imgs/lambda' failed
+make: *** [imgs/lambda] Error 1
+
+Solved by changing proxy for docker, refer https://stackoverflow.com/questions/51571686/ubuntu-18-04-error-response-from-daemon-get-https-registry-1-docker-io-v2, changed https to http for https_proxy also.
+Still got error (request cancelled), running sudo systemctl show --property Environment docker, showed the proxy was still not set
+Again solved by https://stackoverflow.com/questions/23111631/cannot-download-docker-images-behind-a-proxy
+/etc/systemd/system/docker.service.d/http-proxy.conf :
+[Service] 
+Environment="HTTP_PROXY=http://172.16.2.30:8080/" 
+Environment="HTTPS_PROXY=http://172.16.2.30:8080/"
+
+
+Timing the time for running make and starting the worker using time command.
+http://manpages.ubuntu.com/manpages/trusty/man1/time.1posix.html
+https://stackoverflow.com/questions/3432085/how-to-understand-the-output-of-time-command
+
+real	17m21.603s
+user	0m2.072s
+sys	0m0.401s
+
+root@ubuntu:/home/nbs/Desktop/open-lambda# time ./ol new
+Init OL dir at /home/nbs/Desktop/open-lambda/default-ol
+Create lambda base at /home/nbs/Desktop/open-lambda/default-ol/lambda (may take several minutes)
+Working Directory: /home/nbs/Desktop/open-lambda/default-ol
+
+Worker Defaults: 
+{
+	"worker_dir": "/home/nbs/Desktop/open-lambda/default-ol/worker",
+	"worker_port": "5000",
+	"sandbox": "sock",
+	"server_mode": "lambda",
+	"registry": "/home/nbs/Desktop/open-lambda/default-ol/registry",
+	"registry_cache_ms": 5000,
+	"Pkgs_dir": "/home/nbs/Desktop/open-lambda/default-ol/lambda/packages",
+	"pip_mirror": "",
+	"mem_pool_mb": 2431,
+	"import_cache_tree": "",
+	"SOCK_base_path": "/home/nbs/Desktop/open-lambda/default-ol/lambda",
+	"sandbox_config": {},
+	"docker_runtime": "",
+	"limits": {
+		"procs": 10,
+		"mem_mb": 50,
+		"swappiness": 0,
+		"installer_mem_mb": 500
+	},
+	"features": {
+		"reuse_cgroups": false,
+		"import_cache": true,
+		"downsize_paused_mem": true
+	},
+	"trace": {
+		"cgroups": false,
+		"memory": false,
+		"evictor": false,
+		"package": false
+	},
+	"storage": {
+		"root": "private",
+		"scratch": "",
+		"code": ""
+	}
+}
+
+You may modify the defaults here: /home/nbs/Desktop/open-lambda/default-ol/config.json
+
+You may now start a server using the "ol worker" command
+
+real	0m4.002s
+user	0m0.601s
+sys	0m2.007s
+
+root@ubuntu:/home/nbs/Desktop/open-lambda# time ./ol worker -d
+using existing OL directory at /home/nbs/Desktop/open-lambda/default-ol
+Starting worker: pid=7553, port=5000, log=/home/nbs/Desktop/open-lambda/default-ol/worker.out
+ready
+
+real	0m0.120s
+user	0m0.010s
+sys	0m0.003s
+
+root@ubuntu:/home/nbs/Desktop/open-lambda# time ./ol kill
+Kill worker process with PID 7553
+
+real	0m0.108s
+user	0m0.004s
+sys	0m0.004s
+
+Writing a CGI script for isolcon in python to support similar functionality as in open-lambda to bridge the gap. See CGI Controller/isolcon/fibo/fibo.py
+Refer https://stackoverflow.com/questions/464040/how-are-post-and-get-variables-handled-in-python , cgi.FieldStorage() not working.
+
+Following worked, Refer https://superuser.com/questions/149329/what-is-the-curl-command-line-syntax-to-do-a-post-request
+Basically -d is taking it as a query string parameter. Here, the cgi.FieldStorage() method worked.
+➜  fibo git:(master) ✗ curl -d "input=5" http://localhost:8080/fibo/fibo.py
+<TITLE>CGI script output</TITLE>
+<H1>This is my first CGI script</H1>
+FieldStorage(None, None, [MiniFieldStorage('input', '5')]) Hello, world!
+1
+
+For posting as json data instead of query params, refer https://stackoverflow.com/questions/10718572/post-json-to-python-cgi
+Its working either way whether mentioning content type or not.
+➜  fibo git:(master) ✗ curl -X POST -d '{"input": "5"}' http://localhost:8080/fibo/fibo.py
+<TITLE>CGI script output</TITLE>
+<H1>This is my first CGI script</H1>
+14
+{'input': '5'}
+➜  fibo git:(master) ✗ curl -H "Content-Type: application/json" -X POST -d '{"input": "5"}' http://localhost:8080/fibo/fibo.py
+<TITLE>CGI script output</TITLE>
+<H1>This is my first CGI script</H1>
+14
+{'input': '5'}
+
+Now, that fibo.py is defined, same function is added to echo.py for open-lambda :
+
+def f(event):
+    n = event['input']
+
+    def fibo(n) :
+        a = 0
+        b = 1
+        c = 0
+        for _ in range(n-1) :
+            c = a + b
+            a = b
+            b = c
+        return a
+
+    return (fibo(n))
+
+Created Intercepting Selective System Calls/stats/oracle.py
+➜  stats git:(master) ✗ ./oracle.py -h
+usage: oracle.py [-h] [-v]
+                 [-gr GENERATEREQUESTS GENERATEREQUESTS GENERATEREQUESTS GENERATEREQUESTS GENERATEREQUESTS | -gg GENERATEGRAPHS GENERATEGRAPHS]
+
+Oracle for doing everything
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --verbose         Increase output verbosity
+  -gr GENERATEREQUESTS GENERATEREQUESTS GENERATEREQUESTS GENERATEREQUESTS GENERATEREQUESTS, --generaterequests GENERATEREQUESTS GENERATEREQUESTS GENERATEREQUESTS GENERATEREQUESTS GENERATEREQUESTS
+                        Make POST requests : Number of requests, Initial seed,
+                        Maximum value, URL for Post, Filename for storing
+                        stats
+  -gg GENERATEGRAPHS GENERATEGRAPHS, --generategraphs GENERATEGRAPHS GENERATEGRAPHS
+                        Generate graph : Filenames for 1st stats and 2nd stats
+
+
+Week 20 :
+
+
+Use following commands to generate stats.
+./oracle.py -v -gr 100 7 10 http://localhost:5000/run/echo ol.csv
+./oracle.py -v -grcs 30 7 10 http://localhost:5000/run/echo cs.csv
+# Run isolcon server
+./oracle.py -v -gr 100 7 10 http://localhost:8080/fibo/fibo.py cgi.csv
+# Stop isolcon server
+# Insert the iallops module, start the isolcon server and pass its pid to the module
+./oracle.py -v -gr 100 7 10 http://localhost:8080/fibo/fibo.py ni.csv
+# measure cold starts for open-lambda
+./oracle.py -v -gg ol.csv olcs.csv 'Normal Requests' 'Cold Start Requests'
+# measure difference in cgi latency before and after inserting module
+./oracle.py -v -gg cgi.csv ni.csv 'Before Intercepting' 'After Intercepting'
+# measure difference between open-lambda and novo isolates
+./oracle.py -v -gg 'ol.csv,ni.csv' 'Open Lambda,Novo Isolates'
+
+Taking stats for open lambda :
+
+root@ubuntu:/home/nbs/Desktop/open-lambda# time make
+cd /home/nbs/Desktop/open-lambda/src && go build -mod vendor -o ../ol
+make -C lambda
+make[1]: Entering directory '/home/nbs/Desktop/open-lambda/lambda'
+gcc -O2 --static -o spin spin.c
+make[1]: Leaving directory '/home/nbs/Desktop/open-lambda/lambda'
+docker build -t lambda lambda
+Sending build context to Docker daemon  931.8kB
+Step 1/18 : FROM ubuntu:bionic
+ ---> c3c304cb4f22
+Step 2/18 : ENV http_proxy=http://172.16.2.30:8080/
+ ---> Using cache
+ ---> c9449cbce977
+Step 3/18 : ENV ftp_proxy=ftp://172.16.2.30:8080/
+ ---> Using cache
+ ---> bb6bd7798866
+Step 4/18 : ENV https_proxy=https://172.16.2.30:8080/
+ ---> Using cache
+ ---> 3a50bc682962
+Step 5/18 : RUN echo $'Acquire::https::proxy "https://172.16.2.30:8080/";\nAcquire::ftp::proxy "ftp://172.16.2.30:8080/";\nAcquire::socks::proxy "socks://172.16.2.30:8080/";\nAcquire::http::proxy "http://172.16.2.30:8080/";' > /etc/apt/apt.conf
+ ---> Using cache
+ ---> 7992ef1d6709
+Step 6/18 : RUN apt-get -y --fix-missing update
+ ---> Using cache
+ ---> 913afa973e79
+Step 7/18 : RUN apt-get -y install wget apt-transport-https
+ ---> Using cache
+ ---> 9955c59df917
+Step 8/18 : RUN apt-get -y install python3 python3-dev python3-pip build-essential
+ ---> Using cache
+ ---> 18f22dee201a
+Step 9/18 : RUN pip3 install --upgrade pip
+ ---> Using cache
+ ---> e23af3c94295
+Step 10/18 : RUN pip3 install virtualenv requests tornado==4.5.3
+ ---> Using cache
+ ---> 981cef2e2eda
+Step 11/18 : COPY sock2.py /
+ ---> Using cache
+ ---> 87b11ca5688e
+Step 12/18 : COPY ol.c /
+ ---> Using cache
+ ---> fcc4bd5e5c21
+Step 13/18 : COPY setup.py /
+ ---> Using cache
+ ---> 4e1713c569ad
+Step 14/18 : RUN cd / && python3 setup.py build_ext --inplace && mv ol.*.so /ol.so
+ ---> Using cache
+ ---> 835fc4d4664c
+Step 15/18 : COPY server.py /
+ ---> Using cache
+ ---> 75cf58f413a6
+Step 16/18 : COPY spin /
+ ---> Using cache
+ ---> 282fd8a72cc4
+Step 17/18 : RUN unset http_proxy ftp_proxy https_proxy
+ ---> Using cache
+ ---> 0f9d5aee95c8
+Step 18/18 : CMD ["/spin"]
+ ---> Using cache
+ ---> e82068f2b0f1
+Successfully built e82068f2b0f1
+Successfully tagged lambda:latest
+touch imgs/lambda
+
+real	0m3.312s
+user	0m2.131s
+sys	0m0.788s
+root@ubuntu:/home/nbs/Desktop/open-lambda#
+
+Took less time wrt usual as the containers were already present.
+
+root@ubuntu:/home/nbs/Desktop/open-lambda# time ./ol new
+Init OL dir at /home/nbs/Desktop/open-lambda/default-ol
+2020/05/18 11:43:05 mkdir /home/nbs/Desktop/open-lambda/default-ol: file exists
+
+real	0m0.006s
+user	0m0.004s
+sys	0m0.003s
+
+Don't consider the above one, consider the one previous to this.
+
+root@ubuntu:/home/nbs/Desktop/open-lambda# time ./ol worker -d
+using existing OL directory at /home/nbs/Desktop/open-lambda/default-ol
+Starting worker: pid=11090, port=5000, log=/home/nbs/Desktop/open-lambda/default-ol/worker.out
+ready
+
+real	0m0.114s
+user	0m0.004s
+sys	0m0.004s
+
+root@ubuntu:/home/nbs/Desktop/open-lambda# unset http_proxy
+
+Single POST request :
+curl -X POST localhost:5000/run/echo -d '{"input": 5}'
+
+root@ubuntu:/home/nbs/Desktop/open-lambda# time ./ol kill
+Kill worker process with PID 13652
+
+real	0m0.106s
+user	0m0.004s
+sys	0m0.003s
+
+Faced following errors while installing modules for running oracle.py and referred :
+https://stackoverflow.com/questions/52812425/install-matplotlib-command-python-setup-py-egg-info-failed-with-error-code-1
+https://askubuntu.com/questions/815874/importerror-no-named-tkinter-please-install-the-python3-tk-package
+https://stackoverflow.com/questions/25695412/module-object-has-no-attribute-choice-trying-to-use-random-choice, specifically its answer for random.choices https://stackoverflow.com/a/50227062/7991684
+requests.exceptions.InvalidSchema: No connection adapters were found for 'localhost:5000/run/echo' solved by using 'http://localhost:5000/run/echo' instead, unsetting proxy was not required but required from terminal where ./ol worker -d is run.
+Took stats in ol.csv
+
+Started after making some requests to not include cold start latency.
+./oracle.py -v -gr 100 7 10 http://localhost:5000/run/echo ol.csv
+
+Taking stats for cold starts in open-lambda :
+
+Added functionality in oracle.py
+./oracle.py -v -grcs 30 7 10 http://localhost:5000/run/echo cs.csv
+
+Seeing an error that the previous worker is still running.
+Added sleep to provide sufficient amount of time to ./ol worker and ./ol kill. But, didn't work.
+Tried running the worker and kill command sequentially. Did it multiple times, didn't encounter any problem. My speculation is that the link from the request isn't closed, hence the previous worker is still running.
+for i in {1..10};  do time (./ol worker -d; echo ''; ./ol kill); done
+Above command runs without any problems.
+for i in {1..5};  do time (./ol worker -d; curl -X POST localhost:5000/run/echo -d '{"input": 5}'; echo ''; ./ol kill); done
+But above shows problems after some iterations. This implies that the connection is not being closed.
+For timing multiple commands, refer https://superuser.com/questions/608591/time-the-execution-time-of-multiple-commands
+
+root@ubuntu:/home/nbs/Desktop/open-lambda# time (./ol worker -d; ./ol status; ./ol kill)
+using existing OL directory at /home/nbs/Desktop/open-lambda/default-ol
+Starting worker: pid=7458, port=5000, log=/home/nbs/Desktop/open-lambda/default-ol/worker.out
+ready
+Worker Ping:
+  http://localhost:5000/status => ready
+ [200 OK]
+
+Kill worker process with PID 7458
+
+real	0m0.224s
+user	0m0.011s
+sys	0m0.012s
+
+root@ubuntu:/home/nbs/Desktop/open-lambda# time (./ol worker -d; ./ol kill)
+using existing OL directory at /home/nbs/Desktop/open-lambda/default-ol
+Starting worker: pid=7661, port=5000, log=/home/nbs/Desktop/open-lambda/default-ol/worker.out
+ready
+Kill worker process with PID 7661
+
+real	0m0.223s
+user	0m0.000s
+sys	0m0.021s
+
+So, explicitly closing the connection. Refer https://stackoverflow.com/questions/10115126/python-requests-close-http-connection .
+Explictly checking if the file open-lambda/default-ol/worker/worker.pid has been removed or not. But since, the file only has root permissions os.path.isfile() returns false.
+So, using sudo find command to do the above. Refer https://stackoverflow.com/questions/3503879/assign-output-of-os-system-to-a-variable-and-prevent-it-from-being-displayed-on
+Still, not helping usually fails after 5 to 10 iterations and gives following message.
+Kill worker process with PID 5045
+os: process already finished
+Failed to kill process with PID 5045.  May require manual cleanup.
+
+Removing default-ol directory gives following error
+root@ubuntu:/home/nbs/Desktop/open-lambda# rm -rf default-ol/
+rm: cannot remove 'default-ol/worker/root-sandboxes': Device or resource busy
+
+Refer https://unix.stackexchange.com/questions/11238/how-to-get-over-device-or-resource-busy
+
+lsof command gives following output
+root@ubuntu:/home/nbs/Desktop/open-lambda# lsof +D .
+lsof: WARNING: can't stat() fuse.gvfsd-fuse file system /run/user/1000/gvfs
+      Output information may be incomplete.
+COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF   NODE NAME
+bash    4250  nbs  cwd    DIR    8,1     4096 677502 .
+sudo    4284 root  cwd    DIR    8,1     4096 677502 .
+su      4285 root  cwd    DIR    8,1     4096 677502 .
+bash    4286 root  cwd    DIR    8,1     4096 677502 .
+lsof    6293 root  cwd    DIR    8,1     4096 677502 .
+lsof    6294 root  cwd    DIR    8,1     4096 677502 .
+
+So, simply appending the new stats and restarting the VM each time it fails.
+
+Taking stats for CGI without inserting the module :
+
+./oracle.py -v -gr 100 7 10 http://localhost:8080/fibo/fibo.py cgipyjson.csv
+./oracle.py -v -gr 100 7 10 http://localhost:8080/fibo/fibo.py cgipyqry.csv
+
+fibo.py was taking time in ~80 ms but prntenv was taking in ~20 ms. Tried both by passing argument as query as well as body.
+So, using fibo.go and building it statically and now its also taking ~20 ms using time(curl).
+Even though, the time has reduced, its still not comparable to open-lambda's ~3ms. 
+My speculation is that since our server is forking for each request, it is taking more time than open-lambda. 
+Open-lambda is probably building the lambda once and then using it. 
+Because, it is really astonishing that open-lambda uses python for lambda function and still keeps response time ~7 ms.
+
+nbs@ubuntu:~/Desktop/project/CGI Controller/isolcon/fibo$ time (make)
+CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' .
+
+real	0m3.106s
+user	0m5.018s
+sys	0m0.490s
+
+Above user time > real time. Probably due to multiple processors being used. Refer https://unix.stackexchange.com/questions/40694/why-real-time-can-be-lower-than-user-time
+
+./oracle.py -v -gr 100 7 10 http://localhost:8080/fibo/fibo cgi.csv
+
+This produced results in ~6ms which is far less than measured by time(curl).
+
+Taking stats for CGI with module inserted :
+
+Insert the module and then start the cgi controller.
+
+./oracle.py -v -gr 100 7 10 http://localhost:8080/fibo/fibo ni.csv
+
+Plotting graphs :
+
+./oracle.py -v -gg 'cs.csv,ol.csv,ni.csv' 'Open Lambda (CS),Open Lambda (NO),Novo Isolates'
+./oracle.py -v -gg 'ol.csv,ni.csv' 'Open Lambda,Novo Isolates'
+./oracle.py -v -gg 'cgi.csv,ni.csv' 'Before Intercepting,After Intercepting'
+./oracle.py -v -gg 'cs.csv,ol.csv' 'Cold Start,Normal Operation'
+./oracle.py -v -gg 'cgipyjson.csv,cgipyqry.csv,cgi.csv' 'Python (JSON Body),Python (Query Paras), Go (JSON & Static Build)'
+
+After this all the plots were put in plots folder and csv files put in data folder.
