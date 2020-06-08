@@ -622,7 +622,7 @@ Meeting with Sandip sir :
 
 Current solutions :
 1. Containers
-2. VMMs : Amazon Firecracker paper
+2. VMMs : Amazon Firecracker paper uses micro VMs, 
 3. Isolates : Cloud Flare, V8
 
 Another paper : My VM is lighter than your container.
@@ -1209,6 +1209,49 @@ My speculation is that since our server is forking for each request, it is takin
 Open-lambda is probably building the lambda once and then using it. 
 Because, it is really astonishing that open-lambda uses python for lambda function and still keeps response time ~7 ms.
 
+nbs@ubuntu:~/Desktop/project/Intercepting_Selective_System_Calls/src$ time (make)
+# make -C /lib/modules/4.15.0-88-generic/build M=/home/nbs/Desktop/project/Intercepting_Selective_System_Calls/src modules
+make -C /usr/src/linux-headers-4.15.0-88-generic SUBDIRS=/home/nbs/Desktop/project/Intercepting_Selective_System_Calls/src KBUILD_EXTMOD=/home/nbs/Desktop/project/Intercepting_Selective_System_Calls/src modules
+make[1]: Entering directory '/usr/src/linux-headers-4.15.0-88-generic'
+  CC [M]  /home/nbs/Desktop/project/Intercepting_Selective_System_Calls/src/iallops.o
+  CC [M]  /home/nbs/Desktop/project/Intercepting_Selective_System_Calls/src/custmap.o
+  LD [M]  /home/nbs/Desktop/project/Intercepting_Selective_System_Calls/src/kiallops.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC      /home/nbs/Desktop/project/Intercepting_Selective_System_Calls/src/kiallops.mod.o
+  LD [M]  /home/nbs/Desktop/project/Intercepting_Selective_System_Calls/src/kiallops.ko
+make[1]: Leaving directory '/usr/src/linux-headers-4.15.0-88-generic'
+
+real	0m4.086s
+user	0m3.634s
+sys	0m0.544s
+
+nbs@ubuntu:~/Desktop/project/Intercepting_Selective_System_Calls/src$ time (make insmod)
+sudo insmod kiallops.ko
+
+real	0m0.037s
+user	0m0.006s
+sys	0m0.018s
+
+nbs@ubuntu:~/Desktop/project/Intercepting_Selective_System_Calls/src$ time (make rmmod)
+sudo rmmod kiallops.ko
+
+real	0m0.031s
+user	0m0.007s
+sys	0m0.009s
+
+nbs@ubuntu:~/Desktop/project/Intercepting_Selective_System_Calls/src$ time (make clean)
+#make -C /lib/modules/4.15.0-88-generic/build M=/home/nbs/Desktop/project/Intercepting_Selective_System_Calls/src clean
+make -C /usr/src/linux-headers-4.15.0-88-generic SUBDIRS=/home/nbs/Desktop/project/Intercepting_Selective_System_Calls/src clean
+make[1]: Entering directory '/usr/src/linux-headers-4.15.0-88-generic'
+  CLEAN   /home/nbs/Desktop/project/Intercepting_Selective_System_Calls/src/.tmp_versions
+  CLEAN   /home/nbs/Desktop/project/Intercepting_Selective_System_Calls/src/Module.symvers
+make[1]: Leaving directory '/usr/src/linux-headers-4.15.0-88-generic'
+
+real	0m0.477s
+user	0m0.357s
+sys	0m0.194s
+
 nbs@ubuntu:~/Desktop/project/CGI Controller/isolcon/fibo$ time (make)
 CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' .
 
@@ -1237,3 +1280,88 @@ Plotting graphs :
 ./oracle.py -v -gg 'cgipyjson.csv,cgipyqry.csv,cgi.csv' 'Python (JSON Body),Python (Query Params), Go (JSON & Static Build)'
 
 After this all the plots were put in plots folder and csv files put in data folder.
+
+Week 21 :
+
+Writing Master's Thesis.
+
+Points mentioned by Bishakh sir.
+1. What is serverless cloud computing.
+2. Current uses of serverless, uses container, why container used, whats it role.
+3. Properties of serverless.
+4. Using only process then what are the problems in a multi tenant system. Needs isolation, whatever we are doing.
+5. What all we did, which system call we blocked, how many system calls were there, etc. Which ones whitelisted so statically compiled code was running. Why statically compiling is important.
+6. Why require CGI for interfacing. CGI is a protocol, easy for input, output. We need a protocol for input output and that protocol is CGI, that's all. Similar to AWS, we will take the user's program and put a wrapper over it, by providing user with an interface for input output like in AWS lambda.
+
+Need to write how serverless works, how container is created, why container is needed, etc. Its a multi tenant system, for which containers are important. Serverless properties : stateless, what all is maintained or allowed or not like memory maintenance, file system data, creation of sockets, etc. Multi tenant system : Single system runs processors for multiple users.
+
+Refer Meeting with Sandip sir.
+
+Skeleton of the paper :
+
+1. Introduction 
+
+What is serverless?
+
+Properties of serverless : https://www.infoq.com/news/2019/08/traits-serverless-architecture/
+
+Types of serverless implementation : https://www.cloudflare.com/learning/serverless/serverless-vs-containers/
+a. Micro VMs implementation : refer Firecracker paper, used in AWS Lambda and Fargate.
+b. Cloudflare Isolates implementation : uses V8 engine, refer cloudflare.
+c. Container implementation : Used by many open source implementations, refer SAND, OpenLambda.
+
+Uses of serverless : Refer COMSNETS Paper
+
+Multi tenant architecture, advantages, disadvantages : https://www.datamation.com/cloud-computing/what-is-multi-tenant-architecture.html // Need to add
+
+2. Related Works
+
+Literature Survey : Tell about what current implementations are in place like MicroVMs used by firecracker, containers used by openlambda, isolates used by cloudflare : refer https://medium.com/@zackbloom/isolates-are-the-future-of-cloud-computing-cf7ab91c6142 , sand reduces latency for lambda functions belonging to same application by using two techniques, agile cold starts to reduce cold start time and finds that network setup contributes majorly to container startup time, SOCK uses 3-tier caching to optimize container starting time, Peeking Behind the curtains provides extensive comparision between current commercial lambda providers, ephemeral storage for serverless analytics.
+
+// Ephemeral storage and caching techniques not added
+
+Research Gap : Most use containers : problem of cold starts, vms : heavy & cold start, isolates : cloud flare but not language agnostic. There have been major strides in reducing cold start time in paper agile, sock, but still not that much.
+None of the works so far have completely omitted cold start time, the first request always has to suffer some extra latency against subsequent request.
+Even though multitenant solutions like isolates exist (cite cloudflare), it uses chrome's v8 engine which runs only javascript and hence it is not language agnostic like vm and container solutions.
+
+3. Objective
+
+Problem Motivation : Mention all the things in research gap. 
+
+// As the isolation is done on the process level, it would be faster, even with database applications as then we can use the database on the same vm and intercept its calls, cite workshop paper. This was not added.
+
+Problem Statement : To design a serverless cloud computing system which removes the problem of cold starts completely. To design a serverless cloud computing system which is language agnostic. To design a multitenant system which is lightweight in terms of bootstrapping, memory and computation and works at the process level. To analyse this noval system with respect to conventional serverless implementations in terms of cold start latency and performance.
+
+Contributions : We have created a loadable kernel module which can intercept all system calls based on the parent pid of a process. We have created a CGI server in GoLang which is language agnostic as it can run CGI scripts written in any language. We have created a serverless cloud computing system called as Novo Isolates which takes as input statically compiled CGI scripts and has 0 cold start latency and works at the process level. We have done following latency analysis : OpenLambda's cold start and normal operation and novoisolates's Normal operation, Between Normal operation time of OpenLambda and NovoIsolates, Effects of intercepting system calls on latency, When using different language CGI scripts, tabulating various components of time for bootstrapping the system, running, etc.
+
+4. Proposed Model
+
+Serverless cloud computing is an amazing architecture where the users don't have to bother about how to deploy the servers and only have to pay for the time servers remain active for serving their client's requests. But, still this model suffers from cold start latency. Multiple solutions exist which try to minimise or omit this problem but they come with their own disadvantages. Here, we propose a system which mitigates this problem completely without affecting the latency of serving the requests. Our model consists of two parts : the loadable kernel module, and a CGI Server.
+
+lkm : We have created a loadable kernel module in linux which is capable of selectively intercepting system calls made by a process based on its parent's pid. While creating this module, we faced several difficulties and we came up with solutons to handle them step by step. We describe these problems and solution in detail below.
+
+4.1.1 Getting the address of system call table.
+4.1.2 Logging file and network operations and then all system calls. mention problem while logging all, why chose to use statically compiled binaries. blocked all syscalls and whitelisted a few.
+4.1.3 Intercepting selective system calls. using parent pid as a parameter
+
+cgi : We needed a protocol for the application creaters to follow so that their clients can easily send their requests. For this, we used the CGI protocol. It is this server whose pid is passed as parent pid to the lkm for selective intercepting of system calls. It has following features : It can run binary of any language in general but to allow certain operations that binary must be statically compiled, For each request it forks a new process in the directory of that application binary thereby running each request as an isolated process, The server's bootstrapping time is minimal as it is itself a process.
+
+5. Experiments, Results and Analysis
+
+fibonacci : to reduce variability, we have only taken input uptil integer 10 and we provide the same seed value 7 for each experiment.
+
+One of the things that makes our system stand out is it being language agnostic in nature.
+
+6. Conclusion and future works
+
+Conclusion : mention all the things in contributions
+Not only does our system solves the cold start problem, but it is also language agnostic.
+Future works : We want to do a detailed security analysis of the system, We want to test this system and see if its commercially viable, We want to add components to it for monitoring the requests being handled in the system, We want to compare it with existing commercially available systems. We want to reduce normal operation time further. We want to test a hybrid system where the novoisolates works over containers or VMs, this would be helpful in doing application level sandboxing where all the lambdas of an application lies within one container or VM.
+
+Week 22 :
+
+Completing report and making presentation.
+
+Week 23 :
+
+Presentation done. 8 June 2020.
