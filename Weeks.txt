@@ -1396,3 +1396,5 @@ nbs@ubuntu:~/Desktop/project/CGI Controller/isolcon$ du -h isolcon
 
 root@ubuntu:/home/nbs/Desktop/open-lambda# du -sh default-ol/
 1.5G	default-ol/
+
+Repeated memory experiment to get result in KBs instead of MBs. Took 100 values for each case.

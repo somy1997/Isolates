@@ -142,7 +142,7 @@ def gengraph(data, labels) :
     data = [round(st.mean(datalist)) for datalist in data]
     plt.xticks(range(len(data)), labels)
     # plt.xlabel('Class')
-    plt.ylabel('Memory Used (MB)')
+    plt.ylabel('Memory Used (KB)')
     # plt.title('I am title')
     plt.bar(range(len(data)), data, width=0.2) 
     plt.show()
