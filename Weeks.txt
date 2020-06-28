@@ -1365,3 +1365,28 @@ Completing report and making presentation.
 Week 23 :
 
 Presentation done. 8 June 2020.
+
+Tips for presentation :
+
+Modifying kernel ? No, providing an application, doesn’t require any kernel update, providing a lkm.
+Isolate the environment for the process, isolation for VM happens this way.
+Why intercepting sys calls? Don’t go directly to lkm.
+Why not use any other process level method? Can handle everything by modifying glibc, but some other process might not use glibc like go, etc.
+It will reduce the computation —> cost of servers reduced —> reduce the power usage —> monetary value, cold start 2 things - user sees delay, server running 24 hours, more power consumed and cooling.
+Try to connect, if not connecting, start from some slides back.
+CGI = Common Gateway Interface
+Static loaded library done, dynamically loaded library how? We haven’t done it yet.
+Defend yourself but not lie. Say that not completed due to time constraint but say that this much done.
+Don’t say you don’t remember. Can improvise. Tell truth. Be confident. Answer to the best knowledge.
+
+28 June 2020 :
+
+Comparing memory used in isolates vs openlambda
+Measuring memory used before and after starting the containers.
+Memory is in MBs. Used memory before starting openlambda and novoisolates saved in um1.csv and um2.csv respectively. Used memory after starting them saved in umol.csv and umni.csv respectively.
+
+for run in {1..10}; do free -m | grep Mem | awk '{print $3}'; done > um.csv
+
+./oracle.py -v -gg 'data/mol.csv,data/mni.csv' 'Open Lambda, Novo Isolates'
+
+Done.
