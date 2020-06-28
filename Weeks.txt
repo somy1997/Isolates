@@ -1389,4 +1389,10 @@ for run in {1..10}; do free -m | grep Mem | awk '{print $3}'; done > um.csv
 
 ./oracle.py -v -gg 'data/mol.csv,data/mni.csv' 'Open Lambda, Novo Isolates'
 
-Done.
+Comparing disk space used in isolates vs openlambda
+
+nbs@ubuntu:~/Desktop/project/CGI Controller/isolcon$ du -h isolcon
+7.5M	isolcon
+
+root@ubuntu:/home/nbs/Desktop/open-lambda# du -sh default-ol/
+1.5G	default-ol/
